@@ -12,6 +12,7 @@ var ExpressBrute = require('express-brute');
 //local js files
 var arr = require('./compilers');
 var sandBox = require('./DockerSandbox');
+var sandBoxMin = require('./DockerSandbox');
 
 //create server on port (port)
 var app = express.createServer();
@@ -43,7 +44,6 @@ function random(size) {
 
 
 app.post('/compile', bruteforce.prevent, function(req, res) {
-
     var language = req.body.language;
     var code = req.body.code;
 
@@ -63,6 +63,7 @@ app.post('/compile', bruteforce.prevent, function(req, res) {
     var vm_name = 'virtual_machine'; //name of virtual machine that we want to execute
     var timeout_value = 20; //Timeout Value, In Seconds
 
+    /*
     //details of this are present in DockerSandbox.js
     var sandboxType = new sandBox(
         timeout_value,
@@ -76,6 +77,15 @@ app.post('/compile', bruteforce.prevent, function(req, res) {
         arr.compilerArray[language][3],
         arr.compilerArray[language][4],
         stdin
+    );
+    */
+
+    var sandboxType = new sandBoxMin(
+        timeout_value,
+        folder,
+        'C',
+        code,
+        ''
     );
 
     //data will contain the output of the compiled/interpreted code
