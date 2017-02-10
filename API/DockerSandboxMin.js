@@ -76,11 +76,14 @@ execHandler = function(error, stdout, stderr) {
 */
 
 DockerSandbox.prototype.prepare = function(success) {
+    console.log('here');
+
     var exec = require('child_process').exec;
     var fs = require('fs');
 
     //create the folder to copy 'code' into
     exec('mkdir ' + this.path + this.folder, execHandler);
+    console.log('here');
 
     //copy scripts to new folder
     exec("cp " + this.path + "/Payload/* " + this.path + this.folder, execHandler);
@@ -108,3 +111,5 @@ DockerSandbox.prototype.prepare = function(success) {
         }
     });
 }
+
+module.exports = DockerSandboxMin;
