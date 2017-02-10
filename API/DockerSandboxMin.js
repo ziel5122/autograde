@@ -37,6 +37,8 @@ var DockerSandboxMin = function(timeout, folder, lang, code, xargs) {
             this.file = "file.sh";
             break;
     }
+
+    console.log(this.file);
 }
 
 /**
@@ -46,7 +48,7 @@ var DockerSandboxMin = function(timeout, folder, lang, code, xargs) {
     * @param {Function pointer} success ?????
 */
 
-DockerSanbox.prototype.run = function(success) {
+DockerSandboxMin.prototype.run = function(success) {
     var sandbox = this;
 
     this.prepare(function() {
@@ -56,11 +58,12 @@ DockerSanbox.prototype.run = function(success) {
 
 execHandler = function(error, stdout, stderr) {
     if (error) {
-        console.error('exec error: ${error}');
+        console.error('exec error: ' + error);
         process.exit(1);
-    }
-    console.log('stdout: ${stdout}');
-    console.log('stderr: ${stderr}');
+    } if (stdout)
+    	console.log('stdout: ' + stdout);
+    if (stderr)    
+	console.log('stderr: ' + stderr);
 }
 
 /**
@@ -75,7 +78,7 @@ execHandler = function(error, stdout, stderr) {
          * @param {Function pointer} success ?????
 */
 
-DockerSandbox.prototype.prepare = function(success) {
+DockerSandboxMin.prototype.prepare = function(success) {
     console.log('here');
 
     var exec = require('child_process').exec;
@@ -91,16 +94,16 @@ DockerSandbox.prototype.prepare = function(success) {
     //give all permissions on new folder
     exec("chmod 777 " + this.path + this.folder, execHandler);
 
+    var stdin_data = ['dog', 'cat'];
+
     fs.writeFile(this.path + this.folder + "/" + this.file, this.code, (error) => {
         if (error) {
-            console.error('error writing file: ${error}');
+            console.error('error writing file: ' + error);
         } else {
-            console.log('${this.lang} file was saved');
-            exec('chmod 777 ' + sandbox.path +sandbox.folder + '/' + sandbox.file, execHandler);
+            console.log(this.lang + ' file was saved');
+            exec('chmod 777 ' + this.path + this.folder + '/' + this.file, execHandler);
 
-            fs.writeFile(this.path + this.folder + '/inputFile', this.)
-
-            fs.writeFile(sandbox.path + sandbox.folder+"/inputFile", sandbox.stdin_data,function(err) {
+            fs.writeFile(this.path + this.folder+"/inputFile", this.stdin_data,function(err) {
                 if (err) {
                     console.log(err);
                 } else {

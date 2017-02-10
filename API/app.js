@@ -12,7 +12,7 @@ var ExpressBrute = require('express-brute');
 //local js files
 var arr = require('./compilers');
 var sandBox = require('./DockerSandbox');
-var sandBoxMin = require('./DockerSandbox');
+var sandBoxMin = require('./DockerSandboxMin');
 
 //create server on port (port)
 var app = express.createServer();
