@@ -49,8 +49,7 @@ var DockerSandboxMin = function(timeout, folder, lang, code, xargs) {
 */
 
 DockerSandboxMin.prototype.run = function(success) {
-    var this = this;
-
+    
     this.prepare(function() {
         //this.execute(success);
     });

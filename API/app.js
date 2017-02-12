@@ -47,19 +47,9 @@ app.post('/compile', bruteforce.prevent, function(req, res) {
     var language = req.body.language;
     var code = req.body.code;
 
-    /* code to read test cases from a file
-    fs = require('fs');
-    fs.readFile('solutions/hw2/code-tests.txt', 'utf8', function(err, data) {
-        if (err) {
-            return console.log(err);
-        }
-
-        var stdin = data;
-    });
-    */
-
     if (langauge == 'written') {
         console.log('written homework submitted')
+        res.send({output: 'PASSED', })
     }
 
     /*
