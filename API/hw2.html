@@ -24,9 +24,9 @@
     	<br>
     	<br>
 	<select id="hw_type">
-		<option value="0">C</option>
-		<option value="1">Bash</option>
-		<option value="2">Written</option>
+		<option value="c">C</option>
+		<option value="bash">Bash</option>
+		<option value="written">Written</option>
 	</select>
 	<br>
 	<br>
@@ -38,39 +38,30 @@
     	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
     	<script type="text/javascript">
+			var hw = 'hw2';
 
-	//COMPILE USER GIVEN CODE
-    	$('#submit').on('click', function() {
-		var output = $('#output');
+			//send user code to script
+	    	$('#submit').on('click', function() {
+				var langid = $('#hw_type').val();
+				var code = $('#code').val();
 
-		var langid = $('#hw_type').val();
-		if (langid == 2) {
-			$.post("/written", function(data, error, xhr) {
-				if (data.output)
-					output.css('color', 'green').html("PASSED");
-				else
-					output.css('color', 'red').html("FAILED");
-			});
-			return;
-		}
+				var json = {
+	            		language: langid,
+	            		code: code,
+						homework: hw
+	        	};
 
-		var code = $('#code').val();
-        	var json = {
-            		language: langid,
-            		code: code,
-        	};
+	        	console.log(json);
 
-        	console.log(json);
+	        	$.post("/compile", json, function(data, error) {
+					if (data.output) output.css('color', 'green').html("PASSED");
+					else output.css('color', 'red').html("FAILED");
 
-        	$.post("/compile", json, function(data, error, xhr) {
-			//output.html(data.output);
-			if (data.output)
-				output.css('color', 'green').html("PASSED");
-			else
-				output.css('color', 'red').html("FAILED");
-        	});
-    	});
-
+					if (error) {
+						$('#output').html(error);
+					}
+	        	});
+	    	});
     	</script>
 </body>
 

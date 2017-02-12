@@ -47,6 +47,8 @@ app.post('/compile', bruteforce.prevent, function(req, res) {
     var language = req.body.language;
     var code = req.body.code;
 
+
+
     if (langauge == 'written') {
         console.log('written homework submitted')
         res.send({output: 'PASSED', })
