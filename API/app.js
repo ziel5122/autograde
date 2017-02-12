@@ -58,10 +58,16 @@ app.post('/compile', bruteforce.prevent, function(req, res) {
     });
     */
 
+    if (langauge == 'written') {
+        console.log('written homework submitted')
+    }
+
+    /*
     var folder = 'temp/' + random(10); //folder in which the temporary folder will be saved
     var path = __dirname + "/"; //current working path
     var vm_name = 'virtual_machine'; //name of virtual machine that we want to execute
     var timeout_value = 20; //Timeout Value, In Seconds
+    */
 
     /*
     //details of this are present in DockerSandbox.js
@@ -80,6 +86,7 @@ app.post('/compile', bruteforce.prevent, function(req, res) {
     );
     */
 
+    /*
     var sandboxType = new sandBoxMin(
         timeout_value,
         folder,
@@ -95,6 +102,7 @@ app.post('/compile', bruteforce.prevent, function(req, res) {
         //res.send({output:data, langid: language,code:code, errors:err, time:exec_time});
     	res.send({output:1, langid:language, code:code, errors:err, time:exec_time});
 	});
+    */
 });
 
 app.post('/written', bruteforce.prevent, function(req, res) {
