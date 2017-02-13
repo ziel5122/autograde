@@ -6,8 +6,11 @@
 */
 
 //packages
+var exec = require('child_process').exec;
+var jsdiff = require('diff');
 var express = require('express');
 var ExpressBrute = require('express-brute');
+var fs = require('fs');
 
 //local js files
 var arr = require('./compilers');
@@ -37,26 +40,38 @@ app.all('*', function(req, res, next) {
     next();
 });
 
+function gradeWritten(answers, hw_num, wdir, folder) {
+    exec(wdir + '../solutions/hw' + hw_num + '/written.sh ' + wdir + folder + '/file', (error, stdout, stderr) => {
+	return {output: stdout};
+    });
+}
+
 function random(size) {
     //returns a crypto-safe random
     return require("crypto").randomBytes(size).toString('hex');
 }
 
 
-app.post('/compile', bruteforce.prevent, function(req, res) {
-    var language = req.body.language;
-    var code = req.body.code;
+app.post('/grade', bruteforce.prevent, function(req, res) {
+    var type = req.body.type
+    var content = req.body.content;
+    var hw_num = req.body.hw_num;
+  
+    var wdir = __dirname + "/"; //current working path
+    var folder = 'temp/' + random(10); //folder in which the temporary file will be saved
+    
+    fs.writeFile(wdir + folder + '/file', content, (err) => {
+	if (err) {
+	     //console.error('error writing file: ' + err);
+	     //res.send({output: err});
+	}
+    });
 
-
-
-    if (langauge == 'written') {
-        console.log('written homework submitted')
-        res.send({output: 'PASSED', })
+    if (type == 'written') {
+	res.send(gradeWritten(hw_num, wdir, folder));
     }
 
     /*
-    var folder = 'temp/' + random(10); //folder in which the temporary folder will be saved
-    var path = __dirname + "/"; //current working path
     var vm_name = 'virtual_machine'; //name of virtual machine that we want to execute
     var timeout_value = 20; //Timeout Value, In Seconds
     */

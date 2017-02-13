@@ -38,28 +38,32 @@
     	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
     	<script type="text/javascript">
-			var hw = 'hw2';
+		var hw_num = 2;
 
-			//send user code to script
+		//send user code to script
 	    	$('#submit').on('click', function() {
-				var langid = $('#hw_type').val();
-				var code = $('#code').val();
+			var langid = $('#hw_type').val();
+			var code = $('#code').val();
 
-				var json = {
-	            		language: langid,
-	            		code: code,
-						homework: hw
-	        	};
+			var json = {
+            			type: langid,
+            			content: code,
+				hw_num: hw_num 
+        		};
 
 	        	console.log(json);
 
-	        	$.post("/compile", json, function(data, error) {
-					if (data.output) output.css('color', 'green').html("PASSED");
-					else output.css('color', 'red').html("FAILED");
+	        	$.post("/grade", json, function(data, error) {
+				if (data) { 
+					$('#output').css('color', 'green').html("PASSED"); 
+					return;
+				} else $('#output').css('color', 'red').html("FAILED");
+	
+				console.log(error);				
 
-					if (error) {
-						$('#output').html(error);
-					}
+				if (error) {
+					$('#output').html(error);
+				}
 	        	});
 	    	});
     	</script>
