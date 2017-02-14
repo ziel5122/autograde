@@ -6,6 +6,9 @@
         *Revised on: 30th June 2014 (Changed the way errors are logged on console, added language name into error messages)
 */
 
+var exec = require('child_process').exec
+var fs = require('fs');
+
 /**
          * @Constructor
          * @variable DockerSandbox
@@ -62,8 +65,6 @@ DockerSandbox.prototype.run = function(success) {
 */
 
 DockerSandbox.prototype.prepare = function(success) {
-    var exec = require('child_process').exec;
-    var fs = require('fs');
     var sandbox = this;
 
     exec("mkdir " + this.path + this.folder + " && cp " + this.path + "/Payload/* " + this.path + this.folder + "&& chmod 777 " + this.path + this.folder, function(st) {
@@ -105,8 +106,6 @@ DockerSandbox.prototype.prepare = function(success) {
 
 DockerSandbox.prototype.execute = function(success)
 {
-    var exec = require('child_process').exec;
-    var fs = require('fs');
     var myC = 0; //variable to enforce the timeout_value
     var sandbox = this;
 

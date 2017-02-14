@@ -4,6 +4,9 @@
     *Created: 9th Feb 2017
 */
 
+var exec = require('child_process').exec;
+var fs = require('fs');
+
 /**
     * @Constructor
     * @variable DockerSandboxMin
@@ -15,30 +18,16 @@
     * @param {String} xargs: extra arguments for compilation
 */
 
-var path = __dirname + "/";
-var vm_name = "virtual_machine";
+var DockerSandboxMin = function(vm_name, wdir, folder, hw_num, hw_type, content, timeout) {
+	this.vm_name = vm_name;
+	this.wdir = wdir;
+	this.folder = folder;
 
-var DockerSandboxMin = function(timeout, folder, lang, code, xargs) {
-    this.timeout = timeout;
-    this.path = path;
-    this.folder = folder;
-    this.vm_name = vm_name;
-    this.code = code;
-    this.lang = lang;
-    this.xargs = xargs;
+	this.hw_num = hw_num;
+	this.hw_type = hw_type;
+	this.content = content;	
 
-    switch (lang) {
-        case "C":
-            this.compiler = "gcc";
-            this.file = "file.c";
-            break;
-        case "bash":
-            this.compiler = "bash";
-            this.file = "file.sh";
-            break;
-    }
-
-    console.log(this.file);
+	this.timeout = timeout;
 }
 
 /**
@@ -55,16 +44,6 @@ DockerSandboxMin.prototype.run = function(success) {
     });
 }
 
-execHandler = function(error, stdout, stderr) {
-    if (error) {
-        console.error('exec error: ' + error);
-        process.exit(1);
-    } if (stdout)
-    	console.log('stdout: ' + stdout);
-    if (stderr)
-	console.log('stderr: ' + stderr);
-}
-
 /**
          * @function
          * @name DockerSandboxMin.prepare
@@ -78,40 +57,40 @@ execHandler = function(error, stdout, stderr) {
 */
 
 DockerSandboxMin.prototype.prepare = function(success) {
-    console.log('here');
+    console.log('\nPREPARING');
 
-    var exec = require('child_process').exec;
-    var fs = require('fs');
+	//make folder for user content
+	exec('mkdir ' + this.wdir + this.folder, (err) => {
+		if (err) console.error(err); //'error making directory ' + this.wdir + this.folder);
+		else {
+			console.log('* mkdir ' + this.wdir + this.folder);
 
-    //create the folder to copy 'code' into
-    exec('mkdir ' + this.path + this.folder, execHandler);
-    console.log('here');
+			//copy scripts to new folder
+			exec('cp ' + this.wdir + '/Payload/* ' + this.wdir + this.folder, (err) => {
+				if (err) console.error('error copying payload to new folder');
+				else {
+					console.log('* cp ' + this.wdir + '/Payload/* ' + this.wdir + this.folder);
 
-    //copy scripts to new folder
-    exec("cp " + this.path + "/Payload/* " + this.path + this.folder, execHandler);
+					//give all permission on new folder
+					exec('chmod 777 ' + this.wdir + this.folder, (err) => {
+						if (err) console.error('error changing permissions on ' + this.wdir + this.folder);
+						else {
+							console.log('* chmod 777 ' + this.wdir + this.folder);
 
-    //give all permissions on new folder
-    exec("chmod 777 " + this.path + this.folder, execHandler);
-
-    var stdin_data = ['dog', 'cat'];
-
-    fs.writeFile(this.path + this.folder + "/" + this.file, this.code, (error) => {
-        if (error) {
-            console.error('error writing file: ' + error);
-        } else {
-            console.log(this.lang + ' file was saved');
-            exec('chmod 777 ' + this.path + this.folder + '/' + this.file, execHandler);
-
-            fs.writeFile(this.path + this.folder+"/inputFile", this.stdin_data,function(err) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log("Input file was saved!");
-                    success();
-                }
-            });
-        }
-    });
+							//write content to file
+							fs.writeFile(this.wdir + this.folder + '/file', this.content, (err) => {
+								if (err) console.error('error writing user content file');
+								else {
+									console.log('* user content file saved');
+									success();
+								}
+							});
+						}
+					});
+				}
+			});
+		}
+	});
 }
 
 /**
