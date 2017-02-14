@@ -8,11 +8,11 @@
 	input, textarea {
     		display: inline-block;
 	}
-		
+
 	textarea {
-		
+
 	}
-	
+
 	.output {
 		font-family: monospace;
 	}
@@ -24,9 +24,10 @@
     	<br>
     	<br>
 	<select id="hw_type">
-		<option value="0">C</option>
-		<option value="2">Written</option>
-	</select>	
+		<option value="c">C</option>
+		<option value="bash">Bash</option>
+		<option value="written">Written</option>
+	</select>
 	<br>
 	<br>
     	<input type="button" value="Submit" id="submit">
@@ -37,39 +38,34 @@
     	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
     	<script type="text/javascript">
-    	
-	//COMPILE USER GIVEN CODE
-    	$('#submit').on('click', function() {
-		var output = $('#output');
+		var hw_num = 2;
 
-		var langid = $('#hw_type').val();
-		if (langid == 2) {
-			$.post("/written", function(data, error, xhr) {
-				if (data.output)
-					output.css('color', 'green').html("PASSED");
-				else
-					output.css('color', 'red').html("FAILED");
-			});
-			return;
-		}
-        	
-		var code = $('#code').val();
-        	var json = {
-            		language: langid,
-            		code: code,
-        	};
+		//send user code to script
+	    	$('#submit').on('click', function() {
+			var langid = $('#hw_type').val();
+			var code = $('#code').val();
 
-        	console.log(json);
+			var json = {
+            			type: langid,
+            			content: code,
+				hw_num: hw_num 
+        		};
 
-        	$.post("/compile", json, function(data, error, xhr) {
-			//output.html(data.output);
-			if (data.output)
-				output.css('color', 'green').html("PASSED");
-			else
-				output.css('color', 'red').html("FAILED");
-        	});
-    	});
+	        	console.log(json);
 
+	        	$.post("/grade", json, function(data, error) {
+				if (data) { 
+					$('#output').css('color', 'green').html("PASSED"); 
+					return;
+				} else $('#output').css('color', 'red').html("FAILED");
+	
+				console.log(error);				
+
+				if (error) {
+					$('#output').html(error);
+				}
+	        	});
+	    	});
     	</script>
 </body>
 

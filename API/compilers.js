@@ -1,7 +1,7 @@
 
 /*
 	This file stores the compiler/interpretor details that are provided to DockerSandbox.sh	by the app.js
-	The index is the key field, 
+	The index is the key field,
 	First column contains the compiler/interpretor that will be used for translation
 	Second column is the file name to use when storing the source code
 	Third column is optional, it contains the command to invoke the compiled program, it is used only for compilers
@@ -11,13 +11,15 @@
 	You can add more languages to this API by simply adding another row in this file along with installing it in your
 	Docker VM.
 
-	Author: Osman Ali 
+	Author: Osman Ali
 	Date: 3 - JUN - 2014
 	*Revised on: 30th June 2014 (Added Column number 4 to display the name of languages to console)
 */
 
 exports.compilerArray= [ ["\'gcc -o /usercode/a.out\'", "file.c", "/usercode/a.out", "C", ""],
 			 ["/bin/bash", "file.sh", " ", "Bash", ""] ];
+
+//setup for other langauages
 /*
 			  ["python","file.py","","Python",""],
 			 ["ruby","file.rb","","Ruby",""],
