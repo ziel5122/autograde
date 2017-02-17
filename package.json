@@ -7,6 +7,7 @@
     "express-brute":"*",
     "exports": "*"
   },
-  "author": "Osman Ali",
-  "license": "MIT"
+  "scripts": {
+    "start": "node src/app.js"
+  }
 }

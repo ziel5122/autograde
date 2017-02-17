@@ -19,15 +19,10 @@ var sandBoxMin = require('./DockerSandboxMin');
 
 //create server on port (port)
 var app = express.createServer();
-var port = 80;
+var port = process.env.PORT || 3000;
 
 var store = new ExpressBrute.MemoryStore(); // stores state locally, don't use this in production
-var bruteforce = new ExpressBrute(store,
-    {
-        freeRetries: 50,
-        lifetime: 3600
-    }
-);
+var bruteforce = new ExpressBrute(store);
 
 app.use(express.static(__dirname));
 app.use(express.bodyParser());
@@ -47,15 +42,15 @@ function random(size) {
 
 
 app.post('/grade', bruteforce.prevent, function(req, res) {
-    var hw_type = req.body.type
-    var content = req.body.content;
-    var hw_num = req.body.hw_num;
+  var hw_type = req.body.type
+  var content = req.body.content;
+  var hw_num = req.body.hw_num;
 
-    var wdir = __dirname + "/"; //current working path
-    var folder = 'temp/' + random(10); //folder in which the temporary file will be saved
+  var wdir = __dirname + "/"; //current working path
+  var folder = 'temp/' + random(10); //folder in which the temporary file will be saved
 	var vm_name = 'virtual_machine';
 	var timeout = 20;
-    
+
 	var sandbox = new sandBoxMin(
 		vm_name,
 		wdir,
