@@ -1,5 +1,5 @@
 /*
-        *File: DockerSandbox.js
+        *File: DockerSandboxCB.js
         *Author: Osman Ali Mian/Asad Memon
         *Created: 3rd June 2014
         *Revised on: 25th June 2014 (Added folder mount permission and changed executing user to nobody using -u argument)
@@ -11,7 +11,7 @@ var fs = require('fs');
 
 /**
          * @Constructor
-         * @variable DockerSandbox
+         * @variable DockerSandboxCB
          * @description This constructor stores all the arguments needed to prepare and execute a Docker Sandbox
          * @param {Number} timeout_value: The Time_out limit for code execution in Docker
          * @param {String} path: The current working directory where the current API folder is kept
@@ -23,7 +23,7 @@ var fs = require('fs');
          * @param {String} output_command: Used in case of compilers only, to execute the object code, send " " in case of interpretors
 */
 
-var DockerSandbox = function(timeout_value, path, folder, vm_name, compiler_name, file_name, code, output_command, languageName, e_arguments, stdin_data) {
+var DockerSandboxCB = function(timeout_value, path, folder, vm_name, compiler_name, file_name, code, output_command, languageName, e_arguments, stdin_data) {
     this.timeout_value = timeout_value;
     this.path = path;
     this.folder = folder;
@@ -39,12 +39,12 @@ var DockerSandbox = function(timeout_value, path, folder, vm_name, compiler_name
 
 /**
          * @function
-         * @name DockerSandbox.run
+         * @name DockerSandboxCB.run
          * @description Function that first prepares the Docker environment and then executes the Docker sandbox
          * @param {Function pointer} success ?????
 */
 
-DockerSandbox.prototype.run = function(success) {
+DockerSandboxCB.prototype.run = function(success) {
     var sandbox = this;
 
     this.prepare(function() {
@@ -54,7 +54,7 @@ DockerSandbox.prototype.run = function(success) {
 
 /*
          * @function
-         * @name DockerSandbox.prepare
+         * @name DockerSandboxCB.prepare
          * @description Function that creates a directory with the folder name already provided through constructor
          * and then copies contents of folder named Payload to the created folder, this newly created folder will be mounted
          * on the Docker Container. A file with the name specified in file_name variable of this class is created and all the
@@ -64,7 +64,7 @@ DockerSandbox.prototype.run = function(success) {
          * @param {Function pointer} success ?????
 */
 
-DockerSandbox.prototype.prepare = function(success) {
+DockerSandboxCB.prototype.prepare = function(success) {
     var sandbox = this;
 
     exec("mkdir " + this.path + this.folder + " && cp " + this.path + "/Payload/* " + this.path + this.folder + "&& chmod 777 " + this.path + this.folder, function(st) {
@@ -90,9 +90,9 @@ DockerSandbox.prototype.prepare = function(success) {
 
 /*
          * @function
-         * @name DockerSandbox.execute
-         * @precondition: DockerSandbox.prepare() has successfully completed
-         * @description: This function takes the newly created folder prepared by DockerSandbox.prepare() and spawns a Docker container
+         * @name DockerSandboxCB.execute
+         * @precondition: DockerSandboxCB.prepare() has successfully completed
+         * @description: This function takes the newly created folder prepared by DockerSandboxCB.prepare() and spawns a Docker container
          * with the folder mounted inside the container with the name '/usercode/' and calls the script.sh file present in that folder
          * to carry out the compilation. The Sandbox is spawned ASYNCHRONOUSLY and is supervised for a timeout limit specified in timeout_limit
          * variable in this class. This function keeps checking for the file "Completed" until the file is created by script.sh or the timeout occurs
@@ -104,7 +104,7 @@ DockerSandbox.prototype.prepare = function(success) {
          * @param {Function pointer} success ?????
 */
 
-DockerSandbox.prototype.execute = function(success)
+DockerSandboxCB.prototype.execute = function(success)
 {
     var myC = 0; //variable to enforce the timeout_value
     var sandbox = this;
@@ -189,4 +189,4 @@ DockerSandbox.prototype.execute = function(success)
 
 }
 
-module.exports = DockerSandbox;
+module.exports = DockerSandboxCB;

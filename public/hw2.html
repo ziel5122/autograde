@@ -38,33 +38,35 @@
     	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
     	<script type="text/javascript">
-		var hw_num = 2;
+				var hw_num = 2;
+				var class_code = 'cst334';
 
-		//send user code to script
-	    	$('#submit').on('click', function() {
-			var langid = $('#hw_type').val();
-			var code = $('#code').val();
+				//send user code to script
+	    	$('#submit').on('click', () => {
+				var langid = $('#hw_type').val();
+				var code = $('#code').val();
 
-			var json = {
-            			type: langid,
-            			content: code,
-				hw_num: hw_num 
-        		};
+				var json = {
+        	type: langid,
+          content: code,
+					hw_num: hw_num,
+					class_code: class_code
+        };
 
-	        	console.log(json);
+	      console.log(json);
 
-	        	$.post("/grade", json, function(data, error) {
-				if (data) { 
-					$('#output').css('color', 'green').html("PASSED"); 
-					return;
-				} else $('#output').css('color', 'red').html("FAILED");
-	
-				console.log(error);				
+	      $.post("/grade", json, (data, error) => {
+					if (data) {
+						$('#output').css('color', 'green').html("PASSED");
+						return;
+					} else $('#output').css('color', 'red').html("FAILED");
 
-				if (error) {
-					$('#output').html(error);
-				}
-	        	});
+					console.log(error);
+
+					if (error) {
+						$('#output').html(error);
+					}
+	       });
 	    	});
     	</script>
 </body>

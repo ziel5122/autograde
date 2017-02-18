@@ -1,5 +1,5 @@
 /*
-    *File: DockerSandboxMin.js
+    *File: DockerSandbox.js
     *Author: Austin Zielinski
     *Created: 9th Feb 2017
 */
@@ -9,37 +9,40 @@ var fs = require('fs');
 
 /**
     * @Constructor
-    * @variable DockerSandboxMin
+    * @variable DockerSandbox
     * @description
-    * @param {Number} timeout: timeout limit for code execution in Docker
-    * @param {String} folder: name of folder that would be mounted/shared with Docker
-    * @param {String} compiler: compiler/interpreter to use
-    * @param {String} code: the actual code
-    * @param {String} xargs: extra arguments for compilation
+		* @param {String} vm_name: name of the Docker virtual machine
+		* @param {String} wdir: folder containing app.js
+		* @param {String} folder: folder for user content and scripts
+		* @param {int} hw_num: homework number
+		* @param {String} hw_type: currently supports C, bash, written (TODO: R)
+		* @param {String} content: code or text submitted by user
+    * @param {Number} timeout: timeout limit (seconds) for code execution in Docker
 */
 
-var DockerSandboxMin = function(vm_name, wdir, folder, hw_num, hw_type, content, timeout) {
+var DockerSandbox = function(vm_name, wdir, folder, class_code, hw_num, hw_type, content, timeout) {
 	this.vm_name = vm_name;
 	this.wdir = wdir;
 	this.folder = folder;
 
+	this.class_code = class_code;
 	this.hw_num = hw_num;
 	this.hw_type = hw_type;
-	this.content = content;	
+	this.content = content;
 
 	this.timeout = timeout;
 }
 
 /**
     * @function
-    * @name DockerSandboxMin.run
+    * @name DockerSandbox.run
     * @description Function that prepares the Docker environment then executes
     * @param {Function pointer} success ?????
 */
 
-DockerSandboxMin.prototype.run = function(success) {
+DockerSandbox.prototype.run = function(success) {
     var sandbox = this;
-    
+
     this.prepare(function() {
         sandbox.execute(success);
     });
@@ -47,7 +50,7 @@ DockerSandboxMin.prototype.run = function(success) {
 
 /**
          * @function
-         * @name DockerSandboxMin.prepare
+         * @name DockerSandbox.prepare
          * @description Function that creates a directory with the folder name already provided through constructor
          * and then copies contents of folder named Payload to the created folder, this newly created folder will be mounted
          * on the Docker Container. A file with the name specified in file_name variable of this class is created and all the
@@ -57,32 +60,44 @@ DockerSandboxMin.prototype.run = function(success) {
          * @param {Function pointer} success ?????
 */
 
-DockerSandboxMin.prototype.prepare = function(success) {
-    console.log('\nPREPARING');
+DockerSandbox.prototype.prepare = function(success) {
+	var cmd;
+
+	console.log('\nPREPARING');
 
 	//make folder for user content
 	exec('mkdir ' + this.wdir + this.folder, (err) => {
-		if (err) console.error(err); //'error making directory ' + this.wdir + this.folder);
-		else {
-			console.log('* mkdir ' + this.wdir + this.folder);
+		console.log('* mkdir ' + this.wdir + this.folder);
 
+		if (err) console.error(err); //error making directory this.wdir/this.folder
+		else {
 			//copy scripts to new folder
-			exec('cp ' + this.wdir + '../solutions/hw' + this.hw_num + '/' + this.hw_type + '.sh ' + this.wdir + this.folder + ' && cp ' + this.wdir + 'Payload/wrapper.sh ' + this.wdir + this.folder, (err) => {
+			cmd = 'cp ' + this.wdir + '../../solutions/' + this.class_code + '/hw' + this.hw_num + '/' + this.hw_type + '.sh ' + this.wdir + this.folder +
+				' && cp ' + this.wdir + '../scripts/wrapper.sh ' + this.wdir + this.folder;
+			exec(cmd, (err) => {
+				console.log('* ' + cmd);
+
 				if (err) console.error('error copying payload to new folder');
 				else {
-					console.log('* cp ' + this.wdir + '../solutions/hw' + this.hw_num + '/' + this.hw_type + '.sh ' + this.wdir + this.folder + ' && cp ' + this.wdir + 'Payload/wrapper.sh ' + this.wdir + this.folder);
-
 					//give all permission on new folder
-					exec('chmod 777 ' + this.wdir + this.folder, (err) => {
+					cmd = 'chmod 777 ' + this.wdir + this.folder;
+					exec(cmd, (err) => {
+						console.log('* ' + cmd);
+
 						if (err) console.error('error changing permissions on ' + this.wdir + this.folder);
 						else {
-							console.log('* chmod 777 ' + this.wdir + this.folder);
-
 							//write content to file
+							var file_name = ((hw_type) => {
+								switch(hw_type) {
+									case 'C': return 'file.c';
+									case 'R': return 'file.R';
+									default: return 'file';
+								}
+							})(this.hw_type);
 							fs.writeFile(this.wdir + this.folder + '/file.c', this.content, (err) => {
-								if (err) console.error('error writing user content file');
+								if (err) console.error('error writing user content to file');
 								else {
-									console.log('* user content file saved');
+									console.log('* ' + this.wdir + this.folder + file_name + 'saved');
 									success();
 								}
 							});
@@ -96,7 +111,7 @@ DockerSandboxMin.prototype.prepare = function(success) {
 
 /**
          * @function
-         * @name DockerSandboxMin.execute
+         * @name DockerSandbox.execute
          * @precondition: DockerSandbox.prepare() has successfully completed
          * @description: This function takes the newly created folder prepared by DockerSandbox.prepare() and spawns a Docker container
          * with the folder mounted inside the container with the name '/usercode/' and calls the script.sh file present in that folder
@@ -110,7 +125,7 @@ DockerSandboxMin.prototype.prepare = function(success) {
          * @param {Function pointer} success ?????
 */
 
-DockerSandboxMin.prototype.execute = function(success) {
+DockerSandbox.prototype.execute = function(success) {
     var myC = 0; //variable for timeout
     var sandbox = this;
 
@@ -195,4 +210,4 @@ DockerSandboxMin.prototype.execute = function(success) {
     }, 1000);
 }
 
-module.exports = DockerSandboxMin;
+module.exports = DockerSandbox;
