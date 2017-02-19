@@ -1,6 +1,10 @@
 {
   "name": "autograde",
   "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ziel5122/autograde.git"
+  },
   "main": "src/js/app.js",
   "dependencies": {
     "body-parser": "^1.16.1",
