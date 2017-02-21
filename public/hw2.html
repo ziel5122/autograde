@@ -57,15 +57,9 @@
 
 	      $.post("/grade", json, (data, error) => {
 					if (data) {
-						$('#output').css('color', 'green').html("PASSED");
+						$('#output').css('color', 'green').html((data.output ? data.output : data.errors) + '\n' + data.time);
 						return;
-					} else $('#output').css('color', 'red').html("FAILED");
-
-					console.log(error);
-
-					if (error) {
-						$('#output').html(error);
-					}
+					} else $('#output').css('color', 'red').html(error);
 	       });
 	    	});
     	</script>

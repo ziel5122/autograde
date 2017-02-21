@@ -29,6 +29,7 @@ var DockerSandbox = function(vm_name, wdir, folder, class_code, hw_num, hw_type,
 	this.hw_num = hw_num;
 	this.hw_type = hw_type;
 	this.content = content;
+	this.file_name = '';
 
 	this.timeout = timeout;
 }
@@ -51,19 +52,18 @@ DockerSandbox.prototype.run = function(success) {
 /**
          * @function
          * @name DockerSandbox.prepare
-         * @description Function that creates a directory with the folder name already provided through constructor
-         * and then copies contents of folder named Payload to the created folder, this newly created folder will be mounted
-         * on the Docker Container. A file with the name specified in file_name variable of this class is created and all the
-         * code written in 'code' variable of this class is copied into this file.
-         * Summary: This function produces a folder that contains the source file and 2 scripts, this folder is mounted to our
-         * Docker container when we run it.
+         * @description function that does the following:
+				 	* makes a folder for user submission and scripts
+					* copies grading script and wrapper to folder
+					* changes permissions on the folder
+					* writes user content to a file
          * @param {Function pointer} success ?????
 */
 
 DockerSandbox.prototype.prepare = function(success) {
 	var cmd;
 
-	console.log('\nPREPARING');
+	console.log('\n*** PREPARING ***');
 
 	//make folder for user content
 	exec('mkdir ' + this.wdir + this.folder, (err) => {
@@ -87,17 +87,18 @@ DockerSandbox.prototype.prepare = function(success) {
 						if (err) console.error('error changing permissions on ' + this.wdir + this.folder);
 						else {
 							//write content to file
-							var file_name = ((hw_type) => {
+							this.file_name = ((hw_type) => {
 								switch(hw_type) {
-									case 'C': return 'file.c';
-									case 'R': return 'file.R';
+									case 'c': return 'file.c';
+									case 'r': return 'file.R';
 									default: return 'file';
 								}
 							})(this.hw_type);
-							fs.writeFile(this.wdir + this.folder + '/file.c', this.content, (err) => {
+							fs.writeFile(this.wdir + this.folder + '/' + this.file_name, this.content, (err) => {
 								if (err) console.error('error writing user content to file');
 								else {
-									console.log('* ' + this.wdir + this.folder + file_name + 'saved');
+									console.log('* ' + this.wdir + this.folder + '/' + this.file_name + ' saved');
+									console.log('*****************')
 									success();
 								}
 							});
@@ -126,88 +127,91 @@ DockerSandbox.prototype.prepare = function(success) {
 */
 
 DockerSandbox.prototype.execute = function(success) {
-    var myC = 0; //variable for timeout
-    var sandbox = this;
+	console.log('*** EXECUTING ***');
 
-    //statement to be executed
-    var st = this.wdir + 'DockerTimeout.sh ' + this.timeout +
-        's -e \'NODE_PATH=/usr/local/lib/node_modules\' -i -t -v "' + this.wdir +
-        this.folder + '":/usercode ' + this.vm_name + ' /usercode/wrapper.sh /usercode/' + this.hw_type + '.sh /usercode/file.c'
+	var timer = 0; //variable for timeout
+  var sandbox = this;
 
-    //print satement to console
-    console.log(st);
+  //statement to be executed
+  var st = this.wdir + 'DockerTimeout.sh ' + this.timeout +
+  	's -e \'NODE_PATH=/usr/local/lib/node_modules\' -i -t -v "' + this.wdir +
+    this.folder + '":/usercode ' + this.vm_name + ' /usercode/wrapper.sh /usercode/' + this.hw_type + '.sh /usercode/' + this.file_name;
 
-    //execute the Docker; this is done ASYNCHRONOUSLY
-    exec(st);
-    console.log('-------------------------------');
+  //print satement to console
+  console.log('-------------------------------');
+  console.log(st);
 
-    //Check For File named "completed" after every 1 second
-    var intid = setInterval(function() {
-            //Displaying the checking message after 1 second interval, testing purposes only
-            console.log("Checking " + sandbox.wdir + sandbox.folder + ": for completion: " + myC);
-            myC = myC + 1;
+  //execute the Docker; this is done ASYNCHRONOUSLY
+  exec(st, (err) => { if (err) console.error('error executing Docker') });
+  console.log('-------------------------------');
 
-            fs.readFile(sandbox.wdir + sandbox.folder + '/completed', 'utf8', function(err, data) {
-                //if file is not available yet and the file interval is not yet up carry on
-                if (err && myC < sandbox.timeout) {
-                    //console.log(err);
-                    return;
-                }
-                //if file is found simply display a message and proceed
-                else if (myC < sandbox.timeout) {
-                    console.log("DONE");
-                    //check for possible errors
-                    fs.readFile(sandbox.wdir + sandbox.folder + '/errors', 'utf8', function(err2, data2) {
-                    	if (!data2) data2 = "";
-                   		console.log("Error file: ");
-                   		console.log(data2);
+  //Check For File named "completed" after every 1 second
+  var intid = setInterval(function() {
+  	//Displaying the checking message after 1 second interval, testing purposes only
+  	console.log("Checking " + sandbox.wdir + sandbox.folder + ": for completion: " + timer);
+    timer += 1;
 
-                   		console.log("Main File:");
-                   		console.log(data);
+  	fs.readFile(sandbox.wdir + sandbox.folder + '/completed', 'utf8', function(err, data) {
+    	//if file is not available yet and the file interval is not yet up carry on
+      if (err && timer < sandbox.timeout) {
+      	//console.log(err);
+        return;
+      }
+      //if file is found simply display a message and proceed
+      else if (timer < sandbox.timeout) {
+      	console.log("DONE");
+        //check for possible errors
+        fs.readFile(sandbox.wdir + sandbox.folder + '/errors', 'utf8', function(err2, data2) {
+        	if (!data2) data2 = "";
+          console.log("Error file: ");
+          console.log(data2);
 
-            			//var lines = data.toString().split('*-COMPILEBOX::ENDOFOUTPUT-*');
-            			var lines = data.toString().split('EXECUTION COMPLETE');
-            			data = lines[0];
-            			var time = lines[1];
+          console.log("Main File:");
+          console.log(data);
 
-            			console.log("Time: ");
-            			console.log(time);
+          //var lines = data.toString().split('*-COMPILEBOX::ENDOFOUTPUT-*');
+          var lines = data.toString().split('EXECUTION COMPLETE');
+          data = lines[0];
+          var time = lines[1];
 
-           	           	success(data,time,data2);
-                    });
+          console.log("Time: ");
+          console.log(time);
 
-                    //return the data to the calling function
-                }
-                //if time is up. Save an error message to the data variable
-                else {
-                	//Since the time is up, we take the partial output and return it.
-                	fs.readFile(sandbox.wdir + sandbox.folder + '/logfile.txt', 'utf8', function(err, data) {
-                		if (!data) data = "";
-                        data += "\nExecution Timed Out";
-                        console.log("Timed Out: " + sandbox.folder);
-                        fs.readFile(sandbox.wdir + sandbox.folder + '/errors', 'utf8', function(err2, data2) {
-    	                	if(!data2) data2 = "";
-
-            				var lines = data.toString().split('*---*');
-            				data = lines[0];
-            				var time = lines[1];
-
-            				console.log("Time: ");
-            				console.log(time);
-
-    	                   	success(data, data2);
-    	                });
-                	});
-                }
-
-            //now remove the temporary directory
-            console.log("ATTEMPTING TO REMOVE: " + sandbox.folder);
-            console.log("------------------------------")
-            exec("rm -r " + sandbox.folder);
-
-            clearInterval(intid);
+          success(data, time, data2);
         });
-    }, 1000);
+
+        //return the data to the calling function
+			}
+	    //if time is up. Save an error message to the data variable
+      else {
+      	//Since the time is up, we take the partial output and return it.
+        fs.readFile(sandbox.wdir + sandbox.folder + '/logfile.txt', 'utf8', function(err, data) {
+	        if (!data) data = "";
+	        data += "\nExecution Timed Out";
+	        console.log("Timed Out: " + sandbox.folder);
+	        fs.readFile(sandbox.wdir + sandbox.folder + '/errors', 'utf8', function(err2, data2) {
+		    	  if(!data2) data2 = "";
+
+		        var lines = data.toString().split('*---*');
+		        data = lines[0];
+		        var time = lines[1];
+
+		        console.log("Time: ");
+		        console.log(time);
+
+		    	  success(data, data2);
+    			});
+    		});
+  		}
+
+	  	//now remove the temporary directory
+	  	console.log("ATTEMPTING TO REMOVE: " + sandbox.folder);
+	  	console.log("------------------------------");
+	  	exec("rm -r " + sandbox.folder);
+
+	  	clearInterval(intid);
+		});
+	}, 1000);
 }
 
 module.exports = DockerSandbox;
