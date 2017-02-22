@@ -133,7 +133,7 @@ DockerSandbox.prototype.execute = function(success) {
   var sandbox = this;
 
   //statement to be executed
-  var st = this.wdir + 'DockerTimeout.sh ' + this.timeout +
+  var st = this.wdir + '../scripts/DockerTimeout.sh ' + this.timeout +
   	's -e \'NODE_PATH=/usr/local/lib/node_modules\' -i -t -v "' + this.wdir +
     this.folder + '":/usercode ' + this.vm_name + ' /usercode/wrapper.sh /usercode/' + this.hw_type + '.sh /usercode/' + this.file_name;
 
@@ -142,7 +142,7 @@ DockerSandbox.prototype.execute = function(success) {
   console.log(st);
 
   //execute the Docker; this is done ASYNCHRONOUSLY
-  exec(st, (err) => { if (err) console.error('error executing Docker') });
+  exec(st, (err) => { if (err) console.error(err); console.log('THIS ERROR') });
   console.log('-------------------------------');
 
   //Check For File named "completed" after every 1 second
@@ -184,7 +184,7 @@ DockerSandbox.prototype.execute = function(success) {
 			}
 	    //if time is up. Save an error message to the data variable
       else {
-      	//Since the time is up, we take the partial output and return it.
+      	//Since the time is up, we take the partial output and return it.t
         fs.readFile(sandbox.wdir + sandbox.folder + '/logfile.txt', 'utf8', function(err, data) {
 	        if (!data) data = "";
 	        data += "\nExecution Timed Out";
@@ -207,7 +207,7 @@ DockerSandbox.prototype.execute = function(success) {
 	  	//now remove the temporary directory
 	  	console.log("ATTEMPTING TO REMOVE: " + sandbox.folder);
 	  	console.log("------------------------------");
-	  	exec("rm -r " + sandbox.folder);
+	  	exec("rm -r " + sandbox.wdir + sandbox.folder);
 
 	  	clearInterval(intid);
 		});

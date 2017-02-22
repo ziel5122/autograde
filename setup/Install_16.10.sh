@@ -21,9 +21,9 @@ echo "NodeJS setup Complete"
 ###########################
 # Start Docker
 ###########################
-chmod 777 ../API/DockerTimeout.sh
-chmod 777 ../API/Payload/script.sh
-chmod 777 ../API/Payload/javaRunner.sh
+chmod 777 ../src/scripts/DockerTimeout.sh
+chmod 777 ../src/scripts/wrapper.sh
+chmod 777 ../solutions/*/*/*
 chmod 777 UpdateDocker.sh
 
 service docker.io restart

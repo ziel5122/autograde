@@ -49,9 +49,9 @@ app.post('/grade', bruteforce.prevent, function(req, res) {
   var class_code = req.body.class_code;
 
   var wdir = __dirname + "/"; //current working path
-  var folder = '../temp/' + random(10); //folder in which the temporary file will be saved
+  var folder = '../../temp/' + random(10); //folder in which the temporary file will be saved
 	var vm_name = 'virtual_machine';
-	var timeout = 20;
+	var timeout = 200;
 
 	var sandbox = new sandBox(
 		vm_name,
