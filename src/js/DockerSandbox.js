@@ -142,7 +142,7 @@ DockerSandbox.prototype.execute = function(success) {
   console.log(st);
 
   //execute the Docker; this is done ASYNCHRONOUSLY
-  exec(st, (err) => { if (err) console.error(err); console.log('THIS ERROR') });
+  exec(st, (err) => { if (err) { console.error(err); console.log('THIS ERROR') } });
   console.log('-------------------------------');
 
   //Check For File named "completed" after every 1 second
@@ -205,9 +205,9 @@ DockerSandbox.prototype.execute = function(success) {
   		}
 
 	  	//now remove the temporary directory
-	  	console.log("ATTEMPTING TO REMOVE: " + sandbox.folder);
+	  	console.log("ATTEMPTING TO REMOVE: " + sandbox.wdir + sandbox.folder);
 	  	console.log("------------------------------");
-	  	exec("rm -r " + sandbox.wdir + sandbox.folder);
+	  	//exec("rm -r " + sandbox.wdir + sandbox.folder);
 
 	  	clearInterval(intid);
 		});

@@ -1,0 +1,43 @@
+bin
+boot
+dev
+etc
+home
+lib
+lib64
+media
+mnt
+opt
+proc
+root
+run
+sbin
+srv
+sys
+tmp
+usercode
+usr
+var
+/
+total 68
+drwxr-xr-x.   2 root root 4096 Jun  7  2014 bin
+drwxr-xr-x.   2 root root 4096 Apr 10  2014 boot
+drwxr-xr-x.   5 root root  380 Feb 22 09:19 dev
+drwxr-xr-x.  42 root root 4096 Feb 22 09:19 etc
+drwxr-xr-x.   2 root root 4096 Apr 10  2014 home
+drwxr-xr-x.  11 root root 4096 Feb  3 01:07 lib
+drwxr-xr-x.   2 root root 4096 Jun  7  2014 lib64
+drwxr-xr-x.   2 root root 4096 Jun  7  2014 media
+drwxr-xr-x.   2 root root 4096 Apr 10  2014 mnt
+drwxr-xr-x.   2 root root 4096 Jun  7  2014 opt
+dr-xr-xr-x. 162 root root    0 Feb 22 09:19 proc
+drwx------.   2 root root 4096 Jun  7  2014 root
+drwxr-xr-x.   7 root root 4096 Jun  7  2014 run
+drwxr-xr-x.   2 root root 4096 Jun  7  2014 sbin
+drwxr-xr-x.   2 root root 4096 Jun  7  2014 srv
+drwxr-xr-x   13 root root    0 Feb 22 08:19 sys
+drwxrwxrwt.   2 root root 4096 Feb 22 09:19 tmp
+drwxrwxrwx.   2 root root 4096 Feb 22 09:19 usercode
+drwxr-xr-x.  10 root root 4096 Jun  7  2014 usr
+drwxr-xr-x.  11 root root 4096 Jun  7  2014 var
+msh> msh> msh> msh> EXECUTION COMPLETE .59

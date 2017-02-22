@@ -1,0 +1,4 @@
+/usercode/file.c: In function 'main':
+/usercode/file.c:122:11: warning: too many arguments for format [-Wformat-extra-args]
+           printf("msh: cd: bad path\n", path);
+           ^
