@@ -1,0 +1,23 @@
+#!/bin/bash
+
+gcc -o file $1
+
+mkdir temp
+
+./file << LIST
+pwd
+ls -l
+cd temp
+pwd
+exit
+LIST
+
+echo
+echo BREAK
+echo
+
+./file << LIST
+sort < temp.txt > temp-sorted.txt
+ls -l >< foo.txt
+exit
+LIST

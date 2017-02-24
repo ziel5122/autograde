@@ -72,8 +72,7 @@ DockerSandbox.prototype.prepare = function(success) {
 		if (err) console.error(err); //error making directory this.wdir/this.folder
 		else {
 			//copy scripts to new folder
-			cmd = 'cp ' + this.wdir + '../../solutions/' + this.class_code + '/hw' + this.hw_num + '/' + this.hw_type + '.sh ' + this.wdir + this.folder +
-				' && cp ' + this.wdir + '../scripts/wrapper.sh ' + this.wdir + this.folder;
+			cmd = 'cp -r ' + this.wdir + '../../solutions/' + this.class_code + '/hw' + this.hw_num + '/* ' + this.wdir + this.folder + ' && cp ' + this.wdir + '../scripts/wrapper.sh ' + this.wdir + this.folder;
 			exec(cmd, (err) => {
 				console.log('* ' + cmd);
 
@@ -135,7 +134,7 @@ DockerSandbox.prototype.execute = function(success) {
   //statement to be executed
   var st = this.wdir + '../scripts/DockerTimeout.sh ' + this.timeout +
   	's -e \'NODE_PATH=/usr/local/lib/node_modules\' -i -t -v "' + this.wdir +
-    this.folder + '":/usercode ' + this.vm_name + ' /usercode/wrapper.sh /usercode/' + this.hw_type + '.sh /usercode/' + this.file_name;
+    this.folder + '":/usercode ' + this.vm_name + ' /usercode/wrapper.sh /usercode/' + this.hw_type + '.test /usercode/' + this.file_name;
 
   //print satement to console
   console.log('-------------------------------');
