@@ -1,0 +1,8 @@
+ls -l > temp.txt
+sort < temp.txt
+cd home
+pwd
+cd ..
+sort < temp.txt > sorted-temp.txt
+ls -l >< temp.txt
+exit

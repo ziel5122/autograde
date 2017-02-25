@@ -1,0 +1,13 @@
+sort < temp.txt
+cd home
+pwd
+cd ..
+sort < temp.txt > sorted-temp.txt
+ls -l >< temp.txt
+exit
+total 40
+drwxrwxr-x 2 austin austin  4096 Feb 23 23:00 hw2
+drwxrwxr-x 2 austin austin  4096 Feb 18 16:59 hw3
+drwxrwxr-x 2 austin austin  4096 Feb 24 17:51 hw5
+-rwxrwxr-x 1 austin austin 14184 Feb 24 17:59 msh
+-rw-rw-r-- 1 austin austin  6691 Feb 24 00:55 msh.c

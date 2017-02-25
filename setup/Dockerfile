@@ -3,7 +3,7 @@
 # Based on Ubuntu
 ############################################################
 
-FROM chug/ubuntu14.04x64 
+FROM chug/ubuntu14.04x64
 MAINTAINER ASAD MEMON, OSMAN ALI
 
 # Update the repository sources list
@@ -15,3 +15,6 @@ RUN apt-get install -y gcc
 
 #Install bc to calculate runtime
 RUN apt-get install -y bc
+
+#Install expect to run expect commands
+RUN apt-get install -y expect

@@ -1,20 +1,20 @@
-#!/bin/bash
+#!/usr/bin/expect
 
-gcc -o file $1
+exec gcc -o file usercode/file.c
+exec ./file
 
-#1> easy.txt
+#expect "*msh>*"
+#send "ls -l > temp.txt"
 
-./file << LIST
-ls -l > temp.txt
-diff temp.txt usercode/temp.sol
-sort < temp.txt
-cd home
-pwd
-cd ..
-sort < temp.txt > sorted-temp.txt
-diff sorted-temp.txt usercode/sorted-temp.sol
-ls -l >< temp.txt
-exit
-LIST
+#expect "*msh>*"
+#send "cat temp.txt"
+
+#diff temp.txt usercode/temp.sol
+
+send "exit"
+
+#diff sorted-temp.txt usercode/sorted-temp.sol
+
+#./file < /usercode/c.txt
 
 echo PASSED

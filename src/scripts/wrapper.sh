@@ -19,8 +19,7 @@ END=$(date +%s.%2N)
 #calculate runtime
 runtime=$(echo "$END - $START" | bc)
 
-echo "EXECUTION COMPLETE" $runtime 
+echo "EXECUTION COMPLETE" $runtime
 
 #change name of logfile so NodeJS can find it
 mv /usercode/logfile.txt /usercode/completed
-
