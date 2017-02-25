@@ -6,33 +6,13 @@ gcc -o file $1
 
 ./file << LIST
 ls -l > temp.txt
-diff temp.txt temp.sol
-exit
-LIST
-
-./file << LIST
+diff temp.txt usercode/temp.sol
 sort < temp.txt
-exit
-
-./file << LIST
 cd home
 pwd
 cd ..
-exit
-LIST
-
-#1> /dev/tty
-#diff easy.txt easy.sol
-
-#1> hard.txt
-
-./file << LIST
 sort < temp.txt > sorted-temp.txt
-diff sorted-temp.txt sorted-temp.sol
-exit
-LIST
-
-./file << LIST
+diff sorted-temp.txt usercode/sorted-temp.sol
 ls -l >< temp.txt
 exit
 LIST
