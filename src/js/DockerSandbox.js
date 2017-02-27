@@ -134,7 +134,7 @@ DockerSandbox.prototype.execute = function(success) {
   //statement to be executed
   var st = this.wdir + '../scripts/DockerTimeout.sh ' + this.timeout +
   	's -e \'NODE_PATH=/usr/local/lib/node_modules\' -i -t -v "' + this.wdir +
-    this.folder + '":/usercode ' + this.vm_name + ' /usercode/wrapper.sh /usercode/' + this.hw_type + '.test /usercode/' + this.file_name;
+    this.folder + '":/usercode ' + this.vm_name + ' /usercode/wrapper.sh /usercode/ex-bash /usercode/' + this.file_name;
 
   //print satement to console
   console.log('-------------------------------');
@@ -168,10 +168,13 @@ DockerSandbox.prototype.execute = function(success) {
           console.log("Main File:");
           console.log(data);
 
-          //var lines = data.toString().split('*-COMPILEBOX::ENDOFOUTPUT-*');
           var lines = data.toString().split('EXECUTION COMPLETE');
-          data = lines[0];
           var time = lines[1];
+	
+		  var check = 'Files /usercode/hw' + sandbox.hw_num + '.sol and /usercode/logfile2.txt are identical\n';
+		  console.log('lines[0]: ' + check);
+		  if (lines[0] == check) data = 'SUCCESS';
+		  else data = 'FAILURE'; 
 
           console.log("Time: ");
           console.log(time);
@@ -206,7 +209,7 @@ DockerSandbox.prototype.execute = function(success) {
 	  	//now remove the temporary directory
 	  	console.log("ATTEMPTING TO REMOVE: " + sandbox.wdir + sandbox.folder);
 	  	console.log("------------------------------");
-	  	//exec("rm -r " + sandbox.wdir + sandbox.folder);
+	  	exec("rm -r " + sandbox.wdir + sandbox.folder);
 
 	  	clearInterval(intid);
 		});
