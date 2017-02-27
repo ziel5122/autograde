@@ -1,0 +1,22 @@
+#!/usr/bin/expect
+
+log_file out.txt
+
+spawn ./msh5
+
+expect "msh> "
+send "ls  > temp.txt\n"
+expect "msh> "
+send "diff temp.txt temp.sol\n"
+expect "msh> "
+send "sort < temp.txt\n"
+expect "msh> "
+send "cd ..\n"
+expect "msh> "
+send "pwd\n"
+expect "msh> "
+send "sort < temp.txt > sorted-temp.txt\n"
+expect "msh> "
+send "sort < new.txt\n"
+expect "msh> "
+send "exit\n"
