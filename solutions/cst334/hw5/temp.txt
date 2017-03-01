@@ -1,8 +1,0 @@
-total 24
--rwxrwxrwx 1 austin austin  257 Feb 23 23:00 c.sh
--rwxrwxrwx 1 austin austin  281 Feb 25 01:02 c.test
--rwxrwxrwx 1 austin austin  108 Feb 24 17:52 c.txt
--rwxrwxrwx 1 austin austin 1044 Feb 24 01:05 easy.sol
--rwxrwxrwx 1 austin austin 1044 Feb 24 00:48 sorted-temp.sol
--rwxrwxrwx 1 austin austin 1044 Feb 24 00:59 temp.sol
--rw-rw-r-- 1 austin austin    0 Feb 26 21:47 temp.txt
