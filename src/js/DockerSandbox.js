@@ -134,7 +134,7 @@ DockerSandbox.prototype.execute = function(success) {
   //statement to be executed
   var st = this.wdir + '../scripts/DockerTimeout.sh ' + this.timeout +
   	's -e \'NODE_PATH=/usr/local/lib/node_modules\' -i -t -v "' + this.wdir +
-    this.folder + '":/usercode ' + this.vm_name + ' /usercode/wrapper.sh /usercode/ex-bash /usercode/' + this.file_name;
+    this.folder + '":/usercode ' + this.vm_name + ' /usercode/wrapper.sh /usercode/' + this.hw_type + '.sh /usercode/' + this.file_name;
 
   //print satement to console
   console.log('-------------------------------');
@@ -171,9 +171,8 @@ DockerSandbox.prototype.execute = function(success) {
           var lines = data.toString().split('EXECUTION COMPLETE');
           var time = lines[1];
 	
-		  var check = 'Files /usercode/hw' + sandbox.hw_num + '.sol and /usercode/logfile2.txt are identical\n';
-		  console.log('lines[0]: ' + check);
-		  if (lines[0] == check) data = 'SUCCESS';
+		  //console.log('lines[0]: ' + check);
+		  if (lines[0] == "" && data2 == "") data = 'SUCCESS';
 		  else data = 'FAILURE'; 
 
           console.log("Time: ");
@@ -186,7 +185,7 @@ DockerSandbox.prototype.execute = function(success) {
 			}
 	    //if time is up. Save an error message to the data variable
       else {
-      	//Since the time is up, we take the partial output and return it.t
+      	//Since the time is up, we take the partial output and return it.
         fs.readFile(sandbox.wdir + sandbox.folder + '/logfile.txt', 'utf8', function(err, data) {
 	        if (!data) data = "";
 	        data += "\nExecution Timed Out";

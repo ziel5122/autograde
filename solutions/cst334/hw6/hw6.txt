@@ -1,0 +1,29 @@
+
+# Instructions: edit this file to provide your homework answers.
+# Problem numbers are shown on lines that begin with #@.
+#
+# Please put your solution to a problem after the line that gives
+# the number of that problem.  Each problem shows how your answer
+# should be given.
+#
+# Do not modify this file *except* to add lines as needed after each problem.
+# Blank lines are ignored.
+#
+# The homework will be graded by a script, so you will not get points
+# if you don't follow these formatting instructions.
+#
+
+# 1 Reading
+
+#@ 1a -- enter '1', '2', or '3'  (without the quotes)
+
+#@ 1b -- enter 'a' or 'b'
+
+#@ 1c -- enter 'y' or 'n'
+
+#@ 1d -- enter '1', '2', or '3'
+
+#@ 1e -- enter 'y' or 'n'
+
+
+
