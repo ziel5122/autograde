@@ -31,6 +31,7 @@ msh> cd ..
 msh> pwd
 /
 msh> sort < temp.txt > sorted-temp.txt
+msh> diff /usercode/sorted-temp.sol sorted-temp.txt
 msh> sort < new.txt
 msh: new.txt: No such file or directory
 msh> 
