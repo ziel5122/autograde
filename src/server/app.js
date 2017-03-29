@@ -7,13 +7,17 @@ import path from 'path';
 const port = process.env.PORT || 3000;
 
 const app = express();
-app.use(express.static(path.join(__dirname, '../../public')));
+app.use(express.static(path.resolve(__dirname, '../../public')));
 app.use(json());
 
 const bruteforce = new ExpressBrute(new MemoryStore());
 
-app.post('/grade', bruteforce.prevent, (req, res) => {
-  res.send('Success!');
+app.get('/test', (req, res) => {
+  res.send('Test successful!');
+});
+
+app.get('/testBrute', bruteforce.prevent, (req, res) => {
+  res.send('Brute test successful');
 });
 
 app.listen(port);

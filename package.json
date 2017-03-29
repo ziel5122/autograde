@@ -17,8 +17,10 @@
     "body-parser": "*",
     "express": "*",
     "express-brute": "*",
+    "material-ui": "^0.17.1",
     "react": "*",
-    "react-dom": "*"
+    "react-dom": "*",
+    "react-tap-event-plugin": "^2.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.7",
