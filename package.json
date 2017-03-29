@@ -10,26 +10,33 @@
   "main": "src/js/app.js",
   "scripts": {
     "start": "node src/js/app.js",
-    "watch": "webpack --watch"
+    "start-babel": "babel-node src/server/app.js",
+    "watch": "webpack --watch --display-error-details"
   },
   "dependencies": {
-    "body-parser": "^1.16.1",
-    "express": "4.15.2",
-    "express-brute": "^1.0.1",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "body-parser": "*",
+    "express": "*",
+    "express-brute": "*",
+    "react": "*",
+    "react-dom": "*"
   },
   "devDependencies": {
-    "babel-core": "^6.24.0",
-    "babel-loader": "^6.4.1",
-    "babel-preset-es2015": "^6.24.0",
-    "babel-preset-react": "^6.23.0",
-    "eslint": "^3.18.0",
-    "eslint-config-airbnb": "^14.1.0",
+    "autoprefixer": "^6.7.7",
+    "babel-cli": "^6.24.0",
+    "babel-core": "*",
+    "babel-loader": "*",
+    "babel-preset-es2015": "*",
+    "babel-preset-react": "*",
+    "css-loader": "^0.27.3",
+    "eslint-config-airbnb": "*",
+    "eslint-loader": "^1.7.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.3",
-    "react-router": "^4.0.0",
-    "webpack": "^2.3.2"
+    "file-loader": "^0.10.1",
+    "react-router": "*",
+    "style-loader": "^0.16.1",
+    "url-loader": "^0.5.8",
+    "webpack": "^1.13.3"
   }
 }

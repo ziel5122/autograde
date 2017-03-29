@@ -29,3 +29,5 @@ node_modules
 keys
 
 autograde.zip
+
+public/*-bundle.js
