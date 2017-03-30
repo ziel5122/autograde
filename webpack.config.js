@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
 
-nodeModules = {};
+const nodeModules = {};
 fs.readdirSync('node_modules')
   .filter(x => {
     return ['.bin'].indexOf(x) === -1;
@@ -108,9 +108,15 @@ const common = {
 
 const frontend = {
   name: 'frontend code; output to ./public',
-  entry: path.join(__dirname, 'src/index.jsx'),
+  entry: [
+    'webpack/hot/dev-server',
+    'webpack-hot-middleware/client',
+    path.resolve(__dirname, 'src/index.jsx')
+  ],
   output: {
-    filename: './public/frontend-bundle.js'
+    path: path.resolve(__dirname, 'public'),
+    filename: 'frontend-bundle.js',
+    publicPath: '/'
   },
   resolve: {
     extensions: ['', '.js', '.jsx']
@@ -119,9 +125,11 @@ const frontend = {
 
 const backend = {
   name: 'server code; output to ./public',
-  entry: path.join(__dirname, 'src/server/app.js'),
+  entry: path.resolve(__dirname, 'src/server/app.js'),
   output: {
-    filename: './public/server-bundle.js'
+    path: path.resolve(__dirname, 'public'),
+    filename: 'server-bundle.js',
+    publicPath: '/'
   },
   target: 'node',
   externals: nodeModules,
