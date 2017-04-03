@@ -6,10 +6,12 @@
   "author": "Glen Mailer <glen@stainlessed.co.uk>",
   "license": "MIT",
   "scripts": {
-    "start": "babel-node server.js",
+    "start": "babel-node src/server/server.js",
     "lint": "eslint ."
   },
   "dependencies": {
+    "auth0-lock": "^10.14.0",
+    "aws-sdk": "^2.35.0",
     "babel-cli": "^6.10.1",
     "babel-core": "^6.10.4",
     "babel-eslint": "^6.1.2",
@@ -25,16 +27,25 @@
     "css-loader": "^0.23.1",
     "css-modules-require-hook": "^4.0.1",
     "eslint": "^3.1.0",
-    "eslint-plugin-react": "^5.2.2",
     "express": "^4.14.0",
+    "express-jwt": "^5.1.0",
+    "jsonwebtoken": "^7.3.0",
+    "material-ui": "^0.17.1",
     "react": "^15.2.1",
+    "react-bootstrap": "^0.30.8",
     "react-dom": "^15.2.1",
     "react-redux": "^4.4.5",
+    "react-router": "^3.0.0",
+    "react-tap-event-plugin": "^2.0.1",
     "react-transform-hmr": "^1.0.4",
     "redux": "^3.5.2",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.12.1"
+  },
+  "devDependencies": {
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-react": "^6.10.3"
   }
 }
