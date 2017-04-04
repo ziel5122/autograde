@@ -3,9 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-  entry: {
-    js: path.resolve(__dirname, 'src', 'index.jsx'),
-  },
+  entry: path.resolve(__dirname, 'src', 'index'),
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js',
@@ -45,7 +43,28 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: 'style!css?importLoaders=1!postcss'
+        use: [
+          {
+            loader: 'style!css?importLoaders=1!postcss'
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: () => {
+                return [
+                  autoprefixer({
+                    browsers: [
+                      '>1%',
+                      'last 4 versions',
+                      'Firefox ESR',
+                      'not ie < 9', // React doesn't support IE8 anyway
+                    ]
+                  }),
+                ];
+              }
+            }
+          }
+        ]
       },
       {
         test: /\.json$/,
