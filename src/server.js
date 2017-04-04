@@ -4,6 +4,7 @@ import express from 'express';
 import path from 'path';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
+import { StaticRouter as Router } from 'react-router-dom';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
@@ -11,20 +12,13 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import test from './endpoints/test';
 
 const app = express();
-const env = process.env.NODE_ENV || 'production';
-const port = process.env.PORT || 3000;
-
-// Include server routes as a middleware
-app.use(function(req, res, next) {
-  test(req, res, next);
-});
 
 // use ejs templates
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, '..', 'public'));
+app.set('views', path.join(__dirname, 'views'));
 
 // define the folder that will be used for static assets
-// app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'static')));
 
 // universal routing and rendering
 app.get('*', (req, res) => {
@@ -32,9 +26,11 @@ app.get('*', (req, res) => {
   let status = 200;
 
   if (process.env.UNIVERSAL) {
-    const context = {};
+    const context = {}
     markup = renderToString(
-      <App />,
+      <Router location={req.url} context={context}>
+        <App />
+      </Router>,
     );
 
     // context.url will contain the URL to redirect to if a <Redirect> was used
@@ -50,6 +46,9 @@ app.get('*', (req, res) => {
   return res.status(status).render('index', { markup });
 });
 
+// start the server
+const env = process.env.NODE_ENV || 'production';
+const port = process.env.PORT || 3000;
 app.listen(port, (err) => {
   if (err) return console.error(err);
 
