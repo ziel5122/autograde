@@ -1,72 +1,65 @@
-import webpack from 'webpack';
-import path from 'path';
-import qs from 'querystring';
+const autoprefixer = require('autoprefixer');
+const path = require('path');
+const webpack = require('webpack');
 
-process.env.NODE_ENV = process.env.NODE_ENV || "development";
-
-export default {
-  devtool: '#eval-source-map',
-  entry: [
-    'webpack-hot-middleware/client',
-    './src/client/index.jsx'
-  ],
-  output: {
-    path: path.join(__dirname, 'public'),
-    filename: 'bundle.js',
-    publicPath: '/'
+module.exports = {
+  entry: {
+    js: path.resolve(__dirname, 'src', 'index.jsx'),
   },
-  plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
-    new webpack.DefinePlugin({
-      'process.env': {
-          'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-      }
-    })
-  ],
+  output: {
+    path: path.resolve(__dirname, 'public'),
+    filename: 'bundle.js',
+  },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
-    alias: {
-      request: 'browser-request'
-    }
+    extensions: ['.js', '.json', '.jsx']
   },
   module: {
     loaders: [
-      // Javascript
       {
         test: /\.(js|jsx)$/,
-        loader: 'babel',
-        include: path.join(__dirname, 'src', 'client'),
+        loader: 'eslint-loader',
+        include: path.resolve(__dirname, 'src'),
+        enforce: 'pre'
+      },
+      {
+        exclude: [
+          /\.html$/,
+          /\.(js|jsx)(\?.*)?$/,
+          /\.css$/,
+          /\.json$/,
+          /\.svg$/
+        ],
+        loader: 'url',
         query: {
-          "env": {
-            "development": {
-              "presets": ["react-hmre"],
-              "plugins": [
-                ["react-transform", {
-                  "transforms": [{
-                    "transform": "react-transform-hmr",
-                    "imports": ["react"],
-                    "locals": ["module"]
-                  }]
-                }]
-              ]
-            }
-          },
+          limit: 10000,
+          name: 'static/media/[name].[hash:8].[ext]'
         }
       },
-
-      // CSS
+      {
+        test: /\.(js|jsx)$/,
+        include: path.resolve(__dirname, 'src'),
+        loader: 'babel-loader',
+        query: {
+          cacheDirectory: true
+        }
+      },
       {
         test: /\.css$/,
-        include: path.join(__dirname, 'src', 'client'),
-        loader: 'style-loader!css-loader?' + qs.stringify({
-          modules: true,
-          importLoaders: 1,
-          localIdentName: '[path][name]-[local]'
-        })
+        loader: 'style!css?importLoaders=1!postcss'
+      },
+      {
+        test: /\.json$/,
+        loader: 'json'
+      },
+      {
+        test: /\.svg$/,
+        loader: 'file',
+        query: {
+          name: 'static/media/[name].[hash:8].[ext]'
+        }
       }
-
+      // ** STOP ** Are you adding a new loader?
+      // Remember to add the new extension(s) to the "url" loader exclusion list.
     ]
   }
 };

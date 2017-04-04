@@ -1,6 +1,0 @@
-{
-  "accessKeyId": "fakeMyKeyId",
-  "secretAccessKey": "fakeSecretAccessKey",
-  "region": "us-west-1",
-  "endpoint": "http://localhost:8000"
-}

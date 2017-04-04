@@ -1,5 +1,0 @@
-#!/bin/bash
-
-gcc -o file $1
-
-/usercode/ex-demo
