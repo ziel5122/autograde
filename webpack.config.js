@@ -12,12 +12,14 @@ module.exports = {
     extensions: ['.js', '.json', '.jsx']
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.(js|jsx)$/,
-        loader: 'eslint-loader',
-        include: path.resolve(__dirname, 'src'),
-        enforce: 'pre'
+        loader: [
+          "babel-loader",
+          "eslint-loader"
+        ],
+        include: path.resolve(__dirname, 'src')
       },
       {
         exclude: [
@@ -31,14 +33,6 @@ module.exports = {
         query: {
           limit: 10000,
           name: 'static/media/[name].[hash:8].[ext]'
-        }
-      },
-      {
-        test: /\.(js|jsx)$/,
-        include: path.resolve(__dirname, 'src'),
-        loader: 'babel-loader',
-        query: {
-          cacheDirectory: true
         }
       },
       {
