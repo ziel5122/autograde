@@ -1,46 +1,41 @@
-import App from './app/App';
-import chokidar from 'chokidar';
 import express from 'express';
 import path from 'path';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { StaticRouter as Router } from 'react-router-dom';
-import webpack from 'webpack';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
+import { StaticRouter as Router } from 'react-router';
 
-import test from './endpoints/test';
+import Main from './app/Main';
+
+process.env.NODE_ENV = 'development';
+
 
 const app = express();
+const publicPath = path.join(__dirname, '..', 'public');
 
-// use ejs templates
+// ejs templates
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', publicPath);
 
 // define the folder that will be used for static assets
-app.use(express.static(path.join(__dirname, 'static')));
+app.use(express.static(publicPath));
 
 // universal routing and rendering
 app.get('*', (req, res) => {
+  global.navigator = global.navigator || {};
+  global.navigator.userAgent = req.headers['user-agent'] || 'all';
+
   let markup = '';
   let status = 200;
 
   if (process.env.UNIVERSAL) {
-    const context = {}
+    const context = {};
     markup = renderToString(
-      <Router location={req.url} context={context}>
-        <App />
-      </Router>,
+      <Router context={context} location={req.url}>
+        <Main />
+      </Router>
     );
 
-    // context.url will contain the URL to redirect to if a <Redirect> was used
-    if (context.url) {
-      return res.redirect(302, context.url);
-    }
-
-    if (context.is404) {
-      status = 404;
-    }
+    if (context.is404) status = 404;
   }
 
   return res.status(status).render('index', { markup });

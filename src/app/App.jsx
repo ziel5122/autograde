@@ -1,18 +1,13 @@
-// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import React from 'react';
-import { Route } from 'react-router-dom';
-/*
-import Demo from '../public/Demo';
-import Login from '../public/Login';
-*/
-import Landing from '../public/Landing';
+import { BrowserRouter as Router } from 'react-router-dom';
+
+import Main from './Main';
 
 function App() {
   return (
-    <div>
-      Content.
-      <Route component={Landing} />
-    </div>
+    <Router>
+      <Main />
+    </Router>
   );
 }
 
