@@ -9,7 +9,7 @@
     "build:dev:watch": "export NODE_ENV=development && webpack -d --watch --display-error-details",
     "start": "npm run build && babel-node src/server.js",
     "start:dev": "export NODE_ENV=development && npm run build:dev && nodemon --exec babel-node -- src/server.js",
-    "start:universal": "export UNIVERSAL=true && npm run start",
+    "start-universal": "export UNIVERSAL=true && npm run start",
     "start:dev:universal": "export NODE_ENV=development && export UNIVERSAL=true && npm run start:dev",
     "test": "jest"
   },
