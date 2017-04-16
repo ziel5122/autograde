@@ -6,18 +6,14 @@ import { StaticRouter as Router } from 'react-router';
 
 import Main from './app/Main';
 
-process.env.NODE_ENV = 'development';
-
-
 const app = express();
-const publicPath = path.join(__dirname, '..', 'public');
 
 // ejs templates
 app.set('view engine', 'ejs');
-app.set('views', publicPath);
+app.set('views', path.join(__dirname, '..', 'static'));
 
 // define the folder that will be used for static assets
-app.use(express.static(publicPath));
+app.use(express.static(path.join(__dirname, '..', 'static')));
 
 // universal routing and rendering
 app.get('*', (req, res) => {

@@ -1,10 +1,15 @@
-const path = require('path');
+var path = require('path');
+var webpack = require('webpack');
 
-module.exports = {
-  entry: path.resolve(__dirname, 'src', 'index.jsx'),
+var APP_DIR = path.resolve(__dirname, 'src');
+var BUILD_DIR = path.resolve(__dirname, 'static');
+
+var config = {
+  devtool: 'cheap-module-eval-source-map',
+  entry: APP_DIR + '/index.jsx',
   output: {
-    path: path.resolve(__dirname, 'public', 'js'),
-    filename: 'bundle.js',
+    path: BUILD_DIR,
+    filename: 'js/bundle.js'
   },
   resolve: {
     extensions: ['.js', '.json', '.jsx']
@@ -13,14 +18,14 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        loader: [
-          "babel-loader",
-          "eslint-loader"
-        ],
-        include: path.resolve(__dirname, 'src')
+        include: APP_DIR,
+        use: [
+          'babel-loader',
+          'eslint-loader'
+        ]
       }
-      // ** STOP ** Are you adding a new loader?
-      // Remember to add the new extension(s) to the "url" loader exclusion list.
     ]
   }
 };
+
+module.exports = config;

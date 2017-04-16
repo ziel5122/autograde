@@ -15,10 +15,10 @@ const requireAuth = component => (loggedIn ? component : redirect('/login'));
 
 function Routes() {
   return (
-    <Switch>
-      <Route exact path="/" render={() => (requireAuth(<Home />))} />
-      <Route path="/cst334" render={() => (requireAuth(<OSHome />))} />
-      <Route path="/cst463" render={() => (requireAuth(<DMHome />))} />
+    <Switch className="switch">
+      <Route exact path="/" render={() => requireAuth(<Home />)} />
+      <Route path="/cst334" render={() => requireAuth(<OSHome />)} />
+      <Route path="/cst463" render={() => requireAuth(<DMHome />)} />
       <Route path="/demo" component={Demo} />
       <Route path="/login" component={Login} />
     </Switch>
