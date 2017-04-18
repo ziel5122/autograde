@@ -1,3 +1,4 @@
+import bodyParser from 'body-parser';
 import express from 'express';
 import path from 'path';
 import React from 'react';
@@ -5,15 +6,18 @@ import { renderToString } from 'react-dom/server';
 import { StaticRouter as Router } from 'react-router';
 
 import Main from './app/Main';
+import router from './back/accounts-ep';
 
 const app = express();
-
+app.use(bodyParser.json());
 // ejs templates
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '..', 'static'));
 
 // define the folder that will be used for static assets
 app.use(express.static(path.join(__dirname, '..', 'static')));
+
+app.use('/api', router);
 
 // universal routing and rendering
 app.get('*', (req, res) => {
