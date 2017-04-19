@@ -1,9 +1,9 @@
 /* eslint-env browser */
+/* eslint react/prop-types: "warn" */
 import fetch from 'isomorphic-fetch';
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { Redirect } from 'react-router';
 
@@ -61,7 +61,7 @@ class Login extends React.Component {
   }
 
   render() {
-    const from = this.props.fromPath;
+    const { from } = this.props.location.state || { from: { pathname: '/' } };
     const { redirectToReferrer } = this.state;
 
     if (redirectToReferrer) {
@@ -93,9 +93,5 @@ class Login extends React.Component {
     );
   }
 }
-
-Login.propTypes = {
-  fromPath: PropTypes.string.isRequired,
-};
 
 export default Login;

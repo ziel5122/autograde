@@ -1,5 +1,8 @@
 /* eslint-env browser */
+/* eslint react/prop-types: "warn" */
+
 // import fetch from 'isomorphic-fetch';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router';
 
@@ -9,26 +12,47 @@ import Home from '../home/Home';
 import Login from '../public/Login';
 import OSHome from '../cst334/OSHome';
 
-function redirect(path) {
-  return <Redirect to={path} />;
-}
+const AuthRoute = ({ component: Component, isAuthenticated, ...rest }) => (
+  <Route
+    {...rest}
+    render={
+      (props) => {
+        if (isAuthenticated) {
+          return <Component {...props} />;
+        }
+        return (
+          <Redirect
+            to={{
+              pathname: '/login',
+              state: { from: props.location },
+            }}
+          />
+        );
+      }
+    }
+  />
+);
+
+AuthRoute.propTypes = {
+  component: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+};
 
 class Routes extends React.Component {
   constructor() {
     super();
-
     this.fromPath = '/';
-
-    this.loginWithFromPath = this.loginWithFromPath.bind(this);
+    this.state = {
+      isAuthenticated: false,
+    };
   }
 
-  loginWithFromPath() {
-    console.log(this.fromPath);
-    return <Login fromPath={this.fromPath} />;
+  componentDidMount() {
+    console.log('mount');
+    this.requireAuth();
   }
 
-  requireAuth(component, fromPath) {
-    let returned = redirect('/login');
+  requireAuth() {
     const token = sessionStorage.getItem('token');
 
     if (token) {
@@ -44,29 +68,32 @@ class Routes extends React.Component {
         body,
         headers,
         method: 'post',
-      }).then(res => res.text()).then((text) => {
-        if (text) {
-          console.log(text);
-          console.log(typeof(text));
-          return component;
-        }
-      }).catch((err) => {
-        console.error(err);
-        console.log(returned);
-        this.fromPath = fromPath;
-        return returned;
-      });
+      }).then(res => res.text()).then(text => console.log(text));
     }
+
+    this.setState({ isAuthenticated: true });
   }
 
   render() {
     return (
       <Switch className="switch">
-        <Route exact path="/" render={() => this.requireAuth(<Home />, '/')} />
-        <Route path="/cst334" render={() => this.requireAuth(<OSHome />, '/cst334')} />
-        <Route path="/cst463" render={() => this.requireAuth(<DMHome />, '/cst463')} />
+        <AuthRoute
+          exact path="/"
+          component={Home}
+          isAuthenticated={this.state.isAuthenticated}
+        />
+        <AuthRoute
+          exact path="/cst334"
+          component={OSHome}
+          isAuthenticated={this.state.isAuthenticated}
+        />
+        <AuthRoute
+          exact path="/cst463"
+          component={DMHome}
+          isAuthenticated={this.state.isAuthenticated}
+        />
         <Route path="/demo" component={Demo} />
-        <Route path="/login" component={this.loginWithFromPath} />
+        <Route path="/login" component={Login} />
       </Switch>
     );
   }
