@@ -1,7 +1,5 @@
 /* eslint-env browser */
 /* eslint react/prop-types: "warn" */
-
-// import fetch from 'isomorphic-fetch';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router';
@@ -45,6 +43,7 @@ class Routes extends React.Component {
     this.state = {
       isAuthenticated: false,
     };
+    this.requireAuth = this.requireAuth.bind(this);
   }
 
   componentDidMount() {
@@ -56,6 +55,7 @@ class Routes extends React.Component {
     const token = sessionStorage.getItem('token');
 
     if (token) {
+      console.log('token');
       const body = JSON.stringify({
         token,
       });
@@ -68,10 +68,16 @@ class Routes extends React.Component {
         body,
         headers,
         method: 'post',
-      }).then(res => res.text()).then(text => console.log(text));
+      }).then(res => res.text()).then((text) => {
+        console.log(text);
+        console.log(text === 'true');
+        this.setState({ isAtuhenticated: true }, () => console.log(this.state.isAuthenticated));
+      });
+    } else {
+      console.log('else');
+      this.setState({ isAuthenticated: false });
+      console.log(this.state.isAuthenticated);
     }
-
-    this.setState({ isAuthenticated: true });
   }
 
   render() {
