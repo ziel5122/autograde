@@ -1,6 +1,6 @@
 /* eslint-env browser */
 /* eslint react/prop-types: "warn" */
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router';
 
@@ -10,7 +10,9 @@ import Home from '../home/Home';
 import Login from '../public/Login';
 import OSHome from '../cst334/OSHome';
 
-const AuthRoute = ({ component: Component, isAuthenticated, ...rest }) => (
+let isAuthenticated = false;
+
+const AuthRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={
@@ -22,7 +24,9 @@ const AuthRoute = ({ component: Component, isAuthenticated, ...rest }) => (
           <Redirect
             to={{
               pathname: '/login',
-              state: { from: props.location },
+              state: {
+                from: props.location,
+              },
             }}
           />
         );
@@ -31,56 +35,39 @@ const AuthRoute = ({ component: Component, isAuthenticated, ...rest }) => (
   />
 );
 
-AuthRoute.propTypes = {
-  component: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-};
-
 class Routes extends React.Component {
   constructor() {
     super();
-    this.fromPath = '/';
+
     this.state = {
       isAuthenticated: false,
     };
-    this.requireAuth = this.requireAuth.bind(this);
+
+    this.authenticate = this.authenticate.bind(this);
+    this.LoginAuthenticate = this.LoginAuthenticate.bind(this);
   }
 
-  componentDidMount() {
-    console.log('mount');
-    this.requireAuth();
+  authenticate() {
+    isAuthenticated = true;
+    this.setState({
+      isAuthenticated: true,
+    });
   }
 
-  requireAuth() {
-    const token = sessionStorage.getItem('token');
-
-    if (token) {
-      console.log('token');
-      const body = JSON.stringify({
-        token,
-      });
-
-      const headers = {
-        'Content-type': 'application/json',
-      };
-
-      fetch('http://localhost:3000/api/verify', {
-        body,
-        headers,
-        method: 'post',
-      }).then(res => res.text()).then((text) => {
-        console.log(text);
-        console.log(text === 'true');
-        this.setState({ isAtuhenticated: true }, () => console.log(this.state.isAuthenticated));
-      });
-    } else {
-      console.log('else');
-      this.setState({ isAuthenticated: false });
-      console.log(this.state.isAuthenticated);
-    }
+  LoginAuthenticate({ ...rest }) {
+    return (
+      <Login
+        {...rest}
+        authenticate={
+          this.authenticate
+        }
+      />
+    );
   }
 
   render() {
+    console.log(isAuthenticated);
+
     return (
       <Switch className="switch">
         <AuthRoute
@@ -99,7 +86,7 @@ class Routes extends React.Component {
           isAuthenticated={this.state.isAuthenticated}
         />
         <Route path="/demo" component={Demo} />
-        <Route path="/login" component={Login} />
+        <Route path="/login" component={this.LoginAuthenticate} />
       </Switch>
     );
   }

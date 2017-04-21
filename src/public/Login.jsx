@@ -21,14 +21,8 @@ class Login extends React.Component {
       redirectToReferrer: false,
     };
 
-    this.forgot = this.forgot.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.login = this.login.bind(this);
-  }
-
-  forgot() {
-    console.log('forgot triggered');
-    console.log(this.state);
   }
 
   login() {
@@ -50,6 +44,7 @@ class Login extends React.Component {
       method: 'post',
     }).then(res => res.text()).then((token) => {
       sessionStorage.setItem('token', token);
+      this.props.authenticate();
       this.setState({ redirectToReferrer: true });
     });
   }
@@ -61,13 +56,12 @@ class Login extends React.Component {
   }
 
   render() {
-    const { from } = this.props.location.pathname || { from: { pathname: '/' } };
-    // console.log(this.props.location.pathname);
+    const { from } = this.props.location.state || { from: { pathname: '/' } };
     const { redirectToReferrer } = this.state;
 
     if (redirectToReferrer) {
       return (
-        <Redirect to={from} />
+        <Redirect to={from.pathname} />
       );
     }
 
@@ -87,7 +81,7 @@ class Login extends React.Component {
             type="password"
           />
           <br />
-          <FlatButton label="forgot" onTouchTap={this.forgot} style={buttonStyle} />
+          <FlatButton label="forgot" style={buttonStyle} />
           <FlatButton label="login" onTouchTap={this.login} style={buttonStyle} />
         </Paper>
       </div>
