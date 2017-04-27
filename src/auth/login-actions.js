@@ -47,12 +47,15 @@ export function loginUser(creds) {
     dispatch(requestLogin(creds));
 
     return fetch('http://localhost:3001/sessions/create', config)
-      .then((response) => {
-        return response.json().then(user => ({
+      .then(response => (response.json()))
+      .then(user => console.log(user));
+      /*
+      .then(user => (
+        {
           user,
           response,
-        }));
-      })
+        }
+      )
       .then(({ user, response }) => {
         if (!response.ok) {
           // If there was a problem, we want to
@@ -65,5 +68,6 @@ export function loginUser(creds) {
         // Dispatch the success action
         return dispatch(receiveLogin(user));
       }).catch(err => console.error(err));
+      */
   };
 }
