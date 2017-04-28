@@ -2,16 +2,18 @@
 import jwt from 'jsonwebtoken';
 import redis from 'redis';
 
-import client from './redis';
+import RedisClient from './RedisClient';
 
-export default {
+const AuthService = {
   login(username, password, callback) {
-    let token = '';
-    client.get(username, (err, reply) => {
+    RedisClient.get(username, (err, reply) => {
       if (reply && password === reply) {
-        token = jwt.sign({ username }, 'super secret');
+        const token = jwt.sign({ username }, 'super secret');
+        callback(null, token);
+      } else {
+        const error = "username or password incorrect";
+        callback(error, null);
       }
-      callback(token);
     });
   },
 
@@ -22,3 +24,5 @@ export default {
     });
   },
 };
+
+export default AuthService;

@@ -1,18 +1,19 @@
 import Dispatcher from '../Dispatcher';
-import LoginActionTypes from './AuthActionTypes';
+import AuthActionTypes from './AuthActionTypes';
 
 const AuthActions = {
   loginUser(creds) {
-    console.log('yathat');
+    console.log(creds.username);
+    console.log(creds.password);
     Dispatcher.dispatch({
       creds,
-      type: LoginActionTypes.LOGIN_USER,
+      type: AuthActionTypes.LOGIN_USER,
     });
   },
 
   logoutUser() {
     Dispatcher.dispatch({
-      type: LoginActionTypes.LOGOUT_USER,
+      type: AuthActionTypes.LOGOUT_USER,
     });
   },
 };

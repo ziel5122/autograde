@@ -1,6 +1,5 @@
 /* eslint-env browser */
 /* eslint react/prop-types: "warn" */
-import fetch from 'isomorphic-fetch';
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
@@ -31,23 +30,12 @@ class Login extends React.Component {
     const username = this.state.username;
     const password = this.state.password;
 
-    const body = JSON.stringify({
+    console.log(username);
+    console.log(password);
+
+    this.props.onLogin({
       username,
       password,
-    });
-
-    const headers = {
-      'Content-type': 'application/json',
-    };
-
-    fetch('http://localhost:3000/api/login', {
-      body,
-      headers,
-      method: 'post',
-    }).then(res => res.text()).then((token) => {
-      sessionStorage.setItem('token', token);
-      this.props.authenticate();
-      this.setState({ redirectToReferrer: true });
     });
   }
 
@@ -85,7 +73,7 @@ class Login extends React.Component {
           />
           <br />
           <FlatButton label="forgot" onTouchTap={this.props.onLogout} style={buttonStyle} />
-          <FlatButton label="login" onTouchTap={this.props.onLogin} style={buttonStyle} />
+          <FlatButton label="login" onTouchTap={this.login} style={buttonStyle} />
         </Paper>
       </div>
     );

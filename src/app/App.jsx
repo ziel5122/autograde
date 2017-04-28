@@ -6,7 +6,7 @@ import Main from './Main';
 
 function App(props) {
   // const { isAuthenticated } = props;
-  console.log(props);
+  console.log(props.isAuthenticated);
   return (
     <Router>
       <Main {...props} />

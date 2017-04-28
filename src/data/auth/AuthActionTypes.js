@@ -1,6 +1,6 @@
 const AuthActionTypes = {
-  USER_LOGIN: 'USER_LOGIN',
-  USER_LOGOUT: 'USER_LOGOUT',
+  LOGIN_USER: 'LOGIN_USER',
+  LOGOUT_USER: 'LOGOUT_USER',
 };
 
 export default AuthActionTypes;
