@@ -5,7 +5,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import React from 'react';
-import { Redirect } from 'react-router';
+// import { Redirect } from 'react-router';
 
 const buttonStyle = {
   margin: 24,
@@ -20,6 +20,8 @@ class Login extends React.Component {
       password: '',
       redirectToReferrer: false,
     };
+
+    console.log(this.isAuthenticated);
 
     this.handleChange = this.handleChange.bind(this);
     this.login = this.login.bind(this);
@@ -56,6 +58,7 @@ class Login extends React.Component {
   }
 
   render() {
+    /*
     const { from } = this.props.location.state || { from: { pathname: '/' } };
     const { redirectToReferrer } = this.state;
 
@@ -64,7 +67,7 @@ class Login extends React.Component {
         <Redirect to={from.pathname} />
       );
     }
-
+    */
     return (
       <div className="login">
         <Paper className="login-paper">
@@ -81,8 +84,8 @@ class Login extends React.Component {
             type="password"
           />
           <br />
-          <FlatButton label="forgot" style={buttonStyle} />
-          <FlatButton label="login" onTouchTap={this.login} style={buttonStyle} />
+          <FlatButton label="forgot" onTouchTap={this.props.onLogout} style={buttonStyle} />
+          <FlatButton label="login" onTouchTap={this.props.onLogin} style={buttonStyle} />
         </Paper>
       </div>
     );

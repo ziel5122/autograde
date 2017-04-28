@@ -1,7 +1,0 @@
-const ActionTypes = {
-  LOGOUT_FAILURE: 'LOGOUT_FAILURE',
-  LOGOUT_REQUEST: 'LOGOUT_REQUEST',
-  LOGOUT_SUCCESS: 'LOGOUT_SUCCESS',
-};
-
-export default ActionTypes;

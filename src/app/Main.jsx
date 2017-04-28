@@ -9,11 +9,11 @@ import Layout from './Layout';
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
-function Main() {
+function Main(props) {
   const muiTheme = getMuiTheme({ userAgent: global.navigator.userAgent });
   return (
     <MuiThemeProvider muiTheme={muiTheme}>
-      <Layout />
+      <Layout {...props} />
     </MuiThemeProvider>
   );
 }

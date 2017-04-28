@@ -8,6 +8,7 @@ import Routes from './Routes';
 class Layout extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       open: false,
     };
@@ -34,7 +35,7 @@ class Layout extends React.Component {
         >
           <Menu />
         </Drawer>
-        <Routes />
+        <Routes {...this.props} />
       </div>
     );
   }

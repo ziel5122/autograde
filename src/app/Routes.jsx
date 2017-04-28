@@ -10,9 +10,7 @@ import Home from '../home/Home';
 import Login from '../public/Login';
 import OSHome from '../cst334/OSHome';
 
-let isAuthenticated = false;
-
-const AuthRoute = ({ component: Component, ...rest }) => (
+const AuthRoute = ({ component: Component, isAuthenticated, ...rest }) => (
   <Route
     {...rest}
     render={
@@ -36,28 +34,16 @@ const AuthRoute = ({ component: Component, ...rest }) => (
 );
 
 class Routes extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
-    this.state = {
-      isAuthenticated: false,
-    };
-
-    this.authenticate = this.authenticate.bind(this);
     this.LoginAuthenticate = this.LoginAuthenticate.bind(this);
   }
 
-  authenticate() {
-    isAuthenticated = true;
-    this.setState({
-      isAuthenticated: true,
-    });
-  }
-
-  LoginAuthenticate({ ...rest }) {
+  LoginAuthenticate() {
     return (
       <Login
-        {...rest}
+        {...this.props}
         authenticate={
           this.authenticate
         }
@@ -66,24 +52,22 @@ class Routes extends React.Component {
   }
 
   render() {
-    console.log(isAuthenticated);
-
     return (
       <Switch className="switch">
         <AuthRoute
           exact path="/"
           component={Home}
-          isAuthenticated={this.state.isAuthenticated}
+          isAuthenticated={this.props.isAuthenticated}
         />
         <AuthRoute
           exact path="/cst334"
           component={OSHome}
-          isAuthenticated={this.state.isAuthenticated}
+          isAuthenticated={this.props.isAuthenticated}
         />
         <AuthRoute
           exact path="/cst463"
           component={DMHome}
-          isAuthenticated={this.state.isAuthenticated}
+          isAuthenticated={this.props.isAuthenticated}
         />
         <Route path="/demo" component={Demo} />
         <Route path="/login" component={this.LoginAuthenticate} />
