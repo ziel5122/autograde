@@ -1,4 +1,5 @@
 /* eslint class-methods-use-this: "warn" */
+/* esling consistent-return: "warn" */
 /* eslint-env browser */
 import { ReduceStore } from 'flux/utils';
 // import Immutable from 'immutable';
@@ -18,34 +19,25 @@ class AuthStore extends ReduceStore {
 
   reduce(state, action) {
     switch (action.type) {
-      case AuthActionTypes.LOGIN_USER: {
-        const { username, password } = action.creds;
-        const body = JSON.stringify({
-          username,
-          password,
-        });
-
-        const headers = {
-          'content-type': 'application/json',
-        };
-
-        const method = 'post';
-
+      case AuthActionTypes.LOGIN_USER:
         fetch('http://localhost:3000/api/login', {
-          method,
-          headers,
-          body,
-        }).then((status, content) => {
-          console.log(status);
-          console.log(content);
+          method: 'post',
+          headers: {
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify({
+            username: action.creds.usernmae,
+            password: action.creds.password,
+          }),
+        }).then((token) => {
+          if (token) return state.set(true);
+          return state.set(false);
         }).catch(err => console.error(err));
-
-        return true;
-      }
+        return;
 
       case AuthActionTypes.LOGOUT_USER:
         localStorage.removeItem('id_token');
-        return false;
+        return state.set(false);
 
       default:
         return state;
