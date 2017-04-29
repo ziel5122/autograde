@@ -1,22 +1,24 @@
-function loadState() {
+/* eslint-env browser */
+
+const loadState = () => {
   try {
     const serializedState = localStorage.getItem('state');
     if (serializedState === null) {
       return undefined;
     }
     return JSON.parse(serializedState);
-  } catch(err) {
+  } catch (err) {
     return undefined;
   }
-}
+};
 
-function saveState(state) {
+const saveState = (state) => {
   try {
     const serializedState = JSON.stringify(state);
     localStorage.setItem('state', serializedState);
-  } catch(err) {
+  } catch (err) {
     console.error(err);
   }
-}
+};
 
 export { loadState, saveState };

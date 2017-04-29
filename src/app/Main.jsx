@@ -4,11 +4,13 @@ import React from 'react';
 import { Provider } from 'react-redux';
 
 import Layout from './Layout';
-import store from '../data/store';
+import configureStore from '../data/configureStore';
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
+
+const store = configureStore();
 
 const Main = () => {
   console.log(store.getState());

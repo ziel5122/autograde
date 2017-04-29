@@ -1,8 +1,6 @@
-import { createStore } from 'redux';
-
-function authentication(state = {
+const authentication = (state = {
   isAuthenticated: false,
-}, action) {
+}, action) => {
   switch (action.type) {
     case 'LOGIN_USER':
       return {
@@ -18,6 +16,6 @@ function authentication(state = {
     default:
       return state;
   }
-}
+};
 
-export default createStore(authentication);
+export default authentication;

@@ -28,10 +28,8 @@
     "body-parser": "^1.17.1",
     "ejs": "^2.5.6",
     "express": "^4.15.2",
-    "flux": "^3.1.2",
-    "immutable": "^3.8.1",
-    "isomorphic-fetch": "^2.2.1",
     "jsonwebtoken": "^7.3.0",
+    "lodash": "^4.17.4",
     "material-ui": "^0.17.1",
     "prop-types": "^15.5.4",
     "react": "^15.5.3",
@@ -41,8 +39,7 @@
     "react-router-dom": "^4.0.0",
     "react-tap-event-plugin": "^2.0.1",
     "redis": "^2.7.1",
-    "redux": "^3.6.0",
-    "redux-thunk": "^2.2.0"
+    "redux": "^3.6.0"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
