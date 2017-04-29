@@ -1,21 +1,24 @@
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import React from 'react';
+import { Provider } from 'react-redux';
 
 import Layout from './Layout';
+import store from '../data/store';
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
-function Main(props) {
-  const muiTheme = getMuiTheme({ userAgent: global.navigator.userAgent });
+const Main = () => {
+  console.log(store.getState());
   return (
-    <MuiThemeProvider muiTheme={muiTheme}>
-      <Layout {...props} />
+    <MuiThemeProvider>
+      <Provider store={store}>
+        <Layout />
+      </Provider>
     </MuiThemeProvider>
   );
-}
+};
 
 export default Main;

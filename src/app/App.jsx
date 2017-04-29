@@ -1,21 +1,12 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import Main from './Main';
 
-function App(props) {
-  // const { isAuthenticated } = props;
-  console.log(props.isAuthenticated);
-  return (
-    <Router>
-      <Main {...props} />
-    </Router>
-  );
-}
-
-App.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired,
-};
+const App = () => (
+  <Router>
+    <Main />
+  </Router>
+);
 
 export default App;

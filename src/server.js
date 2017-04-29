@@ -5,7 +5,6 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter as Router } from 'react-router';
 
-import Main from './app/Main';
 import router from './back/accounts-ep';
 
 const app = express();
@@ -29,12 +28,13 @@ app.get('*', (req, res) => {
 
   if (process.env.UNIVERSAL) {
     const context = {};
+    /*
     markup = renderToString(
       <Router context={context} location={req.url}>
         <Main />
       </Router>
     );
-
+    */
     if (context.is404) status = 404;
   }
 

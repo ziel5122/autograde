@@ -2,8 +2,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import AppContainer from './containers/AppContainer';
+import App from './app/App';
 
-window.onload = () => {
-  ReactDOM.render(<AppContainer />, document.getElementById('root'));
-};
+ReactDOM.render(<App />, document.getElementById('root'));

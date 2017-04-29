@@ -1,23 +1,16 @@
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
-import React from 'react';
+import React, { Component } from 'react';
 
 import Menu from './Menu';
 import Routes from './Routes';
 
-class Layout extends React.Component {
-  constructor(props) {
-    super(props);
-
+class Layout extends Component {
+  constructor() {
+    super();
     this.state = {
       open: false,
     };
-    this.handleToggle = this.handleToggle.bind(this);
-  }
-
-  handleToggle() {
-    console.log(this.state.open);
-    this.setState({ open: !this.state.open });
   }
 
   render() {
@@ -25,7 +18,11 @@ class Layout extends React.Component {
       <div>
         <AppBar
           className="AppBar"
-          onLeftIconButtonTouchTap={this.handleToggle}
+          onLeftIconButtonTouchTap={() => {
+            this.setState({
+              open: !this.state.open,
+            });
+          }}
           title="autograde"
         />
         <Drawer
@@ -35,7 +32,7 @@ class Layout extends React.Component {
         >
           <Menu />
         </Drawer>
-        <Routes {...this.props} />
+        <Routes />
       </div>
     );
   }
