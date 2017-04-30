@@ -1,4 +1,4 @@
-import { throttle } from 'lodash/throttle';
+import throttle from 'lodash/throttle';
 import { createStore } from 'redux';
 
 import authentication from './store';

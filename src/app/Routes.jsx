@@ -2,6 +2,7 @@
 /* eslint react/prop-types: "warn" */
 // import PropTypes from 'prop-types';
 import React from 'react';
+// import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router';
 
 import AuthRoute from './AuthRoute';
@@ -11,23 +12,26 @@ import Home from '../home/Home';
 import Login from '../public/Login';
 import OSHome from '../cst334/OSHome';
 
-const Routes = () => (
-  <Switch className="switch">
-    <AuthRoute
-      exact path="/"
-      component={Home}
-    />
-    <AuthRoute
-      exact path="/cst334"
-      component={OSHome}
-    />
-    <AuthRoute
-      exact path="/cst463"
-      component={DMHome}
-    />
-    <Route path="/demo" component={Demo} />
-    <Route path="/login" component={Login} />
-  </Switch>
-);
+const Routes = () => {
+  console.log('Routes render');
+  return (
+    <Switch className="switch">
+      <AuthRoute
+        exact path="/"
+        component={Home}
+      />
+      <AuthRoute
+        exact path="/cst334"
+        component={OSHome}
+      />
+      <AuthRoute
+        exact path="/cst463"
+        component={DMHome}
+      />
+      <Route exact path="/demo" component={Demo} />
+      <Route exact path="/login" component={Login} />
+    </Switch>
+  );
+};
 
 export default Routes;

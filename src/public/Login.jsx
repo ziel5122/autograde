@@ -3,55 +3,92 @@
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
-import React from 'react';
-
-import { loginUser, logoutUser } from '../data/actions';
-import store from '../data/store';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 
 const buttonStyle = {
   margin: 24,
 };
 
-let username;
-let password;
-let login = true;
-
-const authenticateUser = () => {
-  console.log(username);
-  console.log(password);
-  if (login) {
-    store.dispatch(loginUser());
-  } else {
-    store.dispatch(logoutUser());
+class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      redirectToReferrer: false,
+    };
+    this.authenticateUser = this.authenticateUser.bind(this);
   }
-  console.log(store.getState());
-  login = !login;
-};
 
-const Login = () => (
-  <div className="login">
-    <Paper className="login-paper">
-      <TextField
-        onChange={(input) => {
-          username = input.target.value;
-        }}
-        floatingLabelText="username"
-        name="username"
-      />
-      <br />
-      <TextField
-        onChange={(input) => {
-          password = input.target.value;
-        }}
-        floatingLabelText="password"
-        name="password"
-        type="password"
-      />
-      <br />
-      <FlatButton label="forgot" style={buttonStyle} />
-      <FlatButton label="login" onTouchTap={authenticateUser} style={buttonStyle} />
-    </Paper>
-  </div>
-);
+  authenticateUser() {
+    const { username, password } = this;
+    console.log(username, password);
+    fetch('http://localhost:3000/api/login', {
+      method: 'post',
+      header: {
+        'content-type': 'application/json',
+      },
+      body: {
+        username,
+        password,
+      },
+    }).then((response) => {
+      console.log(response);
+      if (response.status === 200) {
+        this.props.loginUser(username);
+        this.setState({ redirectToReferrer: true });
+      }
+    }).catch(err => console.error(err));
+  }
 
-export default Login;
+  render() {
+    const { from } = this.props.location.state || { from: { pathname: '/' } };
+    const { redirectToReferrer } = this.state;
+
+    console.log('redirectToReferrer', redirectToReferrer);
+    if (redirectToReferrer) {
+      return <Redirect to={from} />;
+    }
+
+    console.log('component should render');
+    return (
+      <div className="login">
+        <Paper className="login-paper">
+          <TextField
+            onChange={(input) => {
+              this.username = input.target.value;
+            }}
+            floatingLabelText="username"
+            name="username"
+          />
+          <br />
+          <TextField
+            onChange={(input) => {
+              this.password = input.target.value;
+            }}
+            floatingLabelText="password"
+            name="password"
+            type="password"
+          />
+          <br />
+          <FlatButton label="forgot" onTouchTap={this.logout} style={buttonStyle} />
+          <FlatButton label="login" onTouchTap={this.authenticateUser} style={buttonStyle} />
+        </Paper>
+      </div>
+    );
+  }
+}
+
+const LoginRedux = connect(
+  null,
+  dispatch => ({
+    loginUser: (username) => {
+      dispatch({
+        username,
+        type: 'LOGIN_USER',
+      });
+    },
+  }),
+)(Login);
+
+export default LoginRedux;

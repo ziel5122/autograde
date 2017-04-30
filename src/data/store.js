@@ -1,5 +1,6 @@
 const authentication = (state = {
   isAuthenticated: false,
+  username: 'bob',
 }, action) => {
   switch (action.type) {
     case 'LOGIN_USER':
