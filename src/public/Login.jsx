@@ -1,8 +1,8 @@
 /* eslint-env browser */
-/* eslint react/prop-types: "warn" */
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
@@ -22,7 +22,6 @@ class Login extends Component {
 
   authenticateUser() {
     const { username, password } = this;
-    console.log(username, password);
     fetch('http://localhost:3000/api/login', {
       method: 'post',
       header: {
@@ -33,7 +32,6 @@ class Login extends Component {
         password,
       },
     }).then((response) => {
-      console.log(response);
       if (response.status === 200) {
         this.props.loginUser(username);
         this.setState({ redirectToReferrer: true });
@@ -45,12 +43,10 @@ class Login extends Component {
     const { from } = this.props.location.state || { from: { pathname: '/' } };
     const { redirectToReferrer } = this.state;
 
-    console.log('redirectToReferrer', redirectToReferrer);
     if (redirectToReferrer) {
       return <Redirect to={from} />;
     }
 
-    console.log('component should render');
     return (
       <div className="login">
         <Paper className="login-paper">
@@ -78,6 +74,11 @@ class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {
+  location: PropTypes.objectOf(PropTypes.string).isRequired,
+  loginUser: PropTypes.func.isRequired,
+};
 
 const LoginRedux = connect(
   null,

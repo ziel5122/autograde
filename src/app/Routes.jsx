@@ -1,8 +1,5 @@
 /* eslint-env browser */
-/* eslint react/prop-types: "warn" */
-// import PropTypes from 'prop-types';
 import React from 'react';
-// import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router';
 
 import AuthRoute from './AuthRoute';

@@ -1,5 +1,4 @@
 /* eslint-env browser */
-
 const loadState = () => {
   try {
     const serializedState = localStorage.getItem('state');

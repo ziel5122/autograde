@@ -5,7 +5,8 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter as Router } from 'react-router';
 
-import router from './back/accounts-ep';
+import router from './backend/accounts-ep';
+import codeRouter from './backend/Sandbox';
 
 const app = express();
 app.use(bodyParser.json());
@@ -17,6 +18,7 @@ app.set('views', path.join(__dirname, '..', 'static'));
 app.use(express.static(path.join(__dirname, '..', 'static')));
 
 app.use('/api', router);
+app.use('/run', codeRouter);
 
 // universal routing and rendering
 app.get('*', (req, res) => {
