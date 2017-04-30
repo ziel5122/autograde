@@ -2,7 +2,7 @@
 import bodyParser from 'body-parser';
 import express from 'express';
 
-import AuthService from '../back/AuthService';
+import AuthService from './AuthService';
 
 const router = express.Router();
 

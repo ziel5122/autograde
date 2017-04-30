@@ -1,6 +1,5 @@
 /* eslint-env node */
 import jwt from 'jsonwebtoken';
-import redis from 'redis';
 
 import RedisClient from './RedisClient';
 
@@ -11,7 +10,7 @@ const AuthService = {
         const token = jwt.sign({ username }, 'super secret');
         callback(null, token);
       } else {
-        const error = "username or password incorrect";
+        const error = 'username or password incorrect';
         callback(error, null);
       }
     });
