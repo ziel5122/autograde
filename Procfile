@@ -1,1 +1,1 @@
-web: npm run start-universal
+web: babel-node src/server/js
