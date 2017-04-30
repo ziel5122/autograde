@@ -1,6 +1,6 @@
-/* eslint react/prop-types: "warn" */
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -24,6 +24,11 @@ const AutoGradeBar = ({ isAuthenticated, onTouchTap }) => {
       iconStyleRight={{ verticalAlign: 'middle' }}
     />
   );
+};
+
+AutoGradeBar.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
+  onTouchTap: PropTypes.func.isRequired,
 };
 
 const AutoGradeBarRedux = connect(

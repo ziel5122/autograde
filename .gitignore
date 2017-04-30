@@ -26,8 +26,5 @@ node_modules
 
 .DS_Store
 
-#Webpack Bundle(s)
-static/js
-
 #Sanbox Output
 temp
