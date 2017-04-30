@@ -1,1 +1,1 @@
-web: npm run start-universal
+web: npm run start
