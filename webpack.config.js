@@ -6,7 +6,7 @@ var BUILD_DIR = path.resolve(__dirname, 'static');
 
 var config = {
   devtool: 'cheap-module-eval-source-map',
-  entry: APP_DIR + 'index',
+  entry: APP_DIR + '/index',
   output: {
     path: BUILD_DIR,
     filename: 'js/bundle.js'
