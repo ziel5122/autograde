@@ -3,4 +3,6 @@ cp -r static build
 babel server -d build/server
 cp package.json build
 rm autograde.zip
-zip -r autograde.zip build/*
+cd build
+mkdir temp
+zip -r ../autograde.zip *
