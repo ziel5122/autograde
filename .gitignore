@@ -26,5 +26,13 @@ node_modules
 
 .DS_Store
 
+#Production Build
+build
+autograde.zip
+static/js
+
 #Sanbox Output
 temp
+
+#AWS Private Key
+autograde.pem
