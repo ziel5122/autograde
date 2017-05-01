@@ -7,8 +7,8 @@
     "build": "NODE_ENV=production webpack -p --display-error-details",
     "build:dev": "webpack -d --display-error-details",
     "build:dev:watch": "export NODE_ENV=development && webpack -d --watch --display-error-details",
-    "start": "npm run build && babel-node src/server.js",
-    "start:dev": "export NODE_ENV=development && npm run build:dev && nodemon --exec babel-node -- src/server.js",
+    "start": "npm run build && babel-node server/server.js",
+    "start:dev": "export NODE_ENV=development && npm run build:dev && nodemon --exec babel-node -- server/server.js",
     "start-universal": "export UNIVERSAL=true && npm run start",
     "start:dev:universal": "export NODE_ENV=development && export UNIVERSAL=true && npm run start:dev",
     "test": "jest"
@@ -41,7 +41,8 @@
     "react-router-dom": "^4.0.0",
     "react-tap-event-plugin": "^2.0.1",
     "redis": "^2.7.1",
-    "redux": "^3.6.0"
+    "redux": "^3.6.0",
+    "uuid": "^3.0.1"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",

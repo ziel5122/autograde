@@ -1,4 +1,5 @@
 /* eslint-env browser */
+/* eslint react/prop-types: "warn" */
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
@@ -22,21 +23,23 @@ class Login extends Component {
 
   authenticateUser() {
     const { username, password } = this;
-    fetch('/api/login', {
-      method: 'post',
-      header: {
-        'content-type': 'application/json',
-      },
-      body: {
-        username,
-        password,
-      },
-    }).then((response) => {
-      if (response.status === 200) {
-        this.props.loginUser(username);
-        this.setState({ redirectToReferrer: true });
-      }
-    }).catch(err => console.error(err));
+    if (username && password) {
+      fetch('/api/login', {
+        method: 'post',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      }).then((response) => {
+        if (response.status === 200) {
+          this.props.loginUser(username);
+          this.setState({ redirectToReferrer: true });
+        }
+      }).catch(err => console.error(err));
+    }
   }
 
   render() {
@@ -76,7 +79,6 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  location: PropTypes.objectOf(PropTypes.string).isRequired,
   loginUser: PropTypes.func.isRequired,
 };
 

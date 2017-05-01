@@ -3,6 +3,7 @@ import Drawer from 'material-ui/Drawer';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import LogoutButton from '../public/LogoutButton';
 import Menu from './Menu';
@@ -19,7 +20,7 @@ const AutoGradeBar = ({ isAuthenticated, onTouchTap }) => {
     <AppBar
       className="AppBar"
       onLeftIconButtonTouchTap={onTouchTap}
-      title="autograde"
+      title={<Link className="title-link" to="/">{'autograde'}</Link>}
       iconElementRight={<LogoutButton style={logoutStyles} />}
       iconStyleRight={{ verticalAlign: 'middle' }}
     />
@@ -41,6 +42,7 @@ class Layout extends Component {
     this.state = {
       open: false,
     };
+    this.onTouchTap = this.onTouchTap.bind(this);
   }
 
   onTouchTap() {
@@ -52,13 +54,15 @@ class Layout extends Component {
   render() {
     return (
       <div>
-        <AutoGradeBarRedux onTouchTap={this.onTouchTap} />
+        <AutoGradeBarRedux
+          onTouchTap={this.onTouchTap}
+        />
         <Drawer
           docked={false}
           onRequestChange={open => this.setState({ open })}
           open={this.state.open}
         >
-          <Menu />
+          <Menu onTouchTap={this.onTouchTap} />
         </Drawer>
         <Routes />
       </div>

@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch';
-import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 import React from 'react';
 import AceEditor from 'react-ace';
@@ -26,6 +26,7 @@ class Demo extends React.Component {
     super();
     this.state = {
       output: 'Output will print here',
+      result: '',
     };
     this.runCode = this.runCode.bind(this);
   }
@@ -42,7 +43,14 @@ class Demo extends React.Component {
       }),
     })
     .then(response => response.text())
-    .then(text => this.setState({ output: text }))
+    .then((text) => {
+      if (text === 'Hello, Austin!\n') {
+        this.setState({ result: 'PASSED' });
+      } else {
+        this.setState({ result: 'FAILED' });
+      }
+      this.setState({ output: text });
+    })
     .catch(err => console.error(err));
   }
 
@@ -67,9 +75,22 @@ class Demo extends React.Component {
               <span className="demo-title">{'demo'}</span>
               <br />
               <span className="demo-description">
-                {'This is a basic "Hello World" example. It prints "Hello, World!" to standard output'}
+                {
+`This is a basic "Hello World" example in C.
+It prints "Hello, World!" to standard output.
+
+Change "World" to "Austin" in the code to see the test pass.
+`
+                }
               </span>
-              <FlatButton label="run" hoverColor="#d3d3d3" onTouchTap={this.runCode} />
+              <div className="run-and-result">
+                <RaisedButton
+                  className="run-button"
+                  label="run"
+                  onTouchTap={this.runCode}
+                />
+                <div className="demo-result">{this.state.result}</div>
+              </div>
               <div className="demo-actions-output-wrapper">
                 <div className="demo-actions-output">
                   {this.state.output}

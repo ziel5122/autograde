@@ -21,9 +21,9 @@ const AuthRoute = ({ isAuthenticated, component: Component, ...rest }) => (
 );
 
 AuthRoute.propTypes = {
-  component: PropTypes.element.isRequired,
+  component: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
-  location: PropTypes.string.isRequired,
+  location: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 const AuthRouteRedux = connect(

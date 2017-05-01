@@ -9,26 +9,23 @@ import Home from '../home/Home';
 import Login from '../public/Login';
 import OSHome from '../cst334/OSHome';
 
-const Routes = () => {
-  console.log('Routes render');
-  return (
-    <Switch className="switch">
-      <AuthRoute
-        exact path="/"
-        component={Home}
-      />
-      <AuthRoute
-        exact path="/cst334"
-        component={OSHome}
-      />
-      <AuthRoute
-        exact path="/cst463"
-        component={DMHome}
-      />
-      <Route exact path="/demo" component={Demo} />
-      <Route exact path="/login" component={Login} />
-    </Switch>
-  );
-};
+const Routes = () => (
+  <Switch className="switch">
+    <AuthRoute
+      exact path="/"
+      component={Home}
+    />
+    <AuthRoute
+      exact path="/cst334"
+      component={OSHome}
+    />
+    <AuthRoute
+      exact path="/cst463"
+      component={DMHome}
+    />
+    <Route exact path="/demo" component={Demo} />
+    <Route exact path="/login" component={Login} />
+  </Switch>
+);
 
 export default Routes;

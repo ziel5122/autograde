@@ -8,7 +8,7 @@
 }
 
 .demo-actions-output-wrapper {
-  background-color: #d3d3d3;
+  background-color: #e8e8e8;
   margin-top: 24px;
   width: 100%;
   height: 250px;
@@ -16,6 +16,7 @@
 
 .demo-description {
   height: 100px;
+  text-align: left;
 }
 
 .demo-description,
@@ -31,6 +32,15 @@
   padding: 24px;
 }
 
+.demo-result {
+  width: 80px;
+}
+
+.demo-result,
+.run-button {
+  display: inline-block;
+}
+
 .demo-text {
   display: inline-block;
   margin-left: 24px;
@@ -44,7 +54,7 @@
 
 .demo-title {
   font-family: Roboto, sans-serif;
-  background-color: #d3d3d3;
+  background-color: #e8e8e8;
   margin-top: 24px;
   font-size: 18px;
 }
@@ -74,4 +84,25 @@
   padding: 48px;
   padding-bottom: 24px;
   padding-top: 24px;
+}
+
+.menu-link {
+  color: black;
+}
+
+.menu-link,
+.title-link {
+  text-decoration: none;
+}
+
+.run-and-result {
+  display: inline-block;
+}
+
+.run-button {
+  margin-right: 24px;
+}
+
+.title-link {
+  color: white;
 }

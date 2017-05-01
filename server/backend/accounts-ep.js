@@ -9,13 +9,18 @@ const router = express.Router();
 router.use(bodyParser.json());
 
 router.post('/login', (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
+  console.log(req.body);
+  const { username, password } = req.body;
+  console.log('username2', username);
+  console.log('password2', password);
   AuthService.login(username, password, (err, token) => {
+    console.log(err);
+    console.log(token);
     if (err) {
       res.status(401);
+    } else {
+      res.status(200);
     }
-    res.status(200);
     res.send(token);
   });
 });
