@@ -3,11 +3,13 @@ import jwt from 'jsonwebtoken';
 
 import RedisClient from './RedisClient';
 
+const jwtConfig = require('../../config/jwt-config.json');
+
 const AuthService = {
   login(username, password, callback) {
     RedisClient.get(username, (err, reply) => {
       if (reply && password === reply) {
-        const token = jwt.sign({ username }, 'super secret');
+        const token = jwt.sign({ username }, jwtConfig.secret);
         callback(null, token);
       } else {
         const error = 'username or password incorrect';

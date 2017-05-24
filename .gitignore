@@ -1,3 +1,9 @@
+# Config Objects
+config
+
+# Build and Deploy
+static/js
+
 # Logs
 logs
 *.log
