@@ -1,5 +1,10 @@
 #include <stdio.h>
+#include <unistd.h>
 
 int main() {
-  printf("printed\n");
+  int i = 0;
+
+  while (i < 15) {
+    printf("printed %d\n", ++i);
+  }
 }
