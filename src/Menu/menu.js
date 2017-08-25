@@ -6,30 +6,32 @@ import { Link } from 'react-router-dom';
 
 import styles from './styles';
 
+const { menuLink } = styles;
+
 const Menu = ({ toggleDrawer }) => (
   <div>
-    <Subheader children={'Classes'} />
-    <Link to="/cst334" style={styles.menuLink}>
+    <Subheader>Classes</Subheader>
+    <Link to="/cst334" style={menuLink}>
       <MenuItem
-        children={'Operating Systems (CST334)'}
         onClick={toggleDrawer}
-        style={styles.menuLink}
+        primaryText="Operating Systems (CST336)"
+        style={menuLink}
       />
     </Link>
-    <Link to="/cst463" style={styles.menuLink}>
+    <Link to="/cst463" style={menuLink}>
       <MenuItem
-        children={'Data Mining (CST463)'}
         onClick={toggleDrawer}
-        style={styles.menuLink}
+        primaryText="Data Mining (CST463)"
+        style={menuLink}
       />
     </Link>
     <Divider />
-    <Subheader children={'Support'} />
-    <Link to="/demo" style={styles.menuLink}>
-      <MenuItem onClick={toggleDrawer} children={'Demo'} />
+    <Subheader>{'Support'}</Subheader>
+    <Link to="/demo" style={menuLink}>
+      <MenuItem onClick={toggleDrawer} primaryText="Demo" />
     </Link>
-    <MenuItem children={'Report a Problem'} />
-    <MenuItem children={'Contact'} />
+    <MenuItem primaryText="Report a Problem" />
+    <MenuItem primaryText="Github" />
   </div>
 );
 

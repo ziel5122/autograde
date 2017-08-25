@@ -10,6 +10,17 @@ const drawerOpen = (state = false, action) => {
   }
 };
 
+const loggedIn = (state = false, action) => {
+  switch (action.type) {
+    case 'SET_LOGGED_IN':
+      return action.loggedIn;
+
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   drawerOpen,
+  loggedIn,
 });

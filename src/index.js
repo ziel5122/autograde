@@ -4,10 +4,13 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 import { createStore } from 'redux';
 
 import App from './App';
 import reducers from './redux/reducers';
+
+injectTapEventPlugin();
 
 const Main = () => (
   <MuiThemeProvider >
