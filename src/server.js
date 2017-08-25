@@ -1,6 +1,11 @@
 import express from 'express';
+import { renderToString } from 'react-dom/server';
+import { createStore } from 'redux';
 
-const PORT = 3000;
+// import Main from './main';
+import reducers from './reducers';
+
+const PORT = process.env.PORT || 3000;
 
 const renderHtml = (appHtml, store) => (`
 <!doctype html>
@@ -15,7 +20,7 @@ const renderHtml = (appHtml, store) => (`
 <meta name="description" content="automated grading for the Operating Systems course at CSUMB">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>autograde</title>
-<div id="root" style="height:100vh;width:100%;margin:0">${appHtml}</div>
+<div id="root" style="height:100vh;width:100%;margin:0" />
 <script src="node-static.js"></script>
 <script src="client.bundle.js"></script>
 <script>
@@ -25,12 +30,18 @@ const renderHtml = (appHtml, store) => (`
 </script>
 `);
 
+const store = createStore(reducers);
+
+const html = renderHtml(appHtml, store);
+
 const app = express();
 
-app.listen(PORT, (err) => {
-  if (err) {
-    console.error(err);
-  } else {
-    console.log(`listening on port ${PORT}`);
-  }
+app.use(express.static('build'));
+
+app.get('*', (req, res) => {
+  res.send(html);
+});
+
+app.listen(PORT, () => {
+  console.log(`listening on port ${PORT}`);
 });
