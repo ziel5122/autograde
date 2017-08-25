@@ -1,13 +1,14 @@
-import { join } from 'path';
-import { optimize } from 'webpack';
+var join = require('path').join;
+var webpack = require('webpack');
 
-const APP_DIR = join(__dirname, './src');
+var APP_DIR = join(__dirname, './src');
 
-const config = {
+var config = {
   context: APP_DIR,
   entry: {
-    client: [
+    app: [
       './index.js',
+      'webpack-hot-middleware/client',
     ],
   },
   module: {
@@ -24,16 +25,18 @@ const config = {
   output: {
     filename: '[name].bundle.js',
     path: join(__dirname, 'build'),
+    publicPath: '/',
   },
   plugins: [
-    new optimize.CommonsChunkPlugin({
+    new webpack.optimize.CommonsChunkPlugin({
       filename: 'node-static.js',
       minChunks({ context }, count) {
         return context && context.indexOf('node_modules') >= 0;
       },
       name: 'node-static',
     }),
+    new webpack.HotModuleReplacementPlugin(),
   ],
 };
 
-export default config;
+module.exports = config;
