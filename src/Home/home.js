@@ -1,8 +1,11 @@
+
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Home = () => (
   <div>
-    this is home
+    this is Meya is the <b>cutest</b> bape
+    <Link to="/login"> Login</Link>
   </div>
 );
 

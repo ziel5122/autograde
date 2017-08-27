@@ -1,14 +1,15 @@
 import React from 'react';
-import { Route, Router } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 
 import AuthRoute from '../AuthRoute';
 import Home from '../Home/home';
-import Login from '../Login/login';
+import Login from '../Login';
 import styles from './styles';
 
 const Body = () => (
   <div style={styles.body}>
-    <Route path="/login" component={Login} />
+      <Route exact path="/" component={Home} />
+      <Route path="/login" component={Login} />
   </div>
 );
 

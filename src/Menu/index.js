@@ -3,6 +3,10 @@ import { connect } from 'react-redux';
 
 import Menu from './menu';
 
+const mapStateToProps = ({ loggedIn }) => ({
+  loggedIn,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   toggleDrawer() {
     dispatch({
@@ -11,4 +15,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(undefined, mapDispatchToProps)(Menu);
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);

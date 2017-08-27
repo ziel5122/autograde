@@ -1,6 +1,9 @@
 const styles = {
-  menuLink: {
-    textDecoration: 'none',
+  menuLink(loggedIn) {
+    return {
+      color: loggedIn ? '#404040' : 'lightgray',
+      textDecoration: 'none',
+    };
   },
 };
 

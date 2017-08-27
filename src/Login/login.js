@@ -7,9 +7,9 @@ import styles from './styles';
 
 const { button, textField } = styles;
 
-const Login = () => (
+const Login = ({ setLoggedin }) => (
   <div>
-    <Paper zDepth={5} style={styles.login}>
+    <Paper zDepth={0} style={styles.login}>
       <TextField
         floatingLabelFocusStyle={{ color: '#404040' }}
         floatingLabelText="username"
@@ -23,7 +23,11 @@ const Login = () => (
         type="password"
         underlineFocusStyle={{ borderColor: '#404040' }}
       />
-      <FlatButton label="login" style={button} />
+      <FlatButton
+        onClick={() => setLoggedin(true)}
+        label="login"
+        style={button}
+      />
       <FlatButton label="forgot" style={button} />
     </Paper>
   </div>
