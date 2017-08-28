@@ -5,10 +5,8 @@ var PORT = process.env.PORT || 3000;
 
 var app = express();
 
-//app.use(express.static('../build'));
-
 app.get('*', (req, res) => {
-  res.sendFile(join(__dirname, '..', 'build', 'index.html'));
+  res.sendFile(join(__dirname, '../public/index.html'));
 });
 
 app.listen(PORT, () => {

@@ -16,6 +16,7 @@ const styles = {
   },
   textField: {
     display: 'block',
+    textAlign: 'center',
   },
 };
 

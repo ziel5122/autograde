@@ -1,15 +1,29 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import AuthRoute from './auth-route';
 
+const mapStateToProps = ({ loggedIn }) => ({
+  loggedIn,
+});
+
 const mapDispatchToProps = (dispatch) => ({
-  setFrom(from) {
+  setPrevious(previous) {
     dispatch({
-      from,
-      type: 'SET_FROM',
+      previous,
+      type: 'SET_PREVIOUS',
+    });
+  },
+
+  setRedirect(redirect) {
+    dispatch({
+      redirect,
+      type: 'SET_REDIRECT',
     });
   },
 });
 
-export default connect(undefined, mapDispatchToProps)(AuthRoute);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(AuthRoute)
+);

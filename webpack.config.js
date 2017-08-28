@@ -25,7 +25,7 @@ var config = {
   output: {
     filename: '[name].bundle.js',
     path: join(__dirname, 'build'),
-    publicPath: '/',
+    //publicPath: '/',
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({

@@ -1,10 +1,10 @@
 const styles = {
   app: {
-    background: 'navy',
+    background: 'white',
     height: '100%',
   },
   appBar: {
-    background: 'navy',
+    background: 'midnightblue',
   },
   title: {
     color: 'white',

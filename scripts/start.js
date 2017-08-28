@@ -1,7 +1,7 @@
 var devMiddleware = require('webpack-dev-middleware');
 var express = require('express');
 var hotMiddleware = require('webpack-hot-middleware');
-var path = require('path');
+var join = require('path').join;
 var webpack = require('webpack');
 
 var config = require('../webpack.config');
@@ -22,11 +22,8 @@ app.use(devMiddleware(compiler, {
 
 app.use(hotMiddleware(compiler));
 
-// app.use(express.static('../build'));
-
 app.get('*', (req, res) => {
-  console.log('hit');
-  res.sendFile(path.join(__dirname, '../public/index.html'));
+  res.sendFile(join(__dirname, '../public/index.html'));
 });
 
 app.listen(PORT, () => {

@@ -3,13 +3,25 @@ import { connect } from 'react-redux';
 
 import Login from './login';
 
+const mapStateToProps = ({ previous, redirect }) => ({
+  previous,
+  redirect,
+});
+
 const mapDispatchToProps = (dispatch) => ({
-  setLoggedin(loggedIn) {
+  setLoggedIn(loggedIn) {
     dispatch({
       loggedIn,
       type: 'SET_LOGGED_IN',
     });
   },
+
+  setRedirect(redirect) {
+    dispatch({
+      redirect,
+      type: 'SET_REDIRECT',
+    });
+  },
 });
 
-export default connect(undefined, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
