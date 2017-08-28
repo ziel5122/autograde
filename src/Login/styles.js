@@ -1,22 +1,21 @@
 const styles = {
   button: {
-    color: '#404040',
     marginTop: '24px',
+  },
+  forgot: {
+    color: 'darkgray',
+    flex: 1,
+    marginTop: '24px',
+    textAlign: 'right',
   },
   login: {
     alignItems: 'center',
-    background: 'white',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    paddingBottom: '24px',
-    paddingLeft: '24px',
-    paddingRight: '24px',
-    paddingTop: '8px',
   },
-  textField: {
-    display: 'block',
-    textAlign: 'center',
+  topSpacer: {
+    height: '15vh',
   },
 };
 

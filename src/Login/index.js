@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import Login from './login';
 
-const mapStateToProps = ({ previous, redirect }) => ({
-  previous,
-  redirect,
+const mapStateToProps = ({ loggedIn }) => ({
+  loggedIn,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -13,13 +13,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch({
       loggedIn,
       type: 'SET_LOGGED_IN',
-    });
-  },
-
-  setRedirect(redirect) {
-    dispatch({
-      redirect,
-      type: 'SET_REDIRECT',
     });
   },
 });

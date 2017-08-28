@@ -9,6 +9,13 @@ const mapStateToProps = ({ drawerOpen }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  setLoggedIn(loggedIn) {
+    dispatch({
+      loggedIn,
+      type: 'SET_LOGGED_IN',
+    });
+  },
+
   toggleDrawer() {
     dispatch({
       type: 'TOGGLE_DRAWER',

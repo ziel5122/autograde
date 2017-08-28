@@ -1,10 +1,7 @@
 const styles = {
   body: {
-    alignItems: 'center',
-    background: 'white',
+    alignItems: 'flex-start',
     display: 'flex',
-    flexDirection: 'column',
-    height: '75%',
     justifyContent: 'center',
   },
 };

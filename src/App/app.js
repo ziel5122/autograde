@@ -10,25 +10,16 @@ import Login from '../Login/login';
 import Menu from '../Menu';
 import styles from './styles';
 
-const LogoutButton = ({ setLoggedIn }) => (
-  <FlatButton label="logout" onClick={() => setLoggedIn(false)} />
-);
-
-const mapDispatchToProps = (dispatch) => ({
-  setLoggedIn(loggedIn) {
-    dispatch({
-      loggedIn,
-      type: 'SET_LOGGED_IN',
-    })
-  },
-});
-
-const LogoutButtonRedux = connect(undefined, mapDispatchToProps)(LogoutButton);
-
-const App = ({ drawerOpen, toggleDrawer }) => (
+const App = ({ drawerOpen, setLoggedIn, toggleDrawer }) => (
   <div style={styles.app}>
     <AppBar
-      iconElementRight={<LogoutButtonRedux />}
+      iconElementRight={
+        <FlatButton
+          label="logout"
+          onClick={() => setLoggedIn(false)}
+          style={{ color: 'white' }}
+        />
+      }
       onLeftIconButtonTouchTap={toggleDrawer}
       style={styles.appBar}
       title={<Link to="/" style={styles.title}>Autograde</Link>}

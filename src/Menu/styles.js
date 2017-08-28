@@ -1,9 +1,15 @@
 const styles = {
-  menuLink(loggedIn) {
-    return {
-      color: loggedIn ? '#404040' : 'lightgray',
-      textDecoration: 'none',
-    };
+  menu: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+  },
+  menuLink: {
+    color: '#404040',
+    textDecoration: 'none',
+  },
+  subheader: {
+    color: 'orangered',
   },
 };
 

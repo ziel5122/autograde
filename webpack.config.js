@@ -20,6 +20,13 @@ var config = {
           'babel-loader',
         ],
       },
+      {
+        include: join(__dirname, 'public'),
+        test: /\.png$/,
+        use: [
+          'url-loader',
+        ],
+      },
     ],
   },
   output: {

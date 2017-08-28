@@ -6,42 +6,45 @@ import { Redirect } from 'react-router-dom';
 
 import styles from './styles';
 
-const { button, textField } = styles;
+const { textField } = styles;
 
-const Login = ({ previous, redirect, setLoggedIn, setRedirect }) => {
-  console.log(previous);
-  console.log(redirect);
+const Login = ({ location, loggedIn, setLoggedIn }) => {
+  if (loggedIn) {
+    const { from } = location.state || { from: { pathname: '/' } };
+    return <Redirect to={from} />;
+  }
 
-  return redirect ? (
-    <Redirect to={previous} />
-  ) : (
-    <div>
-      <Paper zDepth={0} style={styles.login}>
-        <TextField
-          floatingLabelFocusStyle={{ color: 'orangered' }}
-          floatingLabelText="username"
-          floatingLabelStyle={{ color: 'darkgray' }}
-          style={textField}
-          underlineStyle={{ display: 'none' }}
-        />
-        <TextField
-          floatingLabelFocusStyle={{ color: 'orangered' }}
-          floatingLabelStyle={{ color: 'darkgray' }}
-          floatingLabelText="password"
-          style={textField}
-          type="password"
-          underlineStyle={{ display: 'none' }}
-        />
-        <FlatButton
-          onClick={() => {
-            setLoggedIn(true);
-            setRedirect(true);
-          }}
-          label="login"
-          style={button}
-        />
-        <FlatButton label="forgot" style={button} />
-      </Paper>
+  return (
+    <div style={styles.login}>
+      <div style={styles.topSpacer} />
+      <TextField
+        floatingLabelFocusStyle={{ color: 'orangered' }}
+        floatingLabelStyle={{ color: 'darkgray' }}
+        floatingLabelText="username"
+        style={textField}
+        underlineStyle={{ display: 'none' }}
+      />
+      <TextField
+        floatingLabelFocusStyle={{ color: 'orangered' }}
+        floatingLabelStyle={{ color: 'darkgray' }}
+        floatingLabelText="password"
+        style={textField}
+        type="password"
+        underlineStyle={{ display: 'none' }}
+      />
+    <div style={{ display: 'flex', flex: 1 , width: '100%'}}>
+        <div style={{ flex: 1 }}>
+          <FlatButton
+            backgroundColor="darkgray"
+            hoverColor="orangered"
+            onClick={() => setLoggedIn(true)}
+            label="login"
+            labelStyle={{ color: 'white' }}
+            style={styles.button}
+          />
+        </div>
+        <div style={styles.forgot}>Forgot your<br />password?</div>
+      </div>
     </div>
   );
 };
