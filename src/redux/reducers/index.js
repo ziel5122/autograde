@@ -1,5 +1,17 @@
 import { combineReducers } from 'redux';
 
+const assignmentMenuOpen = (state = true, action) => {
+  console.log(state);
+  console.log(!state);
+  switch (action.type) {
+    case 'TOGGLE_ASSIGNMENT_MENU':
+      return !state;
+
+    default:
+      return state;
+  }
+};
+
 const drawerOpen = (state = false, action) => {
   switch (action.type) {
     case 'TOGGLE_DRAWER':
@@ -21,6 +33,7 @@ const loggedIn = (state = false, action) => {
 };
 
 export default combineReducers({
+  assignmentMenuOpen,
   drawerOpen,
   loggedIn,
 });
