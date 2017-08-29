@@ -5,7 +5,7 @@ import { Route } from 'react-router-dom';
 import Menu from '../Menu/menu';
 
 const OSHome = ({ match }) => (
-  <div style={{ width: '100%' }}>
+  <div style={{ height: '100%', width: '100%' }}>
     <Paper style={{ display: 'inline-block', height: '100%' }}>
       <Menu match={match} />
     </Paper>
