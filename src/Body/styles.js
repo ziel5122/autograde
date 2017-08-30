@@ -3,6 +3,7 @@ const styles = {
     alignItems: 'flex-start',
     display: 'flex',
     height: '100%',
+    flexDirection: 'column',
     justifyContent: 'center',
   },
 };

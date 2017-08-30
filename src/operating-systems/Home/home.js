@@ -3,18 +3,17 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 
 import AssignmentMenu from '../../AssignmentMenu';
+import Editor from '../../Editor';
 import Menu from '../Menu/menu';
 
-const OSHome = ({ match }) => (
-  <div style={{ height: '100%', width: '100%' }}>
-    <Paper style={{ display: 'inline-block', height: '100%' }}>
-      <AssignmentMenu match={match} />
-    </Paper>
-    <Paper>
-      <Route path={`${match.url}/20170828`} />
-      <Route path={`${match.url}/20170904`} />
-      <Route path={`${match.url}/20170911`} />
-      <Route path={`${match.url}/20170918`} />
+const OSHome = ({ match, openAssignment }) => (
+  <div style={{ height: '100%', display: 'flex', width: '100%' }}>
+    <AssignmentMenu match={match} />
+    <Paper style={{ display: 'inline-block' }}>
+      <Route path={`${match.url}/20170801`} component={Editor} />
+      <Route path={`${match.url}/20170904`} component={Editor} />
+      <Route path={`${match.url}/20170911`} component={Editor} />
+      <Route path={`${match.url}/20170918`} component={Editor} />
     </Paper>
   </div>
 );

@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 
 import AssignmentMenu from './assignment-menu';
 
-const mapStateToProps = ({ assignmentMenuOpen }) => ({
+const mapStateToProps = ({ assignmentMenuOpen, assignmentOpen }) => ({
   assignmentMenuOpen,
+  assignmentOpen,
 });
 
 const mapDispatchToProps = (dispatch) => ({
