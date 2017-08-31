@@ -1,3 +1,4 @@
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import React from 'react';
 import { render } from 'react-dom';
@@ -12,8 +13,15 @@ const store = createStore(reducers);
 
 console.log(store.getState());
 
+const muiTheme = getMuiTheme({
+  slider: {
+    selectionColor: 'orangered',
+    trackColor: 'orangered',
+  },
+});
+
 const Main = () => (
-  <MuiThemeProvider >
+  <MuiThemeProvider muiTheme={muiTheme}>
     <Provider store={store}>
       <BrowserRouter>
         <App />

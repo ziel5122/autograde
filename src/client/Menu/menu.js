@@ -4,7 +4,7 @@ import Subheader from 'material-ui/Subheader';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import github from '../../public/GitHub-Mark-32px.png';
+import github from '../../../public/GitHub-Mark-32px.png';
 import styles from './styles';
 
 const { menuLink, subheader } = styles;
@@ -34,7 +34,7 @@ const Menu = ({ loggedIn, toggleDrawer }) => (
     </Link>
     <MenuItem primaryText="Report a Problem" />
     <MenuItem style={{ textAlign: 'center' }}>
-      <a href="http://github.com/ziel5122/autograde">  
+      <a href="http://github.com/ziel5122/autograde">
         <img style={{ marginTop: '16px',}}src={github} />
       </a>
     </MenuItem>

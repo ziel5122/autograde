@@ -57,7 +57,7 @@ const AssignmentMenu = ({
 }) => (
   assignmentMenuOpen ? (
     <div style={menu1}>
-      <Paper style={paper} zDepth={assignmentOpen ? 0 : 2}>
+      <Paper style={paper} zDepth={2}>
         <ChevronLeft onClick={toggleAssignmentMenu} style={chevronLeft} />
         <Subheader style={assignmentsSH}>Assignments</Subheader>
         {
@@ -76,7 +76,7 @@ const AssignmentMenu = ({
     </div>
   ) : (
     <div style={menu2}>
-      <Paper style={paper} zDepth={assignmentOpen ? 0 : 2}>
+      <Paper style={paper} zDepth={2}>
         <ChevronRight onClick={toggleAssignmentMenu} style={chevronRight} />
         <Subheader style={{ padding: 0 }}>
           <div style={{ height: '23px' }}></div>
