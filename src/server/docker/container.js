@@ -1,122 +1,78 @@
-import Docker from 'dockerode';
-import fs from 'fs';
 import { join } from 'path';
-import request from 'request';
+import request from 'request-promise';
 
 const headers = {
   'content-type': 'application/json',
   host: '127.0.0.1',
 };
-
+const image = 'autograde';
+const stopTimeout = 5    //seconds
 const urlBase = 'http://unix:/var/run/docker.sock:/v1.30';
 
-request({
+const createOptions = {
   headers,
-  url: `${urlBase}/containers/create`,
-  method: 'post',
   body: JSON.stringify({
-    image: 'autograde',
+    image,
+    stopTimeout,
     cmd: ['./code/script.sh'],
     hostConfig: {
       binds: [`${join(__dirname, '../../code')}:/code`],
     },
   }),
-}, (error, response, body) => {
-  console.log('error:', error); // Print the error if one occurred
-  console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-  const bodyJson = JSON.parse(body);
-  console.log('body:', bodyJson); // Print the HTML for the Google homepage.
-  const id = bodyJson.Id;
-
-  request({
-    headers,
-    url: `${urlBase}/containers/${id}/start`,
-    method: 'post',
-  }, (error, response, body) => {
-    console.log('error:', error); // Print the error if one occurred
-    console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-    console.log('body:', body); // Print the HTML for the Google homepage.
-
-    request({
-      headers,
-      url: `${urlBase}/containers/${id}/wait`,
-      method: 'post',
-    }, (error, response, body) => {
-      console.log('error:', error); // Print the error if one occurred
-      console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-      console.log('body:', body); // Print the HTML for the Google homepage.
-
-      request({
-        headers,
-        url: `${urlBase}/containers/${id}/logs?stdout=1`,
-        method: 'get',
-        body: JSON.stringify({
-          follow: true,
-          stdout: true,
-          stderr: true,
-        }),
-      }, (error, response, body) => {
-        console.log('error:', error); // Print the error if one occurred
-        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-        console.log('body:', body); // Print the HTML for the Google homepage.
-      });
-    });
-  });
-});
-
-/*
-  'http://unix:/var/run/docker.sock:/v1.30/container/create', {
-    'content-type': 'application/json',
-    image: 'autograde',
-    cmd: ['echo', 'hello world'],
-    method: 'get',
-  }, (error, response, body) => {
-  console.log('error:', error); // Print the error if one occurred
-  console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-  console.log('body:', body); // Print the HTML for the Google homepage.
-});
-*/
-
-/*
-const docker = new Docker();
-
-const code = fs.readFileSync(join(__dirname, '../../code/test.c')).toString();
-
-docker.createContainer({
-  attachStderr: true,
-  attachStdout: true,
-  attachStream: true,
-  cmd: ['./code/script.sh'],
-  hostConfig: {
-    binds: [`${join(__dirname, '../../code')}:/code`],
+  method: 'post',
+  url: `${urlBase}/containers/create`,
+  volumes: {
+    '/code': {},
   },
-  image: 'autograde',
-}).then(container => {
-  return container.stream.pipe(process.stdout);
-}).catch((err, container) => {
-  console.error(err);
-  container.stop();
+};
+
+const logsOptions = (id) => ({
+  headers,
+  url: `${urlBase}/containers/${id}/logs?stdout=1`,
+  method: 'get',
+  body: JSON.stringify({
+    stdout: true,
+    stderr: true,
+  }),
 });
-*/
 
+const startOptions = (id) => ({
+  headers,
+  url: `${urlBase}/containers/${id}/start`,
+  method: 'post',
+});
 
+const waitOptions = (id) => ({
+  headers,
+  method: 'post',
+  url: `${urlBase}/containers/${id}/wait`,
+});
 
+const runCode = (code, res) => {
+  request(createOptions)
+    .then((body) => {
+      const { Id, Warnings } = JSON.parse(body);
+      if (Warnings) console.log(Warnings);
+      return Id;
+    })
+    .then((Id) => {
+      return request(startOptions(Id))
+        .then(() => request(waitOptions(Id)))
+        .then(() => request(logsOptions(Id)))
+        .then(body => body)
+        .catch((err) => {
+          throw err;
+        });
+    })
+    .then(body => {
+      res.send(body)
+    })
+    .catch((err) => {
+      const { statusCode, error } = err;
+      const { message } = JSON.parse(error);
+      console.error(`${statusCode}: ${message}`);
+      res.status(statusCode).send(message);
+    });
+};
 
-
-/*
-docker.createContainer({
-  image: 'ubuntu',
-}).then(container => {
-  container.fs.put('../../code/test.c', { path: 'root' });
-}).then(container => {
-  container.exec({
-    attachstdout: true,
-    cmd: ['ls'],
-  });
-}).then(exec => {
-  exec.start();
-}).then((err, data) => {
-  if (err) console.error(err);
-  else console.log(data);
-}).catch(err => console.error(err));
-*/
+export { runCode };

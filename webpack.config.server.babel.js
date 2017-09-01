@@ -24,10 +24,14 @@ const config = {
       },
     ],
   },
+  node: {
+    __dirname: false,
+  },
   output: {
     filename: '[name].bundle.js',
     path: join(__dirname, 'build/server'),
   },
+  target: 'node',
 };
 
 export default config;

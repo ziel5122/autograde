@@ -1,17 +1,18 @@
 import { Router } from 'express';
 
+import { runCode } from '../docker/container';
+
 const router = Router();
 
 const allowed = ['0808', '1109'];
 
-router.get('/run', (req, res) => {
-  const { id, code } = req.body;
-  console.log(req.body);
+router.post('/run', ({ body }, res) => {
+  const { id, code } = body;
 
   if (allowed.indexOf(id) === -1) {
     res.status(400).send('not authorized');
   } else {
-    res.send(`you submitted this code: ${code}`);
+    runCode(code, res);
   }
 });
 
