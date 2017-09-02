@@ -5,7 +5,7 @@ import AuthRoute from '../AuthRoute';
 import DMHome from '../data-mining/Home/home.js';
 import Home from '../Home/home';
 import Login from '../Login';
-import OSHome from '../operating-systems/Home/home.js';
+import OSHome from '../operating-systems/Home';
 import styles from './styles';
 
 const Body = () => (

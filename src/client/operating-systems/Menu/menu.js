@@ -1,6 +1,8 @@
 import Divider from 'material-ui/Divider';
 import MenuItem from 'material-ui/MenuItem';
 import Subheader from 'material-ui/Subheader';
+import ChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
+import ChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -10,6 +12,18 @@ const { link, menuItem } = styles;
 
 const Menu = ({ match }) => (
   <div style={styles.menu}>
+    <ChevronLeft
+      onClick={() => alert('gay')}
+      style={{
+        alignSelf: 'flex-end',
+        color: 'darkgray',
+        cursor: 'pointer',
+        cursor: 'hand',
+        height: '48px',
+        marginTop: '0px',
+        width: 'auto',
+      }}
+    />
     <Subheader style={styles.assignments}>Assignments</Subheader>
     <Link to={`${match.url}/20170828`} style={link} >
       <MenuItem style={menuItem}>
