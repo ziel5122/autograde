@@ -4,7 +4,7 @@
   "version": "3.0.0",
   "description": "automated grader for operating systems course at CSUMB (Monterey Bay)",
   "scripts": {
-    "build:server": "webpack -p --config webpack.config.server.babel.js",
+    "build:server": "webpack --config webpack.config.server.babel.js",
     "dev:server": "webpack -d --progress --watch --config webpack.config.server.babel.js",
     "server": "nodemon build/server/server.bundle.js",
     "start": "node scripts/start.js",
@@ -38,6 +38,7 @@
     "file-loader": "^0.11.2",
     "jest": "^20.0.4",
     "nodemon": "^1.11.0",
+    "uglifyjs-webpack-plugin": "^1.0.0-beta.2",
     "url-loader": "^0.5.9",
     "webpack": "^3.5.5",
     "webpack-dev-middleware": "^1.12.0",

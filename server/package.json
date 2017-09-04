@@ -1,0 +1,31 @@
+{
+  "name": "autograde-server",
+  "version": "1.0.0",
+  "description": "infrastructure for the Docker endpoints for autograde",
+  "scripts": {
+    "build": "webpack --config webpack.prod.babel.js",
+    "dev": "webpack -d --progress --watch --config webpack.dev.babel.js",
+    "start": "nodemon dist/server.bundle.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "fs-extra": "^4.0.1",
+    "request-promise": "^4.2.1",
+    "uuid": "^3.1.0"
+  },
+  "devDependencies": {
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "jest": "^21.0.1",
+    "nodemon": "^1.12.0",
+    "uglifyjs-webpack-plugin": "^1.0.0-beta.2",
+    "webpack": "^3.5.5",
+    "webpack-bundle-analyzer": "^2.9.0"
+  },
+  "author": "Austin Zielinski ziel5122",
+  "license": "MIT"
+}

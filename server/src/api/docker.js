@@ -10,7 +10,8 @@ import { pruneOptions } from '../docker/options';
 const router = Router();
 
 const allowed = ['0808', '1109'];
-const codePath = join(__dirname, '../../code');
+const codePath = join(__dirname, '../code');
+console.log(codePath);
 
 router.post('/run', ({ body }, res) => {
   const { id, code, hwNum } = body;
@@ -19,7 +20,7 @@ router.post('/run', ({ body }, res) => {
     res.status(400).send('not authorized');
   } else {
     const hwCodePath = join(codePath, `hw${hwNum}`);
-    const tempCodePath = join(__dirname, `../../temp/${v4()}`);
+    const tempCodePath = join(__dirname, `../temp/${v4()}`);
 
     copySync(hwCodePath, tempCodePath);
     writeFileSync(join(tempCodePath, 'student_src.c'), code);
@@ -32,7 +33,7 @@ router.post('/run', ({ body }, res) => {
         console.error(err);
         res.sendStatus(500);
       })
-      .then(() => {  
+      .then(() => {
         request(pruneOptions);
         removeSync(tempCodePath);
       });

@@ -1,20 +1,12 @@
 import { join } from 'path';
-import { readdirSync } from 'fs';
 
-const externals = {};
-
-readdirSync('node_modules')
-  .filter(moduleName => moduleName !== '.bin')
-  .forEach(moduleName => externals[moduleName] = `commonjs ${moduleName}`);
-
-const SERVER_DIR = join(__dirname, 'src/server');
+const SERVER_DIR = join(__dirname, 'src');
 
 const config = {
   context: SERVER_DIR,
   entry: {
     server: './server.js',
   },
-  externals,
   module: {
     rules: [
       {
@@ -29,7 +21,7 @@ const config = {
   },
   output: {
     filename: '[name].bundle.js',
-    path: join(__dirname, 'build/server'),
+    path: join(__dirname, 'dist'),
   },
   target: 'node',
 };
