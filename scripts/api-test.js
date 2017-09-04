@@ -3,7 +3,9 @@ const request = require('request-promise');
 const code = `#include <stdio.h>
 
 int main() {
-    printf("french fry");
+    int x = 24;
+    int y = 24 * 4;
+    printf("x * y = %d", x * y);
 }`;
 
 request({
@@ -13,6 +15,7 @@ request({
     body: JSON.stringify({
       id: '0808',
       code: code,
+      hwNum: 2,
     }),
     method: 'post',
     url: 'http://localhost:8892/docker/run',
