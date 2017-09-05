@@ -19,7 +19,7 @@ request({
       hwNum: 2,
     }),
     method: 'post',
-    url: 'http://localhost:8892/docker/run',
+    url: 'http://138.68.232.140:8892/docker/run',
 })
   .then(res => console.log(res))
   .catch(err => console.error(err));

@@ -1,4 +1,5 @@
 client/dist
+client/config
 
 server/code/hw*
 server/config

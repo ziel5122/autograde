@@ -19,7 +19,7 @@ class Editor extends Component {
     super(props);
     this.state = {
       code: `${props.hwNum}`,
-      feedback: [],
+      feedback: 'banana',
       fontSize: 12,
       theme: lightTheme,
     };
@@ -123,11 +123,7 @@ class Editor extends Component {
                 method: 'post',
               })
               .then(feedback => feedback.text())
-              .then(feedbackText => {
-                this.setState({
-                  feedback: feedbackText.split('\n'),
-                });
-              })
+              .then(text => this.setState({ feedback: text }))
               .catch((err) => console.error(err));
             }}
             style={{
@@ -143,11 +139,7 @@ class Editor extends Component {
               width: '100%',
             }}
           >
-            {
-              this.state.feedback.map((line, index) => (
-                <p key={index} style={{ margin: '4px' }}>{line}</p>
-              ))
-            }
+            {this.state.feedback}
           </div>
         </div>
         </Paper>

@@ -23,7 +23,7 @@ const runCode = (tempPath) => (
       .then((Id) => {
         request(startOptions(Id))
           .then(() => request(waitOptions(Id)))
-          .then((body) => resolve());
+          .then(() => resolve());
       })
       .catch(err => reject(err));
   })
