@@ -1,3 +1,7 @@
-dist
-hw*
+client/dist
+
+server/code/hw*
+server/config
+server/dist
+
 node_modules

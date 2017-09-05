@@ -4,7 +4,7 @@ import Subheader from 'material-ui/Subheader';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import github from '../../../public/GitHub-Mark-32px.png';
+import github from '../../public/GitHub-Mark-32px.png';
 import styles from './styles';
 
 const { menuLink, subheader } = styles;

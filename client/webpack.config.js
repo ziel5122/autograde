@@ -1,7 +1,7 @@
 var join = require('path').join;
 var webpack = require('webpack');
 
-var APP_DIR = join(__dirname, './src/client');
+var APP_DIR = join(__dirname, './src');
 
 var config = {
   context: APP_DIR,

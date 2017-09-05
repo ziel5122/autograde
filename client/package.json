@@ -4,9 +4,6 @@
   "version": "3.0.0",
   "description": "automated grader for operating systems course at CSUMB (Monterey Bay)",
   "scripts": {
-    "build:server": "webpack --config webpack.config.server.babel.js",
-    "dev:server": "webpack -d --progress --watch --config webpack.config.server.babel.js",
-    "server": "nodemon build/server/server.bundle.js",
     "start": "node scripts/start.js",
     "test": "jest"
   },
@@ -24,7 +21,6 @@
     "react-router-dom": "^4.2.2",
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.7.2",
-    "request": "^2.81.0",
     "request-promise": "^4.2.1",
     "uuid": "^3.1.0"
   },

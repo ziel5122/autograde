@@ -4,7 +4,7 @@ var hotMiddleware = require('webpack-hot-middleware');
 var join = require('path').join;
 var webpack = require('webpack');
 
-var config = require('../webpack.config.client');
+var config = require('../webpack.config');
 
 var PORT = process.env.PORT || 3000;
 

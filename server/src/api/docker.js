@@ -1,22 +1,22 @@
 import { Router } from 'express';
-import { copySync, removeSync, writeFileSync } from 'fs-extra';
+import { copySync, readFileSync, removeSync, writeFileSync } from 'fs-extra';
 import { join } from 'path';
 import request from 'request-promise';
 import { v4 } from 'uuid';
 
 import { runCode } from '../docker/container';
 import { pruneOptions } from '../docker/options';
+import allowed from '../../config/uuids';
+
+const codePath = join(__dirname, '../code');
 
 const router = Router();
-
-const allowed = ['0808', '1109'];
-const codePath = join(__dirname, '../code');
-console.log(codePath);
 
 router.post('/run', ({ body }, res) => {
   const { id, code, hwNum } = body;
 
-  if (allowed.indexOf(id) === -1) {
+  //if (allowed.indexOf(id) === -1) {
+  if (id !== '0808') {
     res.status(400).send('not authorized');
   } else {
     const hwCodePath = join(codePath, `hw${hwNum}`);
@@ -27,7 +27,8 @@ router.post('/run', ({ body }, res) => {
 
     runCode(tempCodePath)
       .then((output) => {
-        res.status(200).send(output);
+        const string = readFileSync(join(tempCodePath, 'output'));
+        res.status(200).send(string);
       })
       .catch((err) => {
         console.error(err);

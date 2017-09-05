@@ -1,6 +1,8 @@
 import brace from 'brace';
+import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 import Slider from 'material-ui/Slider';
+import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
 import React, { Component } from 'react';
 import AceEditor from 'react-ace';
@@ -16,7 +18,8 @@ class Editor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      code: '',
+      code: `${props.hwNum}`,
+      feedback: [],
       fontSize: 12,
       theme: lightTheme,
     };
@@ -30,11 +33,11 @@ class Editor extends Component {
     return (
       <div
         style={{
-          alignItems: 'flex-start',
+          alignItems: 'center',
           display: 'flex',
+          flex: 1,
           height: '100%',
           justifyContent: 'center',
-          width: '100%',
         }}
       >
         <Paper
@@ -93,6 +96,58 @@ class Editor extends Component {
                 margin: 0,
               }}
             />
+          </div>
+          <TextField
+            floatingLabelFocusStyle={{ color: 'orangered' }}
+            floatingLabelStyle={{ color: 'darkgray' }}
+            floatingLabelText="password"
+            style={{ width: '96px' }}
+            type="password"
+            underlineStyle={{ display: 'none' }}
+          />
+          <FlatButton
+            backgroundColor="darkgray"
+            hoverColor="orangered"
+            label="submit"
+            labelStyle={{ color: 'white' }}
+            onClick={() => {
+              fetch('http://localhost:8892/docker/run', {
+                body: JSON.stringify({
+                  code: this.state.code,
+                  id: '0808',
+                  hwNum: this.props.hwNum,
+                }),
+                headers: {
+                  'content-type': 'application/json',
+                },
+                method: 'post',
+              })
+              .then(feedback => feedback.text())
+              .then(feedbackText => {
+                this.setState({
+                  feedback: feedbackText.split('\n'),
+                });
+              })
+              .catch((err) => console.error(err));
+            }}
+            style={{
+              display: 'block',
+              marginLeft: '4px',
+              marginTop: '24px',
+            }}
+          />
+          <div
+            style={{
+              height: '100%',
+              marginTop: '16px',
+              width: '100%',
+            }}
+          >
+            {
+              this.state.feedback.map((line, index) => (
+                <p key={index} style={{ margin: '4px' }}>{line}</p>
+              ))
+            }
           </div>
         </div>
         </Paper>

@@ -21,38 +21,33 @@ import {
   paper,
 } from './styles';
 
-const dates = [
+const assignments = [
   {
-    day: '01',
-    month: '08',
-    year: '2017',
+    dueDate: {
+      day: '28',
+      month: '08',
+      year: '2017',
+    },
   },
   {
-    day: '08',
-    month: '08',
-    year: '2017',
+    dueDate: {
+      day: '04',
+      month: '09',
+      year: '2017',
+    },
   },
   {
-    day: '15',
-    month: '08',
-    year: '2017',
-  },
-  {
-    day: '22',
-    month: '08',
-    year: '2017',
-  },
-  {
-    day: '29',
-    month: '08',
-    year: '2017',
+    dueDate: {
+      day: '11',
+      month: '09',
+      year: '2017',
+    },
   },
 ];
 
 const AssignmentMenu = ({
   assignmentMenuOpen,
-  assignmentOpen,
-  match: { url },
+  match,
   toggleAssignmentMenu,
 }) => (
   assignmentMenuOpen ? (
@@ -61,12 +56,18 @@ const AssignmentMenu = ({
         <ChevronLeft onClick={toggleAssignmentMenu} style={chevronLeft} />
         <Subheader style={assignmentsSH}>Assignments</Subheader>
         {
-          dates.map((date, index) => (
-            <Link to={`${url}/${date.year}${date.month}${date.day}`} key={index} style={menuLink}>
+          assignments.map(({ dueDate }, index) => (
+            <Link
+              to={`${match.url}/${dueDate.year}${dueDate.month}${dueDate.day}`}
+              style={menuLink}
+              key={index}
+            >
               <MenuItem>
                 <div style={{ display: 'flex', width: '96px' }}>
                   <span style={{ flex: '1', color: 'darkgray' }}>{index+1}</span>
-                  <span style={{ color: '#404040' }}>{`${date.month}.${date.day}`}</span>
+                  <span style={{ color: '#404040' }}>
+                    {`${dueDate.month}.${dueDate.day}`}
+                  </span>
                 </div>
               </MenuItem>
             </Link>
@@ -84,9 +85,15 @@ const AssignmentMenu = ({
           <div style={{ height: '23px' }}></div>
         </Subheader>
         {
-          dates.map((date, index) => (
-            <Link to={`${url}/${date.year}${date.month}${date.day}`} style={menuLink} key={index}>
-              <MenuItem style={{ color: '#404040', textAlign: 'center' }}>{index+1}</MenuItem>
+          assignments.map(({ dueDate }, index) => (
+            <Link
+              to={`${match.url}/${dueDate.year}${dueDate.month}${dueDate.day}`}
+              style={menuLink}
+              key={index}
+            >
+              <MenuItem style={{ color: '#404040', textAlign: 'center' }}>
+                {index+1}
+              </MenuItem>
             </Link>
           ))
         }

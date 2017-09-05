@@ -16,6 +16,7 @@ const createOptions = (tempCodePath) => ({
     stopTimeout: 5,    //seconds
   }),
   method: 'post',
+  tty: true,
   url: `${urlBase}/containers/create`,
 });
 

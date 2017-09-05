@@ -1,5 +1,6 @@
 const styles = {
-  body: {
+  classHome: {
+    display: 'flex',
     height: '100%',
   },
 };
