@@ -18,15 +18,18 @@ const Login = ({ location, loggedIn, setLoggedIn }) => {
       <Paper>
         <TextField
           floatingLabelFocusStyle={{ color: 'orangered' }}
-          floatingLabelStyle={{ color: 'darkgray' }}
+          floatingLabelShrinkStyle={{ color: 'orangered' }}
+          floatingLabelStyle={{ color: 'lightgray' }}
           floatingLabelText="username"
-          inputStyle={{ background: 'gray' }}
-          underlineStyle={{ display: 'none' }}
+          style={{ display: 'block' }}
+          underlineFocusStyle={{ borderColor: 'orangered' }}
+          underlineStyle={{ borderColor: 'white' }}
         />
         <TextField
           floatingLabelFocusStyle={{ color: 'orangered' }}
           floatingLabelStyle={{ color: 'darkgray' }}
           floatingLabelText="password"
+          style={{ display: 'block' }}
           type="password"
           underlineStyle={{ display: 'none' }}
         />
