@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route } from 'react-router-dom';
 
-import AuthRoute from '../AuthRoute';
+import AuthRoute from '../authentication/AuthRoute';
 import ClassHome from '../ClassHome/class-home';
 import Home from '../Home/home';
-import Login from '../Login';
+import Login from '../authentication/Login';
 import styles from './styles';
 
 const assignments334 = [
@@ -34,8 +34,9 @@ const assignments334 = [
 
 const Body = () => (
   <div style={styles.body}>
+    <AuthRoute exact path="/" Component={Home} />
     <Route path="/login" component={Login} />
-    <Route
+    <AuthRoute
       path="/cst334"
       component={({ match }) => (
         <ClassHome assignments={assignments334} match={match} />

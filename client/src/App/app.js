@@ -6,20 +6,15 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import Body from '../Body/body';
-import Login from '../Login/login';
+import Login from '../authentication/Login/login';
+import LogoutButton from '../authentication/LogoutButton';
 import Menu from '../Menu';
 import styles from './styles';
 
 const App = ({ drawerOpen, setLoggedIn, toggleDrawer }) => (
   <div style={styles.app}>
     <AppBar
-      iconElementRight={
-        <FlatButton
-          label="logout"
-          onClick={() => setLoggedIn(false)}
-          style={{ color: 'white' }}
-        />
-      }
+      iconElementRight={<LogoutButton />}
       onLeftIconButtonTouchTap={toggleDrawer}
       style={styles.appBar}
       title={<Link to="/" style={styles.title}>Autograde</Link>}

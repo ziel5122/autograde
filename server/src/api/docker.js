@@ -13,6 +13,10 @@ const codePath = join(__dirname, '../code');
 
 const router = Router();
 
+router.get('/docker', (req, res) => {
+  res.send(200));
+});
+
 router.post('/run', ({ body }, res) => {
   const { id, code, hwNum } = body;
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 
 const AuthRoute = ({
-  component: Component,
+  Component,
   loggedIn,
   setPrevious,
   setRedirect,

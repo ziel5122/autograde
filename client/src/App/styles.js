@@ -1,6 +1,8 @@
 const styles = {
   app: {
-    background: 'white',
+    background: 'gray',
+    display: 'flex',
+    flexDirection: 'column',
     height: '100%',
   },
   appBar: {
