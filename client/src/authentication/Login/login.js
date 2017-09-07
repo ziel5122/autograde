@@ -9,8 +9,8 @@ import styles from './styles';
 const login = (username, password, setLoggedIn) => {
   fetch('http://localhost:8892/login/authorize', {
     body: JSON.stringify({
-      password: password,
-      username: username,
+      password,
+      username,
     }),
     headers: {
       'content-type': 'application/json',
@@ -19,7 +19,7 @@ const login = (username, password, setLoggedIn) => {
   })
     .then((res) => {
       if (res.status === 400) {
-        throw new Error("username or password incorrect");
+        throw new Error('username or password incorrect');
       }
       return res.json();
     })
@@ -33,15 +33,19 @@ const login = (username, password, setLoggedIn) => {
     });
 };
 
-const Login = ({ location, loggedIn, setLoggedIn }) => {
+const Login = (props) => {
+  const { location, loggedIn, setLoggedIn } = props;
+
   if (loggedIn) {
     const { from } = location.state || { from: { pathname: '/' } };
     return <Redirect to={from} />;
   }
 
+  console.log('login');
+  console.log(props);
+
   return (
-    <div style={styles.login}>
-      <div style={styles.topSpacer} />
+    <div id="login" style={styles.login}>
       <Paper style={styles.loginPaper}>
         <TextField
           floatingLabelFocusStyle={{ color: 'orangered' }}
@@ -64,19 +68,19 @@ const Login = ({ location, loggedIn, setLoggedIn }) => {
           underlineFocusStyle={{ borderColor: 'orangered' }}
           underlineStyle={{ borderColor: 'white' }}
         />
-      <div style={styles.bottom}>
+        <div style={styles.bottom}>
           <div style={{ flex: 1 }}>
             <FlatButton
-                backgroundColor="darkgray"
-                hoverColor="orangered"
-                onClick={() => {
-                  const username = document.getElementById('username').value;
-                  const password = document.getElementById('password').value;
-                  login(username, password, setLoggedIn);
-                }}
-                label="login"
-                labelStyle={{ color: 'white' }}
-                style={styles.button}
+              backgroundColor="darkgray"
+              hoverColor="orangered"
+              onClick={() => {
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                login(username, password, setLoggedIn);
+              }}
+              label="login"
+              labelStyle={{ color: 'white' }}
+              style={styles.button}
             />
           </div>
           <div style={styles.forgot}>

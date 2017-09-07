@@ -31,7 +31,7 @@ const drawerOpen = (state = false, action) => {
 };
 
 const loggedIn = (
-  state = sessionStorage.getItem('jwt') !== null, 
+  state = sessionStorage.getItem('jwt') !== null,
   action,
 ) => {
   switch (action.type) {

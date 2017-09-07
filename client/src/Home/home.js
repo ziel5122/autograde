@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-const Home = ({ ...rest }) => (
+const Home = () => (
   <div>
     this is Meya is the <b>cutest</b> bape
   </div>

@@ -1,14 +1,14 @@
 import FlatButton from 'material-ui/FlatButton';
 import React from 'react';
 
-const LogoutButton = ({ loggedIn, setLoggedIn }) => (
+const LogoutButton = ({ history, loggedIn, setLoggedIn }) => (
   loggedIn ? (
     <FlatButton
       label="logout"
       onClick={() => {
         sessionStorage.removeItem('jwt');
-        console.log(sessionStorage);
         setLoggedIn(false);
+        history.push('/');
       }}
       style={{ color: 'white' }}
     />

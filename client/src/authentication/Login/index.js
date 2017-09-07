@@ -1,4 +1,3 @@
-import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
@@ -8,7 +7,7 @@ const mapStateToProps = ({ loggedIn }) => ({
   loggedIn,
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   setLoggedIn(loggedIn) {
     dispatch({
       loggedIn,
@@ -17,4 +16,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

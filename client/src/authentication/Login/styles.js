@@ -14,20 +14,18 @@ const styles = {
   login: {
     alignItems: 'center',
     display: 'flex',
+    flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
   },
   loginPaper: {
-    paddingBottom: '24px',
-    paddingLeft: '28px',
-    paddingRight: '28px',
-    paddingTop: '16px',
+    paddingBottom: '48px',
+    paddingLeft: '48px',
+    paddingRight: '48px',
+    paddingTop: '40px',
   },
   textField: {
     display: 'block',
-  },
-  topSpacer: {
-    height: '15vh',
   },
 };
 

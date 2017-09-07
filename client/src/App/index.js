@@ -1,4 +1,3 @@
-import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
@@ -8,14 +7,7 @@ const mapStateToProps = ({ drawerOpen }) => ({
   drawerOpen,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  setLoggedIn(loggedIn) {
-    dispatch({
-      loggedIn,
-      type: 'SET_LOGGED_IN',
-    });
-  },
-
+const mapDispatchToProps = dispatch => ({
   toggleDrawer() {
     dispatch({
       type: 'TOGGLE_DRAWER',

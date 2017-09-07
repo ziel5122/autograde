@@ -1,15 +1,10 @@
-import Divider from 'material-ui/Divider';
 import MenuItem from 'material-ui/MenuItem';
 import Paper from 'material-ui/Paper';
 import Subheader from 'material-ui/Subheader';
-import Assignment from 'material-ui/svg-icons/action/assignment';
 import ChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
 import ChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import v4 from 'uuid/v4';
-
-import styles from './styles';
 
 import {
   assignmentsSH,
@@ -64,7 +59,9 @@ const AssignmentMenu = ({
             >
               <MenuItem>
                 <div style={{ display: 'flex', width: '96px' }}>
-                  <span style={{ flex: '1', color: 'darkgray' }}>{index+1}</span>
+                  <span style={{ flex: '1', color: 'darkgray' }}>
+                    {index + 1}
+                  </span>
                   <span style={{ color: '#404040' }}>
                     {`${dueDate.month}.${dueDate.day}`}
                   </span>
@@ -80,9 +77,9 @@ const AssignmentMenu = ({
       <Paper style={paper} zDepth={2}>
         <ChevronRight onClick={toggleAssignmentMenu} style={chevronRight} />
         <Subheader style={{ padding: 0 }}>
-          <div style={{ height: '23px' }}></div>
-          <div style={{ background: 'orangered', height: '2px' }}></div>
-          <div style={{ height: '23px' }}></div>
+          <div style={{ height: '23px' }} />
+          <div style={{ background: 'orangered', height: '2px' }} />
+          <div style={{ height: '23px' }} />
         </Subheader>
         {
           assignments.map(({ dueDate }, index) => (
@@ -92,7 +89,7 @@ const AssignmentMenu = ({
               key={index}
             >
               <MenuItem style={{ color: '#404040', textAlign: 'center' }}>
-                {index+1}
+                {index + 1}
               </MenuItem>
             </Link>
           ))

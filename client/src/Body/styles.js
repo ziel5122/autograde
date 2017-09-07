@@ -1,5 +1,6 @@
 const styles = {
   body: {
+    display: 'flex',
     height: '100%',
   },
 };

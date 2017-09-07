@@ -35,7 +35,7 @@ const Menu = ({ loggedIn, toggleDrawer }) => (
     <MenuItem primaryText="Report a Problem" />
     <MenuItem style={{ textAlign: 'center' }}>
       <a href="http://github.com/ziel5122/autograde">
-        <img style={{ marginTop: '16px',}}src={github} />
+        <img style={{ marginTop: '16px' }} src={github} alt="github" />
       </a>
     </MenuItem>
   </div>

@@ -1,6 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 import AuthRoute from '../authentication/AuthRoute';
 import ClassHome from '../ClassHome/class-home';
@@ -37,11 +36,11 @@ const Body = () => (
     <AuthRoute exact path="/" Component={Home} />
     <Route path="/login" component={Login} />
     <AuthRoute
+      exact
       path="/cst334"
-      component={({ match }) => (
-        <ClassHome assignments={assignments334} match={match} />
-      )}
+      Component={() => <ClassHome assignments={assignments334} />}
     />
+    <Route path="*" component={null} />
   </div>
 );
 

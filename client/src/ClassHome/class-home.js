@@ -1,6 +1,4 @@
-import Paper from 'material-ui/Paper';
 import React from 'react';
-import { connect } from 'react-redux';
 import { Route, withRouter } from 'react-router-dom';
 
 import AssignmentMenu from '../AssignmentMenu';
@@ -9,12 +7,12 @@ import styles from './styles';
 
 const ClassHome = ({ assignments, match }) => (
   <div style={styles.classHome}>
-    <AssignmentMenu match={match} />
+    <AssignmentMenu />
     {
       assignments.map(({ dueDate: { day, month, year } }, index) => (
         <Route
-          path={`/cst334/${year}${month}${day}`}
-          component={() => <Editor hwNum={index+1} />}
+          path={`${match.url}/${year}${month}${day}`}
+          component={() => <Editor hwNum={index + 1} />}
           key={index}
         />
       ))
@@ -22,4 +20,4 @@ const ClassHome = ({ assignments, match }) => (
   </div>
 );
 
-export default ClassHome;
+export default withRouter(ClassHome);

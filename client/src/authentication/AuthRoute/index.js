@@ -1,4 +1,3 @@
-import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
@@ -8,7 +7,7 @@ const mapStateToProps = ({ loggedIn }) => ({
   loggedIn,
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   setPrevious(previous) {
     dispatch({
       previous,
@@ -24,6 +23,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(AuthRoute)
-);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AuthRoute));
