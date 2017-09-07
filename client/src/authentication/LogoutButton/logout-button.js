@@ -5,7 +5,11 @@ const LogoutButton = ({ loggedIn, setLoggedIn }) => (
   loggedIn ? (
     <FlatButton
       label="logout"
-      onClick={() => setLoggedIn(false)}
+      onClick={() => {
+        sessionStorage.removeItem('jwt');
+        console.log(sessionStorage);
+        setLoggedIn(false);
+      }}
       style={{ color: 'white' }}
     />
   ) : null

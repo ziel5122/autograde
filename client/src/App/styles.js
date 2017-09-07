@@ -1,6 +1,6 @@
 const styles = {
   app: {
-    background: 'gray',
+    background: 'white',
     display: 'flex',
     flexDirection: 'column',
     height: '100%',

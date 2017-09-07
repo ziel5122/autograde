@@ -10,15 +10,9 @@ const AuthRoute = ({
 }) => (
   <Route
     {...rest}
-    render={(props) => {
-      if (loggedIn) {
-        return <Component {...props} />;
-      } else {
-        setPrevious(props.location);
-        console.log(props.location);
-        return <Redirect to="/login" />;
-      }
-    }}
+    render={(props) => (
+      loggedIn ? <Component {...props} /> : <Redirect to="/login" />
+    )}
   />
 );
 

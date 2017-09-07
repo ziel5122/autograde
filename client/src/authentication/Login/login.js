@@ -6,6 +6,33 @@ import { Redirect } from 'react-router-dom';
 
 import styles from './styles';
 
+const login = (username, password, setLoggedIn) => {
+  fetch('http://localhost:8892/login/authorize', {
+    body: JSON.stringify({
+      password: password,
+      username: username,
+    }),
+    headers: {
+      'content-type': 'application/json',
+    },
+    method: 'post',
+  })
+    .then((res) => {
+      if (res.status === 400) {
+        throw new Error("username or password incorrect");
+      }
+      return res.json();
+    })
+    .then((json) => {
+      sessionStorage.setItem('jwt', json.token);
+      setLoggedIn(true);
+    })
+    .catch((err) => {
+      console.log('fail');
+      console.log(err);
+    });
+};
+
 const Login = ({ location, loggedIn, setLoggedIn }) => {
   if (loggedIn) {
     const { from } = location.state || { from: { pathname: '/' } };
@@ -15,36 +42,46 @@ const Login = ({ location, loggedIn, setLoggedIn }) => {
   return (
     <div style={styles.login}>
       <div style={styles.topSpacer} />
-      <Paper>
+      <Paper style={styles.loginPaper}>
         <TextField
           floatingLabelFocusStyle={{ color: 'orangered' }}
           floatingLabelShrinkStyle={{ color: 'orangered' }}
-          floatingLabelStyle={{ color: 'lightgray' }}
+          floatingLabelStyle={{ color: 'darkgray' }}
           floatingLabelText="username"
-          style={{ display: 'block' }}
+          id="username"
+          style={styles.textField}
           underlineFocusStyle={{ borderColor: 'orangered' }}
           underlineStyle={{ borderColor: 'white' }}
         />
         <TextField
           floatingLabelFocusStyle={{ color: 'orangered' }}
+          floatingLabelShrinkStyle={{ color: 'orangered' }}
           floatingLabelStyle={{ color: 'darkgray' }}
           floatingLabelText="password"
-          style={{ display: 'block' }}
+          id="password"
+          style={styles.textField}
           type="password"
-          underlineStyle={{ display: 'none' }}
+          underlineFocusStyle={{ borderColor: 'orangered' }}
+          underlineStyle={{ borderColor: 'white' }}
         />
-        <div style={{ display: 'flex', flex: 1 , width: '100%'}}>
+      <div style={styles.bottom}>
           <div style={{ flex: 1 }}>
             <FlatButton
                 backgroundColor="darkgray"
                 hoverColor="orangered"
-                onClick={() => setLoggedIn(true)}
+                onClick={() => {
+                  const username = document.getElementById('username').value;
+                  const password = document.getElementById('password').value;
+                  login(username, password, setLoggedIn);
+                }}
                 label="login"
                 labelStyle={{ color: 'white' }}
                 style={styles.button}
             />
           </div>
-          <div style={styles.forgot}>Forgot your<br />password?</div>
+          <div style={styles.forgot}>
+            Forgot your<br />password?
+          </div>
         </div>
       </Paper>
     </div>

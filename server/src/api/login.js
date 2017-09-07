@@ -18,9 +18,7 @@ router.post('/authorize', ({ body }, res) => {
   const { username, password } = body;
 
   client.hgetall(username, (err, obj) => {
-    const { passwordHash } = obj;
-
-    if (obj && bcrypt.compareSync(password, passwordHash)) {
+    if (obj && bcrypt.compareSync(password, obj.passwordHash)) {
       const token = sign({ username }, jwtConfig.secret);
       delete obj.passwordHash;
       res.status(200).send({ token, obj });

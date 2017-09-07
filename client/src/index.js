@@ -12,6 +12,7 @@ import reducers from './redux/reducers';
 const store = createStore(reducers);
 
 console.log(store.getState());
+console.log(sessionStorage);
 
 const muiTheme = getMuiTheme({
   slider: {
