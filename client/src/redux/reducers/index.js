@@ -30,6 +30,16 @@ const drawerOpen = (state = false, action) => {
   }
 };
 
+const hwNum = (state = 3, action) => {
+  switch (action.type) {
+    case 'SET_HW_NUM':
+      return action.hwNum;
+
+    default:
+      return state;
+  }
+};
+
 const loggedIn = (
   state = sessionStorage.getItem('jwt') !== null,
   action,
@@ -47,5 +57,6 @@ export default combineReducers({
   assignmentMenuOpen,
   assignmentOpen,
   drawerOpen,
+  hwNum,
   loggedIn,
 });

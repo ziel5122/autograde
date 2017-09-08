@@ -33,13 +33,12 @@ const assignments334 = [
 
 const Body = () => (
   <div style={styles.body}>
-    <AuthRoute exact path="/" Component={Home} />
-    <Route path="/login" component={Login} />
     <AuthRoute
       exact
-      path="/cst334"
+      path="/"
       Component={() => <ClassHome assignments={assignments334} />}
     />
+    <Route path="/login" component={Login} />
     <Route path="*" component={null} />
   </div>
 );
