@@ -2,7 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 
 import AuthRoute from '../authentication/AuthRoute';
-import ClassHome from '../ClassHome/class-home';
+import ClassHome from './ClassHome/class-home';
 import Home from '../Home/home';
 import Login from '../authentication/Login';
 import styles from './styles';
@@ -34,9 +34,9 @@ const assignments334 = [
 const Body = () => (
   <div style={styles.body}>
     <AuthRoute
+      Component={() => <ClassHome assignments={assignments334} />}
       exact
       path="/"
-      Component={() => <ClassHome assignments={assignments334} />}
     />
     <Route path="/login" component={Login} />
     <Route path="*" component={null} />

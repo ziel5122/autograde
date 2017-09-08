@@ -3,7 +3,7 @@ import FlatButton from 'material-ui/FlatButton';
 import MenuItem from 'material-ui/MenuItem';
 import React, { Component } from 'react';
 
-import assignments from '../../../data/assignments';
+import assignments from '../../../../data/assignments';
 import styles from './styles';
 
 const assignmentMenu = assignments.map(({ hwNum, name }) => (
