@@ -19,11 +19,6 @@ app.get('*', (req, res) => {
   res.send('missed it dufus2');
 });
 
-const httpsServer = https.createServer({
-  key: readFileSync(join(__dirname, '../private.key')),
-  cert: readFileSync(join(__dirname, '../certificate.pem')),
-}, app)
-
-httpsServer.listen(8892, (err) => {
+app.listen(8892, (err) => {
   if (err) console.error(err);
 });
