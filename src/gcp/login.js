@@ -2,7 +2,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const datastore = require('./datastore');
-
 const login = (username, password) => (
   new Promise((resolve, reject) => {
     const key = datastore.key(['User', username]);

@@ -1,6 +1,7 @@
 const diff = require('diff');
 const fsExtra = require('fs-extra');
 const join = require('path').join;
+const request = require('request-promise');
 const Router = require('express').Router;
 const v4 = require('uuid').v4;
 const verify = require('jsonwebtoken').verify;
@@ -26,7 +27,6 @@ router.get('/docker', (req, res) => {
 
 router.post('/run', ({ body }, res) => {
   const { jwt, code, hwNum } = body;
-  console.log('here');
 
   verify(jwt, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
@@ -48,18 +48,19 @@ router.post('/run', ({ body }, res) => {
           'utf-8'
         );
         const diff = diffLines(output, student_output);
+        console.log(diff);
         const result = diff.length === 1 && diff[0].added === undefined &&
           diff[0].removed === undefined ?
             'correct' : 'incorrect';
+        request(options.pruneOptions);
+        removeSync(tempCodePath);
         res.status(200).send(result);
       })
       .catch((err) => {
         console.error(err);
-        res.status(500).send(err);
-      })
-      .then(() => {
         request(options.pruneOptions);
         removeSync(tempCodePath);
+        res.status(500).send(err);
       });
   });
 });

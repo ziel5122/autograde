@@ -13,8 +13,6 @@ router.post('/authorize', ({ body }, res) => {
 
   login(username, password)
     .then(({ status, statusText }) => {
-      console.log(status);
-      console.log(statusText);
       res.status(status).send(statusText);
     })
     .catch((err) => {

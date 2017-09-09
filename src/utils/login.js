@@ -1,7 +1,8 @@
 const loginStatusHandler = (response) => {
-  const { status, statusText } = response;
-  if (response.status === 200) return response;
-  throw new Error(`${status}: ${statusText}`);
+  const { status } = response;
+  const text = response.text();
+  if (response.status === 200) return text;
+  throw new Error(`${status}: ${text}`);
 };
 
 const login = (username, password, setLoggedIn) => {
@@ -16,7 +17,7 @@ const login = (username, password, setLoggedIn) => {
     method: 'post',
   })
     .then(loginStatusHandler)
-    .then(({ statusText }) => {
+    .then((statusText) => {
       sessionStorage.setItem('jwt', statusText);
       setLoggedIn(true);
     })

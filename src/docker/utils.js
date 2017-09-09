@@ -19,4 +19,4 @@ const runCode = (tempPath) => (
   })
 );
 
-module.export = runCode;
+module.exports = runCode;
