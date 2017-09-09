@@ -41,7 +41,7 @@ const hwNum = (state = 3, action) => {
 };
 
 const loggedIn = (
-  state = sessionStorage.getItem('jwt') !== null,
+  state = typeof window !== 'undefined' ? sessionStorage.getItem('jwt') !== null : false,
   action,
 ) => {
   switch (action.type) {

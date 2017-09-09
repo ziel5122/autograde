@@ -13,8 +13,22 @@ import 'brace/mode/c_cpp';
 import 'brace/theme/chrome';
 import 'brace/theme/terminal';
 
+import config from '../../../exclude/config';
 import Header from './Header';
 import styles from './styles';
+
+const background = (feedback) => {
+  switch (feedback) {
+    case 'correct':
+      return 'green';
+
+    case 'incorrect':
+      return 'red';
+
+    default:
+      return 'white';
+  }
+};
 
 class ClassHome extends Component {
   state = {
@@ -38,6 +52,7 @@ class ClassHome extends Component {
         <Paper
           style={{
             alignItems: 'center',
+            background: background(this.state.feedback),
             display: 'flex',
             justifyContent: 'center',
             padding: '16px'
@@ -45,18 +60,7 @@ class ClassHome extends Component {
         >
           <div
             style={{
-              background: () => {
-                switch (this.state.feedback) {
-                  case 'correct':
-                    return 'green';
-
-                  case 'incorrect':
-                    return 'gred';
-
-                  default:
-                    return 'white';
-                }
-              },
+              background: 'white',
               padding: '4px',
             }}
           >
@@ -76,11 +80,11 @@ class ClassHome extends Component {
                 label="submit"
                 labelStyle={{ color: 'white' }}
                 onClick={() => {
-                  fetch('http://localhost:8892/docker/run', {
+                  fetch(`https://${config.serverIp}:8892/docker/run`, {
                     body: JSON.stringify({
                       code: this.state.code,
                       hwNum: 3,
-                      id: '0808',
+                      jwt: sessionStorage.getItem('jwt'),
                     }),
                     headers: {
                       'content-type': 'application/json',
@@ -93,6 +97,7 @@ class ClassHome extends Component {
                 }}
                 style={styles.button}
               />
+            <div>{this.state.feedback}</div>
             </div>
           </div>
         </Paper>

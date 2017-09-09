@@ -4,7 +4,7 @@ import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import React from 'react';
 
-import github from '../../public/GitHub-Mark-32px.png';
+import github from '../../img/GitHub-Mark-32px.png';
 
 const Menu = () => (
   <IconMenu

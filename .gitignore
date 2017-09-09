@@ -1,8 +1,9 @@
-client/dist
-client/config
+client/exclude
+client/heroku
 
 server/code/hw*
 server/config
 server/dist
+server/temp
 
 node_modules

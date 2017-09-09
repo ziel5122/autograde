@@ -4,10 +4,11 @@ import TextField from 'material-ui/TextField';
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
+import config from '../../../exclude/config';
 import styles from './styles';
 
 const login = (username, password, setLoggedIn) => {
-  fetch('http://localhost:8892/login/authorize', {
+  fetch(`https://${config.serverIp}:8892/login/authorize`, {
     body: JSON.stringify({
       password,
       username,
@@ -40,9 +41,6 @@ const Login = (props) => {
     const { from } = location.state || { from: { pathname: '/' } };
     return <Redirect to={from} />;
   }
-
-  console.log('login');
-  console.log(props);
 
   return (
     <div id="login" style={styles.login}>

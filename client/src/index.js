@@ -11,9 +11,6 @@ import reducers from './reducers';
 
 const store = createStore(reducers);
 
-console.log(store.getState());
-console.log(sessionStorage);
-
 const muiTheme = getMuiTheme({
   slider: {
     selectionColor: 'orangered',

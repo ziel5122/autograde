@@ -9,15 +9,16 @@ const SERVER_DIR = join(__dirname, 'src');
 
 const externals = {};
 
+const exclude = ['redis'];
+
 readdirSync('node_modules')
-  .filter(moduleName => moduleName === 'redis')
+  .filter(moduleName => exclude.includes(moduleName))
   .forEach(moduleName => externals[moduleName] = `commonjs ${moduleName}`);
 
 const config = {
   ...common,
   externals,
   plugins: [
-    new UglifyJSPlugin(),
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
     }),
