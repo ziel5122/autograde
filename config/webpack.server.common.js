@@ -26,4 +26,4 @@ const config = {
   target: 'node',
 };
 
-export default config;
+module.exports = config;

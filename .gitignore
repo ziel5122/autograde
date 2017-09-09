@@ -1,6 +1,8 @@
 client/exclude
 client/heroku
 
+dist
+
 server/code/hw*
 server/config
 server/dist

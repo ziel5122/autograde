@@ -13,8 +13,11 @@ import 'brace/mode/c_cpp';
 import 'brace/theme/chrome';
 import 'brace/theme/terminal';
 
-import config from '../../../exclude/config';
 import Header from './Header';
+
+const buttonStyles = {
+    marginTop: '24px',
+};
 
 const classHomeStyles = {
   alignItems: 'center',
@@ -44,16 +47,6 @@ class ClassHome extends Component {
   };
 
   render() {
-    const assignmentRoutes = this.props.assignments.map(
-      ({ dueDate: { day, month, year } }, index) => (
-        <Route
-          path={`${this.props.match.url}/${year}${month}${day}`}
-          component={() => <Editor hwNum={index + 1} />}
-          key={index}
-        />
-      )
-    );
-
     return (
       <div style={classHomeStyles}>
         <Paper
@@ -87,7 +80,7 @@ class ClassHome extends Component {
                 label="submit"
                 labelStyle={{ color: 'white' }}
                 onClick={() => {
-                  fetch(`https://${config.serverIp}:8892/docker/run`, {
+                  fetch(`/docker/run`, {
                     body: JSON.stringify({
                       code: this.state.code,
                       hwNum: 3,
@@ -102,7 +95,7 @@ class ClassHome extends Component {
                     .then(text => this.setState({ feedback: text }))
                     .catch(err => console.error(err));
                 }}
-                style={styles.button}
+                style={buttonStyles}
               />
             <div>{this.state.feedback}</div>
             </div>

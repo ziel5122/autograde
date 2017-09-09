@@ -1,6 +1,8 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
 import Header from './Header';
+import Body from './Body';
 
 const appStyles = {
   height: '100%',
@@ -9,7 +11,8 @@ const appStyles = {
 const App = () => (
   <div style={appStyles}>
     <Header />
+    <Body />
   </div>
 );
 
-export default App;
+export default withRouter(App);

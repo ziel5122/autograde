@@ -4,20 +4,29 @@
   "description": "automated grading for the Operating Systems class at CSUMB",
   "main": "src/index.js",
   "scripts": {
+    "build": "node scripts/build",
+    "build:client": "webpack --config config/webpack.client.prod.js",
+    "build:server": "webpack --config config/webpack.server.prod.js",
     "start": "node scripts/start",
     "test": "jest"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.0",
+    "diff": "^3.3.1",
     "express": "^4.15.4",
+    "fs-extra": "^2.0.0",
     "jsonwebtoken": "^8.0.0",
     "material-ui": "^0.19.1",
     "react": "^15.6.1",
+    "react-ace": "^5.2.0",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "request": "^2.81.0",
+    "request-promise": "^4.2.1",
+    "uuid": "^3.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -28,6 +37,7 @@
     "file-loader": "^0.11.2",
     "url-loader": "^0.5.9",
     "webpack": "^3.5.6",
+    "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-middleware": "^1.12.0",
     "webpack-hot-middleware": "^2.19.1"
   },

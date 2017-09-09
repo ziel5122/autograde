@@ -5,7 +5,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 
-import config from '../../../exclude/config';
+import { login } from '../utils/login';
 
 const bottomStyles = {
   display: 'flex',
@@ -41,33 +41,6 @@ const textFieldStyles = {
   display: 'block',
 };
 
-const login = (username, password, setLoggedIn) => {
-  fetch(`https://${config.serverIp}:8892/login/authorize`, {
-    body: JSON.stringify({
-      password,
-      username,
-    }),
-    headers: {
-      'content-type': 'application/json',
-    },
-    method: 'post',
-  })
-    .then((res) => {
-      if (res.status === 400) {
-        throw new Error('username or password incorrect');
-      }
-      return res.json();
-    })
-    .then((json) => {
-      sessionStorage.setItem('jwt', json.token);
-      setLoggedIn(true);
-    })
-    .catch((err) => {
-      console.log('fail');
-      console.log(err);
-    });
-};
-
 const Login = (props) => {
   const { location, loggedIn, setLoggedIn } = props;
 
@@ -77,15 +50,15 @@ const Login = (props) => {
   }
 
   return (
-    <div id="login" style={styles.login}>
-      <Paper style={styles.loginPaper}>
+    <div id="login" style={loginStyles}>
+      <Paper style={loginPaperStyles}>
         <TextField
           floatingLabelFocusStyle={{ color: 'orangered' }}
           floatingLabelShrinkStyle={{ color: 'orangered' }}
           floatingLabelStyle={{ color: 'darkgray' }}
           floatingLabelText="username"
           id="username"
-          style={styles.textField}
+          style={textFieldStyles}
           underlineFocusStyle={{ borderColor: 'orangered' }}
           underlineStyle={{ borderColor: 'white' }}
         />
@@ -95,12 +68,12 @@ const Login = (props) => {
           floatingLabelStyle={{ color: 'darkgray' }}
           floatingLabelText="password"
           id="password"
-          style={styles.textField}
+          style={textFieldStyles}
           type="password"
           underlineFocusStyle={{ borderColor: 'orangered' }}
           underlineStyle={{ borderColor: 'white' }}
         />
-        <div style={styles.bottom}>
+        <div style={bottomStyles}>
           <div style={{ flex: 1 }}>
             <FlatButton
               backgroundColor="darkgray"
@@ -112,10 +85,10 @@ const Login = (props) => {
               }}
               label="login"
               labelStyle={{ color: 'white' }}
-              style={styles.button}
+              style={buttonStyles}
             />
           </div>
-          <div style={styles.forgot}>
+          <div style={forgotStyles}>
             Forgot your<br />password?
           </div>
         </div>

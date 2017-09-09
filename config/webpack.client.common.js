@@ -11,7 +11,12 @@ const config = {
         include: APP_DIR,
         test: /\.js$/,
         use: [
-          'babel-loader',
+          {
+            loader: 'babel-loader',
+            query: {
+              cacheDirectory: true,
+            },
+          },
         ],
       },
       {

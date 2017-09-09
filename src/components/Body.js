@@ -1,10 +1,9 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 
 import AuthRoute from '../containers/AuthRoute';
-import ClassHome from './ClassHome/class-home';
+import ClassHome from '../containers/ClassHome';
 import Login from '../containers/Login';
-import styles from './styles';
 
 const bodyStyles = {
   display: 'flex',
@@ -14,7 +13,7 @@ const bodyStyles = {
 const Body = () => (
   <div style={bodyStyles}>
     <AuthRoute
-      Component={() => <ClassHome assignments={assignments334} />}
+      Component={() => <ClassHome />}
       exact
       path="/"
     />
@@ -23,4 +22,4 @@ const Body = () => (
   </div>
 );
 
-export default Body;
+export default withRouter(Body);

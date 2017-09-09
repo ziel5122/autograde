@@ -13,4 +13,4 @@ const config = Object.assign({}, common, {
   externals,
 });
 
-export default config;
+module.exports = config;
