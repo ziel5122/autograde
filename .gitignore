@@ -1,9 +1,13 @@
-client/exclude
-client/heroku
+code
 
-server/code/hw*
-server/config
-server/dist
-server/temp
+config/autograde-d565d3c6192b.json
+
+dist
 
 node_modules
+
+reports
+
+temp
+
+.env
