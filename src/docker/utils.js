@@ -18,3 +18,5 @@ const runCode = (tempPath) => (
       .catch(err => reject(err));
   })
 );
+
+module.export = runCode;

@@ -6,8 +6,10 @@ import ClassHome from '../containers/ClassHome';
 import Login from '../containers/Login';
 
 const bodyStyles = {
+  alignItems: 'center',
   display: 'flex',
-  height: '100%',
+  flex: 1,
+  justifyContent: 'flex',
 };
 
 const Body = () => (

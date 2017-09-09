@@ -3,15 +3,18 @@
 client/exclude
 client/heroku
 
+code
+
 config/334-users.csv
 config/autograde-d565d3c6192b.json
 config/keys.js
 
 dist
 
-server/code/hw*
+node_modules
+
 server/config
 server/dist
 server/temp
 
-node_modules
+temp

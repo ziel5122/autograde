@@ -6,6 +6,7 @@ const v4 = require('uuid').v4;
 const verify = require('jsonwebtoken').verify;
 
 const options = require('../docker/options');
+const runCode = require('../docker/utils');
 
 const diffChars = diff.diffChars;
 const diffLines = diff.diffLines;
@@ -15,7 +16,7 @@ const readFileSync = fsExtra.readFileSync;
 const removeSync = fsExtra.removeSync;
 const writeFileSync = fsExtra.writeFileSync;
 
-const jwtSecret = require('../../config/keys').JWT_SECRET;
+const CODE_PATH = join(__dirname, '../../code');
 
 const router = Router();
 
@@ -27,14 +28,14 @@ router.post('/run', ({ body }, res) => {
   const { jwt, code, hwNum } = body;
   console.log('here');
 
-  verify(jwt, jwtSecret, (err, decoded) => {
+  verify(jwt, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
       console.error(err);
       res.status(400).send('not authorized');
     }
 
-    const hwCodePath = join(codePath, `hw${hwNum}`);
-    const tempCodePath = join(__dirname, `../temp/${v4()}`);
+    const hwCodePath = join(CODE_PATH, `hw${hwNum}`);
+    const tempCodePath = join(__dirname, `../../temp/${v4()}`);
 
     copySync(hwCodePath, tempCodePath);
     writeFileSync(join(tempCodePath, 'student_src.c'), code);
@@ -54,10 +55,10 @@ router.post('/run', ({ body }, res) => {
       })
       .catch((err) => {
         console.error(err);
-        res.sendStatus(500);
+        res.status(500).send(err);
       })
       .then(() => {
-        request(pruneOptions);
+        request(options.pruneOptions);
         removeSync(tempCodePath);
       });
   });
