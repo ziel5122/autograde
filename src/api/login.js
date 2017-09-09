@@ -1,5 +1,6 @@
 const Router = require('express').Router;
-const sign = require('jsonwebtoken').sign;
+
+const login = require('../gcp/login');
 
 const router = Router();
 
@@ -10,12 +11,16 @@ router.get('/login', (req, res) => {
 router.post('/authorize', ({ body }, res) => {
   const { username, password } = body;
 
-  if (username === 'austin' && password === 'lladnar') {
-    const token = sign({ username }, 'kitty');
-    res.status(200).send(token);
-  } else {
-    res.status(400).send('username or password incorrect');
-  }
+  login(username, password)
+    .then(({ status, statusText }) => {
+      console.log(status);
+      console.log(statusText);
+      res.status(status).send(statusText);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send(err);
+    });
 });
 
 module.exports = router;

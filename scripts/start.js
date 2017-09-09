@@ -1,3 +1,4 @@
+require('dotenv').config();
 const devMiddleware = require('webpack-dev-middleware');
 const express = require('express');
 const hotMiddleware = require('webpack-hot-middleware');

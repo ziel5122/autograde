@@ -1,10 +1,11 @@
 const diff = require('diff');
 const fsExtra = require('fs-extra');
 const join = require('path').join;
-const request = require('request-promise');
 const Router = require('express').Router;
 const v4 = require('uuid').v4;
 const verify = require('jsonwebtoken').verify;
+
+const options = require('../docker/options');
 
 const diffChars = diff.diffChars;
 const diffLines = diff.diffLines;
@@ -14,74 +15,7 @@ const readFileSync = fsExtra.readFileSync;
 const removeSync = fsExtra.removeSync;
 const writeFileSync = fsExtra.writeFileSync;
 
-const headers = {
-  'content-type': 'application/json',
-  host: '127.0.0.1',
-};
-
-const urlBase = 'http://unix:/var/run/docker.sock:/v1.30';
-
-const createOptions = (tempCodePath) => ({
-  headers,
-  body: JSON.stringify({
-    cmd: ['./code/script.sh'],
-    hostConfig: {
-      binds: [`${tempCodePath}:/code`],
-    },
-    image: 'autograde',
-    stopTimeout: 5,    //seconds
-  }),
-  method: 'post',
-  tty: true,
-  url: `${urlBase}/containers/create`,
-});
-
-const deleteOptions = (id) => ({
-  headers,
-  method: 'delete',
-  url: `${urlBase}/containers/${id}`,
-});
-
-const logsOptions = (id) => ({
-  headers,
-  url: `${urlBase}/containers/${id}/logs?stdout=1&stderr=1`,
-  method: 'get',
-});
-
-const pruneOptions = {
-  headers,
-  method: 'post',
-  url: `${urlBase}/containers/prune`,
-}
-
-const startOptions = (id) => ({
-  headers,
-  url: `${urlBase}/containers/${id}/start`,
-  method: 'post',
-});
-
-const waitOptions = (id) => ({
-  headers,
-  method: 'post',
-  url: `${urlBase}/containers/${id}/wait`,
-});
-
-const runCode = (tempPath) => (
-  new Promise((resolve, reject) => {
-    request(createOptions(tempPath))
-      .then((body) => {
-        const { Id, Warnings } = JSON.parse(body);
-        if (Warnings) console.log(Warnings);
-        return Id;
-      })
-      .then((Id) => {
-        request(startOptions(Id))
-          .then(() => request(waitOptions(Id)))
-          .then(() => resolve());
-      })
-      .catch(err => reject(err));
-  })
-);
+const jwtSecret = require('../../config/keys').JWT_SECRET;
 
 const router = Router();
 
@@ -93,7 +27,7 @@ router.post('/run', ({ body }, res) => {
   const { jwt, code, hwNum } = body;
   console.log('here');
 
-  verify(jwt, 'kitty', (err, decoded) => {
+  verify(jwt, jwtSecret, (err, decoded) => {
     if (err) {
       console.error(err);
       res.status(400).send('not authorized');

@@ -14,13 +14,18 @@ const login = (username, password, setLoggedIn) => {
     },
     method: 'post',
   })
-    .then(fetchStatusHandler)
-    .then(res => res.text())
-    .then((token) => {
-      sessionStorage.setItem('jwt', token);
-      setLoggedIn(true);
+    .then(res => {
+      console.log('utils');
+      console.log('success');
+      console.log(res.status);
+      console.log(res.statusText);
+      return res.text();
     })
-    .catch(err => console.log(err));
+    .then(text => console.log(text))
+    .catch(err => {
+      console.log('utils');
+      console.error(err)
+    });
 };
 
 export { fetchStatusHandler, login };

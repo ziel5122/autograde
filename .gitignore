@@ -1,5 +1,11 @@
+.env
+
 client/exclude
 client/heroku
+
+config/334-users.csv
+config/autograde-d565d3c6192b.json
+config/keys.js
 
 dist
 
