@@ -1,5 +1,5 @@
-import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import AssignmentMenu from './assignment-menu';
 
@@ -8,7 +8,7 @@ const mapStateToProps = ({ assignmentMenuOpen, assignmentOpen }) => ({
   assignmentOpen,
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   toggleAssignmentMenu() {
     dispatch({
       type: 'TOGGLE_ASSIGNMENT_MENU',
@@ -16,4 +16,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AssignmentMenu);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(AssignmentMenu),
+);

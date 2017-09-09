@@ -7,11 +7,9 @@ import { BrowserRouter } from 'react-router-dom';
 import { createStore } from 'redux';
 
 import App from './App';
-import reducers from './redux/reducers';
+import reducers from './reducers';
 
 const store = createStore(reducers);
-
-console.log(store.getState());
 
 const muiTheme = getMuiTheme({
   slider: {
@@ -23,7 +21,7 @@ const muiTheme = getMuiTheme({
 const Main = () => (
   <MuiThemeProvider muiTheme={muiTheme}>
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter basename="/">
         <App />
       </BrowserRouter>
     </Provider>

@@ -1,19 +1,45 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
-import AuthRoute from '../AuthRoute';
-import DMHome from '../data-mining/Home/home.js';
+import AuthRoute from '../authentication/AuthRoute';
+import ClassHome from './ClassHome/class-home';
 import Home from '../Home/home';
-import Login from '../Login';
-import OSHome from '../operating-systems/Home';
+import Login from '../authentication/Login';
 import styles from './styles';
+
+const assignments334 = [
+  {
+    dueDate: {
+      day: '28',
+      month: '08',
+      year: '2017',
+    },
+  },
+  {
+    dueDate: {
+      day: '04',
+      month: '09',
+      year: '2017',
+    },
+  },
+  {
+    dueDate: {
+      day: '11',
+      month: '09',
+      year: '2017',
+    },
+  },
+];
 
 const Body = () => (
   <div style={styles.body}>
-    <AuthRoute exact path="/" component={Home} />
+    <AuthRoute
+      Component={() => <ClassHome assignments={assignments334} />}
+      exact
+      path="/"
+    />
     <Route path="/login" component={Login} />
-    <Route path="/cst334" component={OSHome} />
-    <Route path="/cst463" component={DMHome} />
+    <Route path="*" component={null} />
   </div>
 );
 
