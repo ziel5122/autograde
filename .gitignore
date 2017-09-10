@@ -1,12 +1,15 @@
 code
 
-config/autograde-d565d3c6192b.json
+config/cst334_fa17.csv
+config/datastore-credentials.json
 
 dist
 
 node_modules
 
 reports
+
+scripts/create-users.js
 
 temp
 

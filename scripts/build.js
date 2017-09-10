@@ -31,3 +31,4 @@ copySync(INDEX_PATH, join(DIST_DIR, 'src/index.html'));
 copySync(PACKAGE_JSON_PATH, join(DIST_DIR, 'package.json'))
 copySync(SERVER_PATH, join(DIST_DIR, 'src/server.js'));
 copySync(UTILS_DIR, join(DIST_DIR, 'src/utils'));
+copySync(join(__dirname, '../config/app.yml'), join(DIST_DIR, 'app.yaml'));

@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const datastore = require('./datastore');
 const login = (username, password) => (
   new Promise((resolve, reject) => {
-    const key = datastore.key(['User', username]);
+    const key = datastore.key(['user', username]);
     datastore.get(key, (err, entity) => {
       if (err) return reject(err);
       if (typeof entity === 'undefined') {
