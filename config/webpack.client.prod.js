@@ -17,7 +17,7 @@ const config = Object.assign({}, common, {
   },
   output: {
     filename: '[name].bundle.js',
-    path: join(__dirname, '../dist/static'),
+    path: join(__dirname, '../dist/src/static'),
   },
   plugins: [
     new UglifyJSPlugin(),
@@ -28,7 +28,7 @@ const config = Object.assign({}, common, {
     }),
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
-      reportFilename: '../../reports/client-report.html',
+      reportFilename: '../../../reports/client-report.html',
       openAnalyzer: false,
     }),
     new CommonsChunkPlugin({

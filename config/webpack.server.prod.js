@@ -1,16 +1,22 @@
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
 const join = require('path').join;
+const readdirSync = require('fs-extra').readdirSync;
 const webpack = require('webpack');
 
 const DefinePlugin = webpack.DefinePlugin;
-const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 
 const common = require('./webpack.server.common');
 
+const externals = {};
+
+readdirSync('node_modules')
+  .filter(moduleName => moduleName === '@google-cloud/datastore')
+  .forEach(moduleName => externals[moduleName] = `commonjs ${moduleName}`);
+
 const config = Object.assign({}, common, {
+  externals,
   plugins: [
-    new UglifyJsPlugin(),
     new DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('production'),

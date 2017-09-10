@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const join = require('path').join;
 const json = require('body-parser').json;
 const express = require('express');
