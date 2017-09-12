@@ -1,10 +1,10 @@
 const fs = require('fs-extra');
-const join = require('path').join;
+const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const webpack = require('webpack');
 const WebpackBundleAnalyzer = require('webpack-bundle-analyzer');
 
-const APP_DIR = join(__dirname, '../server/src');
+const APP_DIR = path.join(__dirname, '../server/src');
 
 const externals = {};
 
@@ -17,13 +17,20 @@ const config = {
   entry: {
     server: './server.js',
   },
-  //externals,
+  externals,
   module: {
     rules: [
       {
         include: APP_DIR,
-        use: 'babel-loader',
         test: /\.js$/,
+        use: [
+          {
+            loader: 'babel-loader',
+            query: {
+              cacheDirectory: true,
+            },
+          },
+        ],
       },
     ],
   },
@@ -32,7 +39,7 @@ const config = {
   },
   output: {
     filename: '[name].bundle.js',
-    path: join(__dirname, '../dist'),
+    path: path.join(__dirname, '../dist'),
   },
   plugins: [
     new webpack.DefinePlugin({

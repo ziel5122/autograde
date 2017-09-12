@@ -13,13 +13,14 @@ const STATIC_PATH = join(__dirname, 'static');
 
 const app = express();
 
+app.use(express.static(STATIC_PATH));
+
 app.use(json());
 
 app.use('/docker', docker);
 
 app.use('/login', login);
 
-app.use(express.static(STATIC_PATH));
 
 app.get('*', (req, res) => {
   res.sendFile(INDEX_PATH)
