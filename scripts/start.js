@@ -7,8 +7,8 @@ const json = require('body-parser').json;
 const webpack = require('webpack');
 
 const config = require('../config/webpack.client.dev');
-const docker = require('../src/api/docker');
-const login = require('../src/api/login')
+const docker = require('../server/src/api/docker');
+const login = require('../server/src/api/login')
 
 const INDEX_PATH = join(__dirname, '../public/dev.html');
 const PORT = process.env.PORT || 3000;

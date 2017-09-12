@@ -1,7 +1,4 @@
 {
-  "name": "autograde",
-  "version": "1.3.0",
-  "description": "automated grading for the Operating Systems class at CSUMB",
   "scripts": {
     "build": "node scripts/build",
     "build:client": "webpack --config config/webpack.client.prod.js",
