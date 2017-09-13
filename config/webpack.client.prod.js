@@ -13,7 +13,7 @@ const config = Object.assign({}, common, {
   },
   output: {
     filename: '[name].bundle.js',
-    path: path.join(__dirname, '../dist/src/static'),
+    path: path.join(__dirname, '../dist/static'),
   },
   plugins: common.plugins.concat([
     new UglifyJSPlugin(),
@@ -24,7 +24,7 @@ const config = Object.assign({}, common, {
     }),
     new webpackBundleAnalyzer.BundleAnalyzerPlugin({
       analyzerMode: 'static',
-      reportFilename: '../../../reports/client-report.html',
+      reportFilename: '../../reports/client-report.html',
       openAnalyzer: false,
     }),
   ]),

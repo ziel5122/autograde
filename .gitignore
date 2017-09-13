@@ -1,9 +1,13 @@
+autograde.zip
+
 code
 
 config/cst334_fa17.csv
 config/datastore-credentials.json
 
 dist
+
+msh.c
 
 node_modules
 

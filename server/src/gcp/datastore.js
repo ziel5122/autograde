@@ -3,7 +3,7 @@ const join = require('path').join;
 
 const DATASTORE_CREDENTIALS = join(
   __dirname,
-  '../../config/datastore-credentials.json'
+  '../../../config/datastore-credentials.json'
 );
 
 const datastore = Datastore({

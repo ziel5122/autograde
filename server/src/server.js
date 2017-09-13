@@ -8,7 +8,7 @@ const login = require('./api/login');
 const middleware = require('./middleware');
 
 const PORT = process.env.PORT || 3000;
-const STATIC_PATH = path.join(__dirname, 'static');
+const STATIC_PATH = path.join(__dirname, '../../static');
 
 const app = express();
 

@@ -3,6 +3,7 @@ const fsExtra = require('fs-extra');
 const join = require('path').join;
 const request = require('request-promise');
 const Router = require('express').Router;
+const v4 = require('uuid').v4;
 const verify = require('jsonwebtoken').verify;
 
 const options = require('../docker/options');
@@ -16,7 +17,7 @@ const readFileSync = fsExtra.readFileSync;
 const removeSync = fsExtra.removeSync;
 const writeFileSync = fsExtra.writeFileSync;
 
-const CODE_PATH = join(__dirname, '../../code');
+const CODE_PATH = join(__dirname, '../../../code');
 
 const router = Router();
 
@@ -34,7 +35,7 @@ router.post('/run', ({ body }, res) => {
     }
 
     const hwCodePath = join(CODE_PATH, `hw${hwNum}`);
-    const tempCodePath = join(__dirname, `../../temp/${v4()}`);
+    const tempCodePath = join(__dirname, `../../../temp/${v4()}`);
 
     copySync(hwCodePath, tempCodePath);
     writeFileSync(join(tempCodePath, 'student_src.c'), code);
