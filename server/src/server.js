@@ -1,29 +1,19 @@
 require('dotenv').config();
 
-const join = require('path').join;
-const json = require('body-parser').json;
 const express = require('express');
+const path = require('path');
 
 const docker = require('./api/docker');
 const login = require('./api/login');
+const middleware = require('./middleware');
 
-const INDEX_PATH = join(__dirname, 'index.html');
 const PORT = process.env.PORT || 3000;
-const STATIC_PATH = join(__dirname, 'static');
+const STATIC_PATH = path.join(__dirname, 'static');
 
 const app = express();
 
 app.use(express.static(STATIC_PATH));
 
-app.use(json());
-
-app.use('/docker', docker);
-
-app.use('/login', login);
-
-
-app.get('*', (req, res) => {
-  res.sendFile(INDEX_PATH)
-});
+middleware.applyMiddleware(app);
 
 app.listen(PORT);

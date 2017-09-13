@@ -3,7 +3,6 @@ const fsExtra = require('fs-extra');
 const join = require('path').join;
 const request = require('request-promise');
 const Router = require('express').Router;
-const v4 = require('uuid').v4;
 const verify = require('jsonwebtoken').verify;
 
 const options = require('../docker/options');
