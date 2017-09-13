@@ -45,4 +45,4 @@ cp ../.env $DIST_DIR
 
 # zip dist folder contents to deploy to elastic beanstalk
 cd $DIST_DIR
-zip -r ../autograde.zip *
+zip -r ../autograde.zip * .ebextensions .env

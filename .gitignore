@@ -17,4 +17,5 @@ scripts/create-users.js
 
 temp
 
+.DS_Store
 .env
