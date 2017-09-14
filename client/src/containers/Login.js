@@ -79,9 +79,15 @@ const Login = (props) => {
               backgroundColor="darkgray"
               hoverColor="orangered"
               onClick={() => {
-                const username = document.getElementById('username').value;
-                const password = document.getElementById('password').value;
-                login(username, password, setLoggedIn);
+                login(
+                  document.getElementById('username').value,
+                  document.getElementById('password').value,
+                )
+                  .then((jwt) => {
+                    sessionStorage.setItem('jwt', jwt);
+                    setLoggedIn(true);
+                  })
+                  .catch(err => console.log('Login:', err.message));
               }}
               label="login"
               labelStyle={{ color: 'white' }}

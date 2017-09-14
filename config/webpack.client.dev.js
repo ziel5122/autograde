@@ -1,6 +1,4 @@
-const join = require('path').join;
-const HotModuleReplacementPlugin = require('webpack')
-  .HotModuleReplacementPlugin;
+const webpack = require('webpack');
 
 const common = require('./webpack.client.common');
 
@@ -16,9 +14,9 @@ const config = Object.assign({}, common, {
     path: __dirname,
     publicPath: '/',
   },
-  plugins: [
-    new HotModuleReplacementPlugin(),
-  ],
+  plugins: common.plugins.concat([
+    new webpack.HotModuleReplacementPlugin(),
+  ]),
 });
 
 module.exports = config;

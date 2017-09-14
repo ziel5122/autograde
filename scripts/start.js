@@ -1,16 +1,13 @@
 require('dotenv').config();
+
 const devMiddleware = require('webpack-dev-middleware');
 const express = require('express');
 const hotMiddleware = require('webpack-hot-middleware');
-const join = require('path').join;
-const json = require('body-parser').json;
 const webpack = require('webpack');
 
 const config = require('../config/webpack.client.dev');
-const docker = require('../src/api/docker');
-const login = require('../src/api/login')
+const middleware = require('../server/src/middleware');
 
-const INDEX_PATH = join(__dirname, '../public/dev.html');
 const PORT = process.env.PORT || 3000;
 
 const compiler = webpack(config);
@@ -27,14 +24,6 @@ app.use(devMiddleware(compiler, {
 
 app.use(hotMiddleware(compiler));
 
-app.use(json());
-
-app.use('/docker', docker);
-
-app.use('/login', login);
-
-app.get('*', (req, res) => {
-  res.sendFile(INDEX_PATH)
-});
+middleware.applyMiddleware(app);
 
 app.listen(PORT);

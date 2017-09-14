@@ -1,10 +1,13 @@
 const Datastore = require('@google-cloud/datastore');
 const join = require('path').join;
 
-const GCP_CREDENTIALS_PATH = join(__dirname, '../../config/autograde-d565d3c6192b.json');
+const DATASTORE_CREDENTIALS = join(
+  __dirname,
+  '../../../config/datastore-credentials.json'
+);
 
 const datastore = Datastore({
-  keyFilename: GCP_CREDENTIALS_PATH,
+  keyFilename: DATASTORE_CREDENTIALS,
 });
 
 module.exports = datastore;

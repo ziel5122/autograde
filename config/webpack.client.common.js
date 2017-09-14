@@ -1,7 +1,7 @@
-const join = require('path').join;
+const path = require('path');
 const webpack = require('webpack');
 
-const APP_DIR = join(__dirname, '../src');
+const APP_DIR = path.join(__dirname, '../client/src');
 
 const config = {
   context: APP_DIR,
@@ -20,7 +20,7 @@ const config = {
         ],
       },
       {
-        include: join(APP_DIR, 'images'),
+        include: path.join(APP_DIR, 'images'),
         test: /\.png$/,
         use: [
           'url-loader',
@@ -28,6 +28,12 @@ const config = {
       },
     ],
   },
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      minChunks: ({ resource }) => /node_modules/.test(resource),
+      name: 'vendor',
+    }),
+  ]
 };
 
 module.exports = config;
