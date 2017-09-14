@@ -6,7 +6,7 @@ const hotMiddleware = require('webpack-hot-middleware');
 const webpack = require('webpack');
 
 const config = require('../config/webpack.client.dev');
-const middleware = require('../server/src/middleware');
+const middleware = require('../server/src/api/middleware');
 
 const PORT = process.env.PORT || 3000;
 

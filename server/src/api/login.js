@@ -22,7 +22,10 @@ router.post('/authorize', ({ body }, res) => {
     } else {
       const { Item } = data;
       if (Item && bcrypt.compareSync(password, Item.passwordHash)) {
-        const token = jwt.sign({}, process.env.JWT_SECRET);
+        const token = jwt.sign({
+          username,
+          privilege: Item.privilege,
+        }, process.env.JWT_SECRET);
         res.status(200).send(token);
       } else {
         res.sendStatus(400);

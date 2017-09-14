@@ -84,7 +84,7 @@ class ClassHome extends Component {
                     body: JSON.stringify({
                       code: this.state.code,
                       hwNum: 3,
-                      jwt: sessionStorage.getItem('jwt'),
+                      token: sessionStorage.getItem('jwt'),
                     }),
                     headers: {
                       'content-type': 'application/json',
