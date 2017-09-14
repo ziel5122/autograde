@@ -1,24 +1,34 @@
-const Router = require('express').Router;
+const bcrypt = require('bcryptjs');
+const dynamodb = require('../aws/dynamo-db');
+const express = require('express');
+const jwt = require('jsonwebtoken');
 
-const login = require('../gcp/login');
-
-const router = Router();
-
-router.get('/login', (req, res) => {
-  res.status(200).send('login get test successful');
-});
+const router = express.Router();
 
 router.post('/authorize', ({ body }, res) => {
   const { username, password } = body;
 
-  login(username, password)
-    .then(({ status, statusText }) => {
-      res.status(status).send(statusText);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send(err);
-    });
+  const params = {
+    Key: {
+      username,
+    },
+    TableName: 'users',
+  };
+
+  dynamodb.get(params, (err, data) => {
+    if (err) {
+      console.log(err, err.stack);
+      res.sendStatus(500);
+    } else {
+      const { Item } = data;
+      if (Item && bcrypt.compareSync(password, Item.passwordHash)) {
+        const token = jwt.sign({}, process.env.JWT_SECRET);
+        res.status(200).send(token);
+      } else {
+        res.sendStatus(400);
+      }
+    }
+  });
 });
 
 module.exports = router;
