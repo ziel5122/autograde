@@ -1,3 +1,5 @@
+# config file required for Google App Engine
+
 runtime: custom
 env: flex
 automatic_scaling:

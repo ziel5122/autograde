@@ -4,6 +4,7 @@ code
 
 config/cst334_fa17.csv
 config/datastore-credentials.json
+config/users.json
 
 dist
 

@@ -8,7 +8,7 @@ SERVER_DIR="../server"
 rm ../autograde.zip
 
 # clean up old build
-rm -rf $DIST_DIR/*
+rm -rf $DIST_DIR/* $DIST_DIR/.ebextensions $DIST_DIR/.env
 
 # build client code for productions and outputs bundles to dist/static
 npm run build:client
