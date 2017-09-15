@@ -83,7 +83,6 @@ class ClassHome extends Component {
                   fetch(`/docker/run`, {
                     body: JSON.stringify({
                       code: this.state.code,
-                      hwNum: 3,
                       token: sessionStorage.getItem('jwt'),
                     }),
                     headers: {
@@ -91,8 +90,9 @@ class ClassHome extends Component {
                     },
                     method: 'post',
                   })
-                    .then(feedback => feedback.text())
-                    .then(text => this.setState({ feedback: text }))
+                    .then((response) => {
+                      console.log(response);
+                    })
                     .catch(err => console.error(err));
                 }}
                 style={buttonStyles}

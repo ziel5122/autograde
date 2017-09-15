@@ -20,6 +20,12 @@ const createOptions = (cmd, binds, stopTimeout) => ({
   url: `${urlBase}/containers/create`,
 });
 
+const logsOptions = (id) => ({
+  headers,
+  url: `${urlBase}/containers/${id}/logs?stdout=1&stderr=1`,
+  method: 'get',
+});
+
 const pruneOptions = {
   headers,
   method: 'post',
@@ -40,6 +46,7 @@ const waitOptions = (id) => ({
 
 module.exports = {
   createOptions,
+  logsOptions,
   pruneOptions,
   startOptions,
   waitOptions,

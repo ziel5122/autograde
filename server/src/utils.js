@@ -15,31 +15,23 @@ const compile = (tempStudentDir) => (
   new Promise((resolve, reject) => {
     request(
       options.createOptions(
-        ['./code/script.sh'],
+        ['gcc', '/code/student_src.c', '-o', '/code/student_exe'],
         [`${tempStudentDir}:/code`],
-        100
+        5
       )
     )
       .then((body) => {
         const { Id, Warnings } = JSON.parse(body);
         if (Warnings) console.log(Warnings);
-        return Id;
-      })
-      .then((Id) => {
-        request(options.startOptions(Id))
+        return request(options.startOptions(Id))
           .then(() => request(options.waitOptions(Id)))
-          .then(() => {
-            return fs.access(join(tempStudentDir, 'student_exe'));
-          })
-          .then(() => resolve(tempStudentDir))
-          .catch(err => {
-            console.log('needed');
-            console.log(err);
-          });
       })
+      .then(() => fs.access(join(tempStudentDir, 'student_exe')))
+      .then(() => resolve(tempStudentDir))
       .catch((err) => {
+        console.log('compile');
         console.log(err, err.stack);
-        reject('compile', tempStudentDir);
+        reject({ func: 'compile', tempStudentDir });
       });
   })
 );
@@ -50,16 +42,21 @@ const evaluate = (tempStudentDir) => (
       .then((output) => {
         fs.readFile(join(tempStudentDir, 'student_output'), 'utf-8')
           .then((student_output) => {
+            console.log('output:');
             console.log(output);
+            console.log();
+            console.log('student_output:');
             console.log(student_output);
+            console.log();
             const outputDiff = diff.diffLines(output, student_output);
             console.log(outputDiff);
-            resolve(tempStudentDir);
+            console.log();
+            resolve({ outputDiff, tempStudentDir });
           })
       })
       .catch((err) => {
         console.log(err, err.stack);
-        reject('evaluate');
+        reject('evaluate', tempStudentDir);
       });
   })
 );
@@ -74,7 +71,7 @@ const prepareTemp = (code) => (
       .then(() => resolve(tempStudentDir))
       .catch((err) => {
         console.log(err, err.stack);
-        reject(err);
+        reject('prepare', err);
       });
   })
 );
@@ -83,26 +80,27 @@ const run = (tempStudentDir) => (
   new Promise((resolve, reject) => {
     request(
       options.createOptions(
-        ['./code/run.sh'],
+        ['/code/script.sh'],
         [`${tempStudentDir}:/code`]
       )
     )
       .then((body) => {
         const { Id, Warnings } = JSON.parse(body);
         if (Warnings) console.log(Warnings);
-        return Id;
+        return request(options.startOptions(Id))
+          .then(() => request(options.waitOptions(Id)));
       })
-      .then((Id) => {
-        request(options.startOptions(Id))
-          .then(() => request(options.waitOptions(Id)))
-          .then(() => resolve(tempStudentDir));
-      })
-      .catch(err => reject('run'));
+      .then(() => resolve(tempStudentDir))
+      .catch((err) => {
+        console.log(err, err.stack);
+        reject('run', tempStudentDir)
+      });
   })
 );
 
 module.exports = {
   compile,
+  evaluate,
   prepareTemp,
   run,
 }
