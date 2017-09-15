@@ -42,6 +42,7 @@ const background = (feedback) => {
 
 class ClassHome extends Component {
   state = {
+    attempts: this.props.attempts,
     code: '',
     feedback: '',
   };
@@ -90,14 +91,16 @@ class ClassHome extends Component {
                     },
                     method: 'post',
                   })
-                    .then((response) => {
-                      console.log(response);
+                    .then((response) => response.json())
+                    .then(({ feedback, attempts }) => {
+                      console.log(feedback, attempts);
+                      this.setState({ feedback, attempts });
                     })
                     .catch(err => console.error(err));
                 }}
                 style={buttonStyles}
               />
-            <div>{this.state.feedback}</div>
+            <div>{`${this.state.feedback} Attempts: ${this.state.attempts}`}</div>
             </div>
           </div>
         </Paper>

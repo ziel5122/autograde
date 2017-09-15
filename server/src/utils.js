@@ -29,7 +29,6 @@ const compile = (tempStudentDir) => (
       .then(() => fs.access(join(tempStudentDir, 'student_exe')))
       .then(() => resolve(tempStudentDir))
       .catch((err) => {
-        console.log('compile');
         console.log(err, err.stack);
         reject({ func: 'compile', tempStudentDir });
       });
