@@ -62,29 +62,42 @@ router.post('/run', ({ body }, res) => {
             console.log('not admin or no attempts');
             res.status(400).json({
               feedback: 'no attempts remaining',
-              attemps,
+              attempts,
             });
           } else {
             utils.prepareTemp(code)
               .then(tempStudentDir => utils.compile(tempStudentDir))
               .then(tempStudentDir => utils.run(tempStudentDir))
-              .then(tempStudentDir => utils.evaluate(tempStudentDir))
+              .then(tempStudentDir => utils.evaluate(tempStudentDir, attempts, decoded.username))
               .then(({ outputDiff, tempStudentDir }) => {
                 return update(decoded.username, attempts || 1)
                   .then((attempts) => {
-                    console.log(attempts ? attempts : 'admin');
-
                     const feedback = outputDiff.length === 1 &&
                       Object.keys(outputDiff[0]).length === 2 ?
                         'correct' :
                         'incorrect';
 
+                    if (feedback === 'correct') {
+                      const params = {
+                        TableName: 'users',
+                        Key: {
+                          username: decoded.username,
+                        },
+                        UpdateExpression: 'set #c = :correct',
+                        ExpressionAttributeNames: { '#c': 'correct' },
+                        ExpressionAttributeValues: {
+                          ':correct': true,
+                        },
+                      };
+
+                      dynamodb.update(params, (err, data) => {
+                        if (err) throw new Error(err);
+                      });
+                    }
+
                     res.status(200).json({ feedback, attempts });
 
                     return tempStudentDir;
-                  })
-                  .catch(() => {
-                    throw new Error({ func: 'attempts', tempStudentDir });
                   });
               })
               .catch(({ func, tempStudentDir }) => {

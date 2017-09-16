@@ -1,4 +1,5 @@
 const diff = require('diff');
+const dynamodb = require('./aws/dynamo-db');
 const fs = require('fs-extra');
 const path = require('path');
 const request = require('request-promise');
@@ -21,10 +22,16 @@ const compile = (tempStudentDir) => (
       )
     )
       .then((body) => {
+        console.log(JSON.parse(body));
         const { Id, Warnings } = JSON.parse(body);
         if (Warnings) console.log(Warnings);
         return request(options.startOptions(Id))
           .then(() => request(options.waitOptions(Id)))
+          .then(() => request(options.logsOptions(Id)))
+          .then((logs) => console.log(logs))
+          .catch((err) => {
+            throw new Error(err);
+          });
       })
       .then(() => fs.access(join(tempStudentDir, 'student_exe')))
       .then(() => resolve(tempStudentDir))
@@ -35,7 +42,7 @@ const compile = (tempStudentDir) => (
   })
 );
 
-const evaluate = (tempStudentDir) => (
+const evaluate = (tempStudentDir, attempts, username) => (
   new Promise((resolve, reject) => {
     fs.readFile(join(tempStudentDir, 'output'), 'utf-8')
       .then((output) => {
@@ -50,7 +57,23 @@ const evaluate = (tempStudentDir) => (
             const outputDiff = diff.diffLines(output, student_output);
             console.log(outputDiff);
             console.log();
-            resolve({ outputDiff, tempStudentDir });
+
+            const params = {
+              TableName: 'users',
+              Key: {
+                username,
+              },
+              UpdateExpression: 'set #a = :attempt',
+              ExpressionAttributeNames: { '#a': `attempt${attempts}` },
+              ExpressionAttributeValues: {
+                ':attempt': student_output,
+              },
+            };
+
+            dynamodb.update(params, (err, data) => {
+              if (err) throw new Error(err);
+              else resolve({ outputDiff, tempStudentDir });
+            });
           })
       })
       .catch((err) => {

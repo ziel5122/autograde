@@ -14,14 +14,89 @@ dynamodb.scan(params, (err, { Items }) => {
   if (err) console.log(err, err.stack);
   else {
     Items.forEach(({ username }) => {
-      const params = {
+      let params = {
         TableName: 'users',
         Key: {
           username,
         },
-        UpdateExpression: 'set attempts = :a',
+        UpdateExpression: 'set attempt1 = :empty',
         ExpressionAttributeValues: {
-          ':a': NUM_ATTEMPTS,
+          ':empty': ' ',
+        },
+      };
+
+      dynamodb.update(params, (err, data) => {
+        if (err) console.log(err, err.stack);
+      });
+
+      params = {
+        TableName: 'users',
+        Key: {
+          username,
+        },
+        UpdateExpression: 'set attempt2 = :empty',
+        ExpressionAttributeValues: {
+          ':empty': ' ',
+        },
+      };
+
+      dynamodb.update(params, (err, data) => {
+        if (err) console.log(err, err.stack);
+      });
+
+      params = {
+        TableName: 'users',
+        Key: {
+          username,
+        },
+        UpdateExpression: 'set attempt3 = :empty',
+        ExpressionAttributeValues: {
+          ':empty': ' ',
+        },
+      };
+
+      dynamodb.update(params, (err, data) => {
+        if (err) console.log(err, err.stack);
+      });
+
+      params = {
+        TableName: 'users',
+        Key: {
+          username,
+        },
+        UpdateExpression: 'set attempt4 = :empty',
+        ExpressionAttributeValues: {
+          ':empty': ' ',
+        },
+      };
+
+      dynamodb.update(params, (err, data) => {
+        if (err) console.log(err, err.stack);
+      });
+
+      params = {
+        TableName: 'users',
+        Key: {
+          username,
+        },
+        UpdateExpression: 'set attempt5 = :empty',
+        ExpressionAttributeValues: {
+          ':empty': ' ',
+        },
+      };
+
+      dynamodb.update(params, (err, data) => {
+        if (err) console.log(err, err.stack);
+      });
+
+      params = {
+        TableName: 'users',
+        Key: {
+          username,
+        },
+        UpdateExpression: 'set correct = :false',
+        ExpressionAttributeValues: {
+          ':false': false,
         },
       };
 

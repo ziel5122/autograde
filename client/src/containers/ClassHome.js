@@ -42,9 +42,7 @@ const background = (feedback) => {
 
 class ClassHome extends Component {
   state = {
-    attempts: this.props.attempts,
     code: '',
-    feedback: '',
   };
 
   render() {
@@ -53,7 +51,7 @@ class ClassHome extends Component {
         <Paper
           style={{
             alignItems: 'center',
-            background: background(this.state.feedback),
+            background: background(this.props.feedback),
             display: 'flex',
             justifyContent: 'center',
             padding: '16px'
@@ -65,6 +63,12 @@ class ClassHome extends Component {
               padding: '4px',
             }}
           >
+            <div>
+              {`Make sure your program uses "msh> " as the prompt`}
+            </div>
+            <div>
+              {`Compiled with command "gcc <input> -o <output>" on gcc 6.3.0`}
+            </div>
             <AceEditor
               fontSize={14}
               id="editor"
@@ -93,14 +97,14 @@ class ClassHome extends Component {
                   })
                     .then((response) => response.json())
                     .then(({ feedback, attempts }) => {
-                      console.log(feedback, attempts);
-                      this.setState({ feedback, attempts });
+                      this.props.setFeedback(feedback);
+                      this.props.setAttempts(attempts);
                     })
                     .catch(err => console.error(err));
                 }}
                 style={buttonStyles}
               />
-            <div>{`${this.state.feedback} Attempts: ${this.state.attempts}`}</div>
+            <div>{`${this.props.feedback} Attempts: ${this.props.attempts}`}</div>
             </div>
           </div>
         </Paper>
