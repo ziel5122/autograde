@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 
+import LoginButton from './LoginButton';
 import { login } from '../utils/login';
 
 const bottomStyles = {
@@ -64,9 +65,11 @@ class Login extends Component {
             floatingLabelStyle={{ color: 'darkgray' }}
             floatingLabelText="username"
             id="username"
+            onChange={(e) => this.props.setUsername(e.target.value)}
             style={textFieldStyles}
             underlineFocusStyle={{ borderColor: 'orangered' }}
             underlineStyle={{ borderColor: 'white' }}
+            value={this.props.username}
           />
           <TextField
             floatingLabelFocusStyle={{ color: 'orangered' }}
@@ -74,37 +77,18 @@ class Login extends Component {
             floatingLabelStyle={{ color: 'darkgray' }}
             floatingLabelText="password"
             id="password"
+            onChange={(e) => this.props.setPassword(e.target.value)}
             style={textFieldStyles}
             type="password"
             underlineFocusStyle={{ borderColor: 'orangered' }}
             underlineStyle={{ borderColor: 'white' }}
+            value={this.props.password}
           />
         <div style={{ color: 'red' }}>
             {this.state.errorText}
           </div>
+          <LoginButton />
           <div style={bottomStyles}>
-            <div style={{ flex: 1 }}>
-              <FlatButton
-                backgroundColor="darkgray"
-                hoverColor="orangered"
-                onClick={() => {
-                  login(
-                    document.getElementById('username').value,
-                    document.getElementById('password').value,
-                  )
-                    .then((jwt) => {
-                      sessionStorage.setItem('jwt', jwt);
-                      this.props.setLoggedIn(true);
-                    })
-                    .catch(err => {
-                      this.setState({ errorText: err.message });
-                    });
-                }}
-                label="login"
-                labelStyle={{ color: 'white' }}
-                style={buttonStyles}
-              />
-            </div>
             <div style={forgotStyles}>
               Forgot your<br />password?
             </div>
@@ -115,7 +99,6 @@ class Login extends Component {
   }
 }
 
-
 const mapStateToProps = ({ loggedIn }) => ({
   loggedIn,
 });
@@ -125,6 +108,20 @@ const mapDispatchToProps = dispatch => ({
     dispatch({
       loggedIn,
       type: 'SET_LOGGED_IN',
+    });
+  },
+
+  setUsername(username) {
+    dispatch({
+      username,
+      type: 'SET_USERNAME',
+    });
+  },
+
+  setPassword(password) {
+    dispatch({
+      password,
+      type: 'SET_PASSWORD',
     });
   },
 });
