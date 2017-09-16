@@ -13,10 +13,6 @@ rm -rf $DIST_DIR/* $DIST_DIR/.ebextensions $DIST_DIR/.env
 # build client code for productions and outputs bundles to dist/static
 npm run build:client
 
-# copy credentials for GCP Datastore
-mkdir $DIST_DIR/config
-cp $CONFIG_DIR/datastore-credentials.json $DIST_DIR/config/datastore-credentials.json
-
 # custom options for elastic beanstalk
 cp -r $CONFIG_DIR/.ebextensions $DIST_DIR
 
@@ -38,7 +34,7 @@ cp $SERVER_DIR/package.json $DIST_DIR
 
 # copy grading scripts to deployment
 mkdir $DIST_DIR/code
-cp -r ../code/hw* $DIST_DIR/code
+cp -r ../code/current $DIST_DIR/code
 
 # file to configure enviroment variables for the app
 cp ../.env $DIST_DIR

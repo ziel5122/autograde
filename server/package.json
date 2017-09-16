@@ -3,7 +3,7 @@
     "start": "node server/src/server.js"
   },
   "dependencies": {
-    "@google-cloud/datastore": "^1.1.0",
+    "aws-sdk": "^2.115.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.0",
     "diff": "^3.3.1",

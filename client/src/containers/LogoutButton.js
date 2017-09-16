@@ -11,6 +11,7 @@ const LogoutButton = ({ history, loggedIn, setLoggedIn }) => (
         sessionStorage.removeItem('jwt');
         setLoggedIn(false);
         history.push('/');
+        location.reload();
       }}
       style={{ color: 'white' }}
     />

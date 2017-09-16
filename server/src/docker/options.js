@@ -5,25 +5,19 @@ const headers = {
 
 const urlBase = 'http://unix:/var/run/docker.sock:/v1.30';
 
-const createOptions = (tempCodePath) => ({
+const createOptions = (cmd, binds, stopTimeout) => ({
   headers,
   body: JSON.stringify({
-    cmd: ['./code/script.sh'],
+    cmd,
     hostConfig: {
-      binds: [`${tempCodePath}:/code`],
+      binds,
     },
     image: 'autograde',
-    stopTimeout: 5,    //seconds
+    stopTimeout,    //seconds
   }),
   method: 'post',
   tty: true,
   url: `${urlBase}/containers/create`,
-});
-
-const deleteOptions = (id) => ({
-  headers,
-  method: 'delete',
-  url: `${urlBase}/containers/${id}`,
 });
 
 const logsOptions = (id) => ({
@@ -52,7 +46,6 @@ const waitOptions = (id) => ({
 
 module.exports = {
   createOptions,
-  deleteOptions,
   logsOptions,
   pruneOptions,
   startOptions,

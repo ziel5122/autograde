@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const path = require('path');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const webpack = require('webpack');
@@ -19,7 +21,10 @@ const config = Object.assign({}, common, {
     new UglifyJSPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify('production'),
+        AWS_ACCESS_KEY_ID: JSON.stringify(process.env.AWS_ACCESS_KEY_ID),
+        AWS_SECRET_ACCESS_KEY: JSON.stringify(process.env.AWS_SECRET_ACCESS_KEY),
+        JWT_SECRET: JSON.stringify(process.env.JWT_SECRET),
+        NODE_ENV: JSON.stringify('production'),
       },
     }),
     new webpackBundleAnalyzer.BundleAnalyzerPlugin({
