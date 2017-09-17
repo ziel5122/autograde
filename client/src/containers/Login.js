@@ -1,7 +1,7 @@
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 
@@ -10,10 +10,6 @@ import { login } from '../utils/login';
 
 const bottomStyles = {
   display: 'flex',
-};
-
-const buttonStyles = {
-  marginTop: '24px',
 };
 
 const forgotStyles = {
@@ -42,12 +38,72 @@ const textFieldStyles = {
   display: 'block',
 };
 
-class Login extends Component {
+const textFieldProps = {
+  floatingLabelFocusStyle: { color: 'orangered' },
+  floatingLabelShrinkStyle: { color: 'orangered' },
+  floatingLabelStyle: { color: 'darkgray' },
+  style: textFieldStyles,
+  underlineFocusStyle: { borderColor: 'orangered' },
+  underlineStyle: { borderColor: 'white' },
+};
+
+class Login extends PureComponent {
   constructor(props) {
-    super(props);
-    this.state = {
-      errorText: '',
-    };
+    super();
+    this.state = { errorText: '' };
+    this.handleLoginResponse = this.handleLoginResponse.bind(this);
+    this.login = this.login.bind(this);
+  }
+
+  handleLoginResponse(loginResponse) {
+    switch (loginResponse.status) {
+      case 200:
+        loginResponse.text()
+          .then((jwt) => {
+            sessionStorage.setItem('jwt', jwt);
+            this.props.setLoggedIn(true);
+          })
+          .catch((err) => {
+            throw new Error(err);
+          });
+        break;
+
+      case 400:
+        this.setState({ errorText: 'username or password incorrect'});
+        break;
+
+      case 500:
+        this.setState({ errorText: 'server exploded' });
+        break;
+
+      default:
+        throw new Error('unexpected status code');
+        break;
+    }
+  }
+
+  login() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    if (username && password) {
+      fetch('/login/authorize', {
+        body: JSON.stringify({ password, username }),
+        headers: { 'content-type': 'application/json' },
+        method: 'post',
+      })
+        .then(this.handleLoginResponse)
+        .catch((err) => {
+          console.log(err, err.stack);
+          this.setState({ errorText: 'error connecting to server' });
+        });
+    } else if (!username && !password) {
+      this.setState({ errorText: 'username and password required' });
+    } else if (!username) {
+      this.setState({ errorText: 'username required' });
+    } else {
+      this.setState({ errorText: 'password required'});
+    }
   }
 
   render() {
@@ -60,35 +116,23 @@ class Login extends Component {
       <div id="login" style={loginStyles}>
         <Paper style={loginPaperStyles}>
           <TextField
-            floatingLabelFocusStyle={{ color: 'orangered' }}
-            floatingLabelShrinkStyle={{ color: 'orangered' }}
-            floatingLabelStyle={{ color: 'darkgray' }}
+            defaultValue={this.props.username}
             floatingLabelText="username"
             id="username"
-            onChange={(e) => this.props.setUsername(e.target.value)}
-            style={textFieldStyles}
-            underlineFocusStyle={{ borderColor: 'orangered' }}
-            underlineStyle={{ borderColor: 'white' }}
-            value={this.props.username}
+            {...textFieldProps}
           />
           <TextField
-            floatingLabelFocusStyle={{ color: 'orangered' }}
-            floatingLabelShrinkStyle={{ color: 'orangered' }}
-            floatingLabelStyle={{ color: 'darkgray' }}
+            defaultValue={this.props.password}
             floatingLabelText="password"
             id="password"
-            onChange={(e) => this.props.setPassword(e.target.value)}
-            style={textFieldStyles}
             type="password"
-            underlineFocusStyle={{ borderColor: 'orangered' }}
-            underlineStyle={{ borderColor: 'white' }}
-            value={this.props.password}
+            {...textFieldProps}
           />
-        <div style={{ color: 'red' }}>
+        <div style={{ color: 'red', height: '18px' }}>
             {this.state.errorText}
           </div>
-          <LoginButton />
           <div style={bottomStyles}>
+            <LoginButton login={this.login} />
             <div style={forgotStyles}>
               Forgot your<br />password?
             </div>
