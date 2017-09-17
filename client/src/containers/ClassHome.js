@@ -10,7 +10,6 @@ import AceEditor from 'react-ace';
 import { Route, withRouter } from 'react-router-dom';
 
 import 'brace/mode/c_cpp';
-import 'brace/theme/chrome';
 import 'brace/theme/terminal';
 
 import Header from './Header';
@@ -22,9 +21,8 @@ const buttonStyles = {
 const classHomeStyles = {
   alignItems: 'center',
   display: 'flex',
-  height: '100%',
   justifyContent: 'center',
-  width: '100%',
+  margin: '18px',
 };
 
 const background = (feedback) => {
@@ -50,25 +48,10 @@ class ClassHome extends Component {
       <div style={classHomeStyles}>
         <Paper
           style={{
-            alignItems: 'center',
             background: background(this.props.feedback),
-            display: 'flex',
-            justifyContent: 'center',
-            padding: '16px'
           }}
         >
-          <div
-            style={{
-              background: 'white',
-              padding: '4px',
-            }}
-          >
-            <div>
-              {`Make sure your program uses "msh> " as the prompt`}
-            </div>
-            <div>
-              {`Compiled with command "gcc <input> -o <output>" on gcc 6.3.0`}
-            </div>
+          <div style={{ display: 'flex' }}>
             <AceEditor
               fontSize={14}
               id="editor"
@@ -78,7 +61,9 @@ class ClassHome extends Component {
               value={this.state.code}
               wrapEnabled
             />
-            <div style={{ marginTop: '8px' }}>
+          <div style={{ flex: 1 }}>
+              {`Make sure your program uses "msh> " as the prompt`}
+              {`Compiled with command "gcc <input> -o <output>" on gcc 6.3.0`}
               <FlatButton
                 backgroundColor="darkgray"
                 hoverColor="orangered"
@@ -104,7 +89,7 @@ class ClassHome extends Component {
                 }}
                 style={buttonStyles}
               />
-            <div>{`${this.props.feedback} Attempts: ${this.props.attempts}`}</div>
+              {`${this.props.feedback} Attempts: ${this.props.attempts}`}
             </div>
           </div>
         </Paper>

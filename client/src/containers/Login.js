@@ -5,11 +5,17 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 
-import LoginButton from './LoginButton';
+import LoginButton from '../components/LoginButton';
 import { login } from '../utils/login';
 
 const bottomStyles = {
   display: 'flex',
+};
+
+const errorTextStyles = {
+  color: 'red',
+  height: '18px',
+  marginTop: '18px',
 };
 
 const forgotStyles = {
@@ -28,9 +34,9 @@ const loginStyles = {
 };
 
 const loginPaperStyles = {
-  paddingBottom: '48px',
-  paddingLeft: '48px',
-  paddingRight: '48px',
+  paddingBottom: '56px',
+  paddingLeft: '60px',
+  paddingRight: '60px',
   paddingTop: '40px',
 };
 
@@ -128,14 +134,14 @@ class Login extends PureComponent {
             type="password"
             {...textFieldProps}
           />
-        <div style={{ color: 'red', height: '18px' }}>
-            {this.state.errorText}
-          </div>
           <div style={bottomStyles}>
             <LoginButton login={this.login} />
             <div style={forgotStyles}>
               Forgot your<br />password?
             </div>
+          </div>
+          <div style={errorTextStyles}>
+            {this.state.errorText}
           </div>
         </Paper>
       </div>
