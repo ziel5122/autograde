@@ -137,7 +137,7 @@ class Login extends PureComponent {
 
     return (
       <div style={loginStyles}>
-        <Paper style={loginPaperStyles}>
+        <Paper style={loginPaperStyles} zDepth={5}>
           <TextField
             defaultValue={this.props.username}
             floatingLabelText="username"

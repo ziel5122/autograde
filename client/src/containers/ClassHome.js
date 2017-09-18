@@ -1,8 +1,10 @@
-import DropDownMenu from 'material-ui/DropDownMenu';
+import 'brace';
+import ace from 'ace-builds/src-noconflict/ace';
+import Divider from 'material-ui/Divider';
 import FlatButton from 'material-ui/FlatButton';
-import MenuItem from 'material-ui/MenuItem';
+import { List, ListItem } from 'material-ui/List';
 import Paper from 'material-ui/Paper';
-import Slider from 'material-ui/Slider';
+import Subheader from 'material-ui/Subheader';
 import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
 import React, { Component } from 'react';
@@ -12,6 +14,7 @@ import { Route, withRouter } from 'react-router-dom';
 import 'brace/mode/c_cpp';
 import 'brace/theme/terminal';
 
+import Editor from './Editor';
 import Header from './Header';
 
 const buttonStyles = {
@@ -24,19 +27,29 @@ const classHomeStyles = {
 };
 
 const paperStyles = {
+  display: 'flex',
   height: 'calc(100% - 48px)',
   margin: '24px',
   width: 'calc(100% - 48px)',
+};
+
+const themeStyles = (theme) => {
+  return theme === 'ace/theme/clouds' ?
+    {
+      background: 'black',
+      color: 'gray',
+    } : {
+      background: 'white',
+      color: 'black',
+    }
 };
 
 const background = (feedback) => {
   switch (feedback) {
     case 'correct':
       return 'green';
-
     case 'incorrect':
       return 'red';
-
     default:
       return 'white';
   }
@@ -44,29 +57,47 @@ const background = (feedback) => {
 
 class ClassHome extends Component {
   state = {
-    code: '',
+    theme: 'ace/theme/clouds',
   };
 
   render() {
     return (
       <div style={classHomeStyles}>
-        <Paper id="paper" style={paperStyles}>
-          <div style={{ display: 'flex' }}>
-            <AceEditor
-              fontSize={14}
-              id="editor"
-              mode="c_cpp"
-              onChange={code => this.setState({ code })}
-              style={{
-                height: paperStyles.height, 
+        <Paper id="paper" style={paperStyles} zDepth={5}>
+          <Editor theme={this.state.theme} />
+          <div style={{ height: '100%', flex: 1 }}></div>
+          <List
+            style={{
+              marginRight: '24px',
+            }}
+          >
+            <Subheader>Options</Subheader>
+            <ListItem
+              onClick={() => {
+                if (this.state.theme === 'ace/theme/clouds') {
+                  this.setState({ theme: 'ace/theme/clouds_midnight' });
+                } else {
+                  this.setState({ theme: 'ace/theme/clouds' });
+                }
               }}
-              theme="terminal"
-              value={this.state.code}
-              wrapEnabled
+              primaryText={
+                this.state.theme === 'ace/theme/clouds' ?
+                  'Dark Theme' : 'Light Theme'
+              }
+              innerDivStyle={themeStyles(this.state.theme)}
             />
-            <div style={{ flex: 1 }}>
-              {`Make sure your program uses "msh> " as the prompt`}
-              {`Compiled with command "gcc <input> -o <output>" on gcc 6.3.0`}
+            <ListItem>
+              Font Size
+            </ListItem>
+            <Divider />
+            <Subheader>Important</Subheader>
+            <ListItem>
+              {`Ensure your shell prompts the user with "msh> "`}
+            </ListItem>
+            <ListItem>
+              {`Compiled with gcc 6.3.0 using "gcc <input> -o <output>"`}
+            </ListItem>
+            <ListItem>
               <FlatButton
                 backgroundColor="darkgray"
                 hoverColor="orangered"
@@ -92,9 +123,13 @@ class ClassHome extends Component {
                 }}
                 style={buttonStyles}
               />
+            </ListItem>
+            <Divider />
+            <Subheader>Feedback</Subheader>
+            <ListItem>
               {`${this.props.feedback} Attempts: ${this.props.attempts}`}
-            </div>
-          </div>
+            </ListItem>
+          </List>
         </Paper>
       </div>
     );
@@ -102,3 +137,18 @@ class ClassHome extends Component {
 }
 
 export default withRouter(ClassHome);
+
+/*
+<AceEditor
+  fontSize={14}
+  id="editor"
+  mode="c_cpp"
+  onChange={code => this.setState({ code })}
+  style={{
+    height: paperStyles.height,
+  }}
+  theme="terminal"
+  value={this.state.code}
+  wrapEnabled
+/>
+*/
