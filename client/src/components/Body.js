@@ -11,7 +11,7 @@ const bodyStyles = {
   alignItems: 'center',
   display: 'flex',
   flex: 1,
-  justifyContent: 'flex',
+  justifyContent: 'center',
 };
 
 class Body extends Component {
@@ -28,6 +28,7 @@ class Body extends Component {
   }
 
   componentWillMount() {
+    console.log('mount');
     const token = sessionStorage.getItem('jwt');
     if (token) {
       jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
@@ -51,6 +52,7 @@ class Body extends Component {
   }
 
   componentWillReceiveProps() {
+    console.log('props');
     const token = sessionStorage.getItem('jwt');
     if (token) {
       jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {

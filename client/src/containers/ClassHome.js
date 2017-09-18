@@ -19,10 +19,14 @@ const buttonStyles = {
 };
 
 const classHomeStyles = {
-  alignItems: 'center',
-  display: 'flex',
-  justifyContent: 'center',
-  margin: '18px',
+  height: '100%',
+  width: '100%',
+};
+
+const paperStyles = {
+  height: 'calc(100% - 48px)',
+  margin: '24px',
+  width: 'calc(100% - 48px)',
 };
 
 const background = (feedback) => {
@@ -46,22 +50,21 @@ class ClassHome extends Component {
   render() {
     return (
       <div style={classHomeStyles}>
-        <Paper
-          style={{
-            background: background(this.props.feedback),
-          }}
-        >
+        <Paper id="paper" style={paperStyles}>
           <div style={{ display: 'flex' }}>
             <AceEditor
               fontSize={14}
               id="editor"
               mode="c_cpp"
               onChange={code => this.setState({ code })}
+              style={{
+                height: paperStyles.height, 
+              }}
               theme="terminal"
               value={this.state.code}
               wrapEnabled
             />
-          <div style={{ flex: 1 }}>
+            <div style={{ flex: 1 }}>
               {`Make sure your program uses "msh> " as the prompt`}
               {`Compiled with command "gcc <input> -o <output>" on gcc 6.3.0`}
               <FlatButton

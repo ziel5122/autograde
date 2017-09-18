@@ -8,6 +8,8 @@ import { Redirect, withRouter } from 'react-router-dom';
 import LoginButton from '../components/LoginButton';
 import { login } from '../utils/login';
 
+const ENTER_KEY = 13;
+
 const bottomStyles = {
   display: 'flex',
 };
@@ -57,8 +59,26 @@ class Login extends PureComponent {
   constructor(props) {
     super();
     this.state = { errorText: '' };
+    this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleLoginResponse = this.handleLoginResponse.bind(this);
     this.login = this.login.bind(this);
+  }
+
+  componentWillMount() {
+    document.addEventListener('keydown', this.handleKeyDown);
+  }
+
+  componentWillUnmount() {
+    document.addEventListener('keydown', this.handleKeyDown);
+  }
+
+  handleKeyDown(event) {
+    switch (event.keyCode) {
+      case ENTER_KEY:
+        this.login();
+      default:
+        break;
+    }
   }
 
   handleLoginResponse(loginResponse) {
@@ -73,15 +93,12 @@ class Login extends PureComponent {
             throw new Error(err);
           });
         break;
-
       case 400:
         this.setState({ errorText: 'username or password incorrect'});
         break;
-
       case 500:
         this.setState({ errorText: 'server exploded' });
         break;
-
       default:
         throw new Error('unexpected status code');
         break;
@@ -119,7 +136,7 @@ class Login extends PureComponent {
     }
 
     return (
-      <div id="login" style={loginStyles}>
+      <div style={loginStyles}>
         <Paper style={loginPaperStyles}>
           <TextField
             defaultValue={this.props.username}
