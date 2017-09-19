@@ -1,20 +1,46 @@
 import ace from 'brace';
 import React, { Component } from 'react';
 
-import 'brace/mode/javascript';
+import 'brace/mode/c_cpp';
 import 'brace/theme/clouds';
 import 'brace/theme/clouds_midnight';
+
+const getAceTheme = (darkTheme) => (
+  darkTheme ? 'ace/theme/clouds_midnight' : 'ace/theme/clouds'
+);
+
+const maxWidthByFontSize = (fontSize) => {
+  switch (fontSize) {
+    case 18:
+      return '810px';
+    case 16:
+      return '730px';
+    case 14:
+      return '645px';
+    case 12:
+      return '565px';
+    case 10:
+    default:
+      return '480px';
+  }
+}
 
 class Editor extends Component {
   componentDidMount() {
     this.editor = ace.edit("editor");
+    this.editor.on('change', () => {
+      this.props.handleEditor(this.editor.getValue())
+    });
+    this.editor.setFontSize(this.props.fontSize);
     this.editor.setPrintMarginColumn(80);
-    this.editor.setTheme(this.props.theme);
-    this.editor.getSession().setMode('ace/mode/c_cpp');
+    this.editor.setTheme(getAceTheme(this.props.darkTheme));
+    this.editor.getSession().setMode(this.props.mode);
+    this.editor.setValue(this.props.value);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.editor.setTheme(nextProps.theme);
+    this.editor.setFontSize(nextProps.fontSize);
+    this.editor.setTheme(getAceTheme(nextProps.theme));
   }
 
   render() {
@@ -22,16 +48,10 @@ class Editor extends Component {
         <div id="editor" style={{
             height: '100%',
             resize: 'horizontal',
-            maxWidth: '665px',
-            width: '665px',
+            maxWidth: maxWidthByFontSize(this.props.fontSize),
+            width: maxWidthByFontSize(this.props.fontSize),
           }}
-        >{
-`#include <stdio.h>
-
-int main() {
-  printf("hello world\\n");
-}`
-        }</div>
+        ></div>
     );
   }
 }
