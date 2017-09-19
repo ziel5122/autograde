@@ -1,7 +1,7 @@
 import DropDownMenu from 'material-ui/DropDownMenu';
 import FlatButton from 'material-ui/FlatButton';
 import MenuItem from 'material-ui/MenuItem';
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 const assignments = [
@@ -30,7 +30,6 @@ const Header = ({ hwNum, setHwNum }) => (
       <DropDownMenu
         onChange={(event, index, value) => handleChange(value, setHwNum)}
         selectedMenuItemStyle={{ color: 'orangered' }}
-        style={styles.drowDownMenu}
         value={hwNum}
       >
         {assignmentMenu}
@@ -60,9 +59,6 @@ const Header = ({ hwNum, setHwNum }) => (
         labelStyle={{ color: 'white' }}
       />
     </div>
-    <div>
-
-    </div>
   </div>
 );
 
@@ -75,7 +71,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch({
       hwNum,
       type: 'SET_HW_NUM',
-    })
+    });
   },
 });
 

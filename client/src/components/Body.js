@@ -1,10 +1,10 @@
+import jwt from 'jsonwebtoken';
 import React, { Component } from 'react';
 import { Route, withRouter } from 'react-router-dom';
 
 import AuthRoute from '../containers/AuthRoute';
 import ClassHome from '../containers/ClassHome';
 import dynamodb from '../../../server/src/aws/dynamo-db';
-import jwt from 'jsonwebtoken';
 import Login from '../containers/Login';
 
 const bodyStyles = {
@@ -41,7 +41,7 @@ class Body extends Component {
           TableName: 'users',
         };
 
-        dynamodb.get(params, (err, data) => {
+        dynamodb.get(params, (error, data) => {
           this.setState({
             attempts: data.Item.attempts,
             feedback: '',
@@ -65,7 +65,7 @@ class Body extends Component {
           TableName: 'users',
         };
 
-        dynamodb.get(params, (err, data) => {
+        dynamodb.get(params, (error, data) => {
           this.setState({
             attempts: data.Item.attempts,
             feedback: '',

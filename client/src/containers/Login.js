@@ -1,4 +1,3 @@
-import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import React, { PureComponent } from 'react';
@@ -6,7 +5,6 @@ import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 
 import LoginButton from '../components/LoginButton';
-import { login } from '../utils/login';
 
 const ENTER_KEY = 13;
 
@@ -56,7 +54,7 @@ const textFieldProps = {
 };
 
 class Login extends PureComponent {
-  constructor(props) {
+  constructor() {
     super();
     this.state = { errorText: '' };
     this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -76,6 +74,7 @@ class Login extends PureComponent {
     switch (event.keyCode) {
       case ENTER_KEY:
         this.login();
+        break;
       default:
         break;
     }
@@ -94,14 +93,13 @@ class Login extends PureComponent {
           });
         break;
       case 400:
-        this.setState({ errorText: 'username or password incorrect'});
+        this.setState({ errorText: 'username or password incorrect' });
         break;
       case 500:
         this.setState({ errorText: 'server exploded' });
         break;
       default:
         throw new Error('unexpected status code');
-        break;
     }
   }
 
@@ -125,7 +123,7 @@ class Login extends PureComponent {
     } else if (!username) {
       this.setState({ errorText: 'username required' });
     } else {
-      this.setState({ errorText: 'password required'});
+      this.setState({ errorText: 'password required' });
     }
   }
 
