@@ -1,39 +1,45 @@
 import Slider from 'material-ui/Slider';
+import Subheader from 'material-ui/Subheader';
 import Toggle from 'material-ui/Toggle';
 import React from 'react';
 import { connect } from 'react-redux';
 
+const tableStyles = {
+  width: '100%',
+};
+
 const EditorOptions = ({ darkTheme, fontSize, setFontSize, toggleDarkTheme }) => (
   <div>
-    <table>
-      <tr>
-        <td>Dark Theme</td>
-        <td>
-          <Toggle onToggle={toggleDarkTheme} toggled={darkTheme} />
-        </td>
-      </tr>
-      <tr>
-        <td>Font Size</td>
-        <td>
-          <Slider
-            defaultValue={fontSize}
-            min={10}
-            max={18}
-            onChange={(event, newValue) => setFontSize(newValue)}
-            step={2}
-            style={{
-              flex: 1,
-              marginLeft: '16px',
-              width: '56px',
-            }}
-            sliderStyle={{
-              height: '16px',
-              flex: 1,
-              margin: 0,
-            }}
-          />
-        </td>
-      </tr>
+    <style jsx>{`
+        td {
+          height: 24px;
+          text-align: center;
+        }
+    `}</style>
+    <Subheader>Options</Subheader>
+    <table style={tableStyles}>
+      <tbody>
+        <tr>
+          <td>Dark Theme</td>
+          <td style={{ display: 'flex' }}>
+            <Toggle onToggle={toggleDarkTheme} style={{ alignSelf: 'center' }} toggled={darkTheme} />
+          </td>
+        </tr>
+        <tr>
+          <td>Font Size</td>
+          <td>
+            <Slider
+              defaultValue={fontSize}
+              sliderStyle={{ margin: '4px' }}
+              min={10}
+              max={18}
+              onChange={(event, newValue) => setFontSize(newValue)}
+              step={2}
+              style={{ margin: '4px' }}
+            />
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>
 );

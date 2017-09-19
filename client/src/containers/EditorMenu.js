@@ -14,7 +14,6 @@ const listItemStyles = {
 
 const EditorMenu = ({ attempts, feedback, setAttempts, setFeedback }) => (
   <div style={{ width: '208px' }}>
-    <Subheader>Options</Subheader>
     <EditorOptions />
     <Divider />
     <Subheader>Important</Subheader>
