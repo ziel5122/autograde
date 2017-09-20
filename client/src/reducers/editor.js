@@ -1,5 +1,14 @@
 import { combineReducers } from 'redux';
 
+const attempts = (state = 0, action) => {
+  switch (action.type) {
+    case 'SET_ATTEMPTS':
+      return action.attempts;
+    default:
+      return state;
+  }
+};
+
 const code = (state = '', action) => {
   switch (action.type) {
     case 'SET_CODE':
@@ -18,6 +27,15 @@ const darkTheme = (state = false, action) => {
   }
 };
 
+const feedback = (state = '', action) => {
+  switch (action.type) {
+    case 'SET_FEEDBACK':
+      return action.feedback;
+    default:
+      return state;
+  }
+};
+
 const fontSize = (state = 14, action) => {
   switch (action.type) {
     case 'SET_FONT_SIZE':
@@ -28,7 +46,9 @@ const fontSize = (state = 14, action) => {
 };
 
 export default combineReducers({
+  attempts,
   code,
   darkTheme,
+  feedback,
   fontSize,
 });

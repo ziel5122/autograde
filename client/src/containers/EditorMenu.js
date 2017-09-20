@@ -12,7 +12,7 @@ const listItemStyles = {
   padding: '16px',
 };
 
-const EditorMenu = ({ attempts, feedback, setAttempts, setFeedback }) => (
+const EditorMenu = ({ attempts, code, feedback, setAttempts, setFeedback }) => (
   <div style={{ width: '208px' }}>
     <EditorOptions />
     <Divider />
@@ -33,7 +33,7 @@ const EditorMenu = ({ attempts, feedback, setAttempts, setFeedback }) => (
           e.preventDefault();
           fetch('/docker/run', {
             body: JSON.stringify({
-              code: this.state.code,
+              code,
               token: sessionStorage.getItem('jwt'),
             }),
             headers: {
