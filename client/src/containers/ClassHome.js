@@ -46,13 +46,27 @@ class ClassHome extends Component {
     return (
       <div style={classHomeStyles}>
         <Paper id="paper" style={paperStyles} zDepth={5}>
-          <Editor
-            fontSize={this.state.fontSize}
-            handleEditor={this.handleEditor}
-            mode="ace/mode/c_cpp"
-            theme={this.state.darkTheme}
-            value={this.state.code}
-          />
+          <div style={{ flex: 1 }}>
+            <div style={{ border: '2px solid orangered', width: '100%' }}>
+              {'- Shell must prompt user with '}
+              <span style={{ background: 'yellow' }}>{'"msh> "'}</span>
+              &nbsp;(space included)<br />
+              - Compiled using gcc&nbsp;
+              <span style={{ background: 'yellow' }}>6.3.0</span><br />
+              - Command:&nbsp;
+              <span style={{ background: 'yellow' }}>
+                {'gcc <INPUT> -o <OUTPUT>'}
+              </span>
+              {' (<INPUT> and <OUTPUT> are some non-empty string)'}
+            </div>
+            <Editor
+              fontSize={this.state.fontSize}
+              handleEditor={this.handleEditor}
+              mode="ace/mode/c_cpp"
+              theme={this.state.darkTheme}
+              value={this.state.code}
+            />
+          </div>
           <EditorMenu />
         </Paper>
       </div>

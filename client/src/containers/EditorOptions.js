@@ -10,19 +10,13 @@ const tableStyles = {
 
 const EditorOptions = ({ darkTheme, fontSize, setFontSize, toggleDarkTheme }) => (
   <div>
-    <style jsx>{`
-        td {
-          height: 24px;
-          text-align: center;
-        }
-    `}</style>
     <Subheader>Options</Subheader>
     <table style={tableStyles}>
       <tbody>
         <tr>
           <td>Dark Theme</td>
-          <td style={{ display: 'flex' }}>
-            <Toggle onToggle={toggleDarkTheme} style={{ alignSelf: 'center' }} toggled={darkTheme} />
+          <td>
+            <Toggle onToggle={toggleDarkTheme} toggled={darkTheme} />
           </td>
         </tr>
         <tr>
@@ -30,12 +24,11 @@ const EditorOptions = ({ darkTheme, fontSize, setFontSize, toggleDarkTheme }) =>
           <td>
             <Slider
               defaultValue={fontSize}
-              sliderStyle={{ margin: '4px' }}
               min={10}
               max={18}
               onChange={(event, newValue) => setFontSize(newValue)}
               step={2}
-              style={{ margin: '4px' }}
+              style={{ width: '96px' }}
             />
           </td>
         </tr>
