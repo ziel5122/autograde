@@ -4,13 +4,29 @@ import Toggle from 'material-ui/Toggle';
 import React from 'react';
 import { connect } from 'react-redux';
 
+const sliderStyles = {
+  height: '16px',
+  margin: 0,
+};
+
+const sliderSliderStyles = {
+  height: '16px',
+  margin: 0,
+  width: '72px',
+};
+
 const tableStyles = {
   width: '100%',
 };
 
-const EditorOptions = ({ darkTheme, fontSize, setFontSize, toggleDarkTheme }) => (
+const EditorOptions = ({
+  darkTheme,
+  fontSize,
+  setFontSize,
+  toggleDarkTheme
+}) => (
   <div>
-    <Subheader>Options</Subheader>
+    <Subheader style={{ color: 'darkgray' }}>Options</Subheader>
     <table style={tableStyles}>
       <tbody>
         <tr>
@@ -27,8 +43,9 @@ const EditorOptions = ({ darkTheme, fontSize, setFontSize, toggleDarkTheme }) =>
               min={10}
               max={18}
               onChange={(event, newValue) => setFontSize(newValue)}
+              sliderStyle={sliderSliderStyles}
               step={2}
-              style={{ width: '96px' }}
+              style={sliderStyles}
             />
           </td>
         </tr>

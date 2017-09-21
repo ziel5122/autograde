@@ -6,6 +6,11 @@ import 'brace/mode/c_cpp';
 import 'brace/theme/clouds';
 import 'brace/theme/clouds_midnight';
 
+const editorStyles = {
+  flex: 1,
+  height: 'calc(100% - 116px)',
+};
+
 const getAceTheme = darkTheme => (
   darkTheme ? 'ace/theme/clouds_midnight' : 'ace/theme/clouds'
 );
@@ -29,7 +34,7 @@ class Editor extends PureComponent {
   }
 
   render() {
-    return <div id="editor" style={{ flex: 1, height: '100%' }} />;
+    return <div id="editor" style={editorStyles} />;
   }
 }
 

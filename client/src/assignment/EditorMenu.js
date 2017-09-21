@@ -13,16 +13,9 @@ const listItemStyles = {
 };
 
 const EditorMenu = ({ attempts, code, feedback, setAttempts, setFeedback }) => (
-  <div style={{ width: '208px' }}>
+  <div style={{ width: '208px', margin: '8px' }}>
     <EditorOptions />
     <Divider />
-    <Subheader>Important</Subheader>
-    <div style={listItemStyles}>{'Shell must prompt user with "msh> "'}</div>
-    <div style={listItemStyles}>gcc 6.3.0</div>
-    <div style={listItemStyles}>
-      Means of compilation:<br />
-      <span style={{ background: 'yellow' }}>{'gcc <input> -o <output>'}</span>
-    </div>
     <div style={listItemStyles}>
       <FlatButton
         backgroundColor="darkgray"
@@ -41,16 +34,15 @@ const EditorMenu = ({ attempts, code, feedback, setAttempts, setFeedback }) => (
             },
             method: 'post',
           })
-            .then(response => response.json())
-            .then(({ results, newAttempts }) => {
-              setFeedback(results);
-              setAttempts(newAttempts);
-            })
-            .catch(err => console.error(err));
+          .then(response => response.json())
+          .then(({ results, newAttempts }) => {
+            setFeedback(results);
+            setAttempts(newAttempts);
+          })
+          .catch(err => console.error(err));
         }}
       />
     </div>
-    <Divider />
     <Subheader>Feedback</Subheader>
     <div style={listItemStyles}>{feedback}</div>
     <div style={listItemStyles}>{`Attempts: ${attempts}`}</div>

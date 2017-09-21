@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Route, withRouter } from 'react-router-dom';
 
 import AuthRoute from '../containers/AuthRoute';
-import ClassHome from '../containers/ClassHome';
+import Assignment from '../assignment/Assignment';
 import dynamodb from '../../../server/src/aws/dynamo-db';
 import Login from '../containers/Login';
 
@@ -88,7 +88,7 @@ class Body extends Component {
       <div style={bodyStyles}>
         <AuthRoute
           Component={() => (
-            <ClassHome
+            <Assignment
               attempts={this.state.attempts}
               feedback={this.state.feedback}
               setAttempts={this.setAttempts}
