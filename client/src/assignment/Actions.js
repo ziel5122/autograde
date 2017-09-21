@@ -1,22 +1,10 @@
-import Divider from 'material-ui/Divider';
 import FlatButton from 'material-ui/FlatButton';
 import Subheader from 'material-ui/Subheader';
 import React from 'react';
 
-import EditorOptions from './EditorOptions';
-
-const listItemStyles = {
-  flex: 1,
-  fontSize: '16px',
-  lineHeight: '16px',
-  padding: '16px',
-};
-
-const EditorMenu = ({ attempts, code, feedback, setAttempts, setFeedback }) => (
-  <div style={{ width: '208px', margin: '8px' }}>
-    <EditorOptions />
-    <Divider />
-    <div style={listItemStyles}>
+const Actions = () => (
+  <div>
+    <div>
       <FlatButton
         backgroundColor="darkgray"
         hoverColor="orangered"
@@ -43,10 +31,7 @@ const EditorMenu = ({ attempts, code, feedback, setAttempts, setFeedback }) => (
         }}
       />
     </div>
-    <Subheader>Feedback</Subheader>
-    <div style={listItemStyles}>{feedback}</div>
-    <div style={listItemStyles}>{`Attempts: ${attempts}`}</div>
   </div>
 );
 
-export default EditorMenu;
+export default Actions;

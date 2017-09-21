@@ -7,8 +7,7 @@ import 'brace/theme/clouds';
 import 'brace/theme/clouds_midnight';
 
 const editorStyles = {
-  flex: 1,
-  height: 'calc(100% - 116px)',
+  height: '100%',
 };
 
 const getAceTheme = darkTheme => (
@@ -18,14 +17,12 @@ const getAceTheme = darkTheme => (
 class Editor extends PureComponent {
   componentDidMount() {
     this.editor = ace.edit('editor');
-    this.editor.on('change', () => {
-      this.props.handleEditor(this.editor.getValue());
-    });
+    this.editor.on('change', () => this.props.setCode(this.editor.getValue()));
     this.editor.setFontSize(this.props.fontSize);
     this.editor.setPrintMarginColumn(80);
     this.editor.setTheme(getAceTheme(this.props.darkTheme));
     this.editor.getSession().setMode(this.props.mode);
-    this.editor.setValue(this.props.value);
+    this.editor.setValue(this.props.code);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -33,14 +30,28 @@ class Editor extends PureComponent {
     this.editor.setTheme(getAceTheme(nextProps.darkTheme));
   }
 
+  componentWillUnmount() {
+    this.editor.destroy();
+  }
+
   render() {
     return <div id="editor" style={editorStyles} />;
   }
 }
 
-const mapStateToProps = ({ editor: { darkTheme, fontSize } }) => ({
+const mapStateToProps = ({ editor: { code, darkTheme, fontSize } }) => ({
+  code,
   darkTheme,
   fontSize,
 });
 
-export default connect(mapStateToProps)(Editor);
+const mapDispatchToProps = dispatch => ({
+  setCode(code) {
+    dispatch({
+      code,
+      type: 'SET_CODE',
+    });
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Editor);

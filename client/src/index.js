@@ -12,9 +12,12 @@ import reducers from './reducers';
 const muiTheme = getMuiTheme({
   slider: {
     handleFillColor: 'orangered',
+    handleSize: 16,
+    handleSizeActive: 24,
     selectionColor: 'orangered',
     trackColor: 'orangered',
     trackColorSelected: 'orangered',
+    trackSize: 4,
   },
   toggle: {
     thumbOnColor: 'orangered',

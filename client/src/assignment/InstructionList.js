@@ -1,50 +1,36 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Instruction from './Instruction';
-
 const InstructionList = ({
-  instructionBullet,
-  instructionHighlightStyle,
+  bullet,
   instructions,
-  instructionStyle,
   style
 }) => (
   <div style={style}>
     {
-      instructions.map((instructionSegments, index) => (
-        <Instruction
-          bullet={instructionBullet}
-          highlightStyle={instructionHighlightStyle}
-          key={index}
-          segments={instructionSegments}
-          style={instructionStyle}
-        />
+      instructions.map((instruction, index) => (
+        <div key={index}>
+          {bullet}
+          {instruction}
+        </div>
       ))
     }
   </div>
 );
 
 InstructionList.defaultProps = {
-  instructionBullet: ' - ',
-  instructionHighlightStyle: {
-    background: 'yellow',
-  },
-  instructionStyle: {
-    whiteSpace: 'nowrap',
-  },
+  bullet: ' - ',
   style: {
     border: '2px solid orangered',
     margin: '8px',
     padding: '8px',
+    whiteSpace: 'nowrap',
   },
 };
 
 InstructionList.propTypes = {
-  instructionBullet: PropTypes.string,
-  instructionHighlightStyle: PropTypes.objectOf(PropTypes.string),
-  instructions: PropTypes.arrayOf(PropTypes.array).isRequired,
-  instructionStyle: PropTypes.objectOf(PropTypes.string),
+  bullet: PropTypes.string,
+  instructions: PropTypes.arrayOf(PropTypes.string).isRequired,
   style: PropTypes.objectOf(PropTypes.string),
 };
 

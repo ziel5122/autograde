@@ -9,7 +9,7 @@ const attempts = (state = 0, action) => {
   }
 };
 
-const code = (state = '', action) => {
+const code = (state = 'jimmy', action) => {
   switch (action.type) {
     case 'SET_CODE':
       return action.code;
