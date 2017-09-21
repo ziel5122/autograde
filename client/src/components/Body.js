@@ -13,6 +13,7 @@ const bodyStyles = {
   flex: 1,
   flexDirection: 'column',
   justifyContent: 'center',
+  padding: '24px',
 };
 
 class Body extends Component {

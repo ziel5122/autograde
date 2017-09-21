@@ -5,16 +5,15 @@ import { withRouter } from 'react-router-dom';
 
 import Actions from './Actions';
 import Editor from './Editor';
+import Feedback from './Feedback';
 import InstructionList from './InstructionList';
 import Options from './Options';
 
 const assignmentStyles = {
   flex: 1,
-  margin: '24px',
   maxWidth: '1000px',
   width: '100%',
 };
-
 
 const leftStyles = {
   display: 'flex',
@@ -55,6 +54,8 @@ const Assignment = () => (
         <Options />
         <Divider />
         <Actions />
+        <Divider />
+        <Feedback />
       </div>
     </Paper>
   </div>

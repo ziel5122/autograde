@@ -1,37 +1,76 @@
 import FlatButton from 'material-ui/FlatButton';
 import Subheader from 'material-ui/Subheader';
 import React from 'react';
+import { connect } from 'react-redux';
 
-const Actions = () => (
-  <div>
-    <div>
-      <FlatButton
-        backgroundColor="darkgray"
-        hoverColor="orangered"
-        label="submit"
-        labelStyle={{ color: 'white' }}
-        onClick={(e) => {
-          e.preventDefault();
-          fetch('/docker/run', {
-            body: JSON.stringify({
-              code,
-              token: sessionStorage.getItem('jwt'),
-            }),
-            headers: {
-              'content-type': 'application/json',
-            },
-            method: 'post',
-          })
-          .then(response => response.json())
-          .then(({ results, newAttempts }) => {
-            setFeedback(results);
-            setAttempts(newAttempts);
-          })
-          .catch(err => console.error(err));
-        }}
-      />
+const actionStyles = {
+  padding: '8px',
+};
+
+const Actions = ({ attempts, code }) => (
+  <div style={actionStyles}>
+    <div
+      style={{
+        lineHeight: '16px',
+        paddingBottom: '8px',
+        paddingTop: '8px',
+      }}
+    >
+      <div>
+        Attempts
+      </div>
+      <div style={{ color: attempts ? 'black' : 'red' }}>
+        {attempts}
+      </div>
     </div>
+    <FlatButton
+      backgroundColor="darkgray"
+      disabled={!attempts}
+      hoverColor="orangered"
+      label="submit"
+      labelStyle={{ color: 'white' }}
+      onClick={(e) => {
+        fetch('/docker/run', {
+          body: JSON.stringify({
+            code,
+            token: sessionStorage.getItem('jwt'),
+          }),
+          headers: {
+              'content-type': 'application/json',
+          },
+            method: 'post',
+        })
+        .then(response => response.json())
+        .then(({ results, newAttempts }) => {
+          setFeedback(results);
+          setAttempts(newAttempts);
+        })
+        .catch(err => console.error(err));
+      }}
+      style={{ marginBottom: '8px', marginTop: '8px' }}
+    />
   </div>
 );
 
-export default Actions;
+const mapStateToProps = ({ attempts, code }) => ({
+  attempts: 1,
+  code,
+});
+
+const mapDispatchToProps = dispatch => ({
+  setAttempts(attempts) {
+    dispatch({
+      attempts,
+      type: 'SET_ATTEMPTS',
+    });
+  },
+
+  setFeedback(feedback) {
+    dispatch({
+      feedback,
+      type: 'SET_FEEDBACK',
+    });
+  },
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Actions);
