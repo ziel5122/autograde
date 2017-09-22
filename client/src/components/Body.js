@@ -1,17 +1,19 @@
+import jwt from 'jsonwebtoken';
 import React, { Component } from 'react';
 import { Route, withRouter } from 'react-router-dom';
 
 import AuthRoute from '../containers/AuthRoute';
-import ClassHome from '../containers/ClassHome';
+import Assignment from '../assignment/Assignment';
 import dynamodb from '../../../server/src/aws/dynamo-db';
-import jwt from 'jsonwebtoken';
 import Login from '../containers/Login';
 
 const bodyStyles = {
   alignItems: 'center',
   display: 'flex',
   flex: 1,
-  justifyContent: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  padding: '24px',
 };
 
 class Body extends Component {
@@ -28,6 +30,7 @@ class Body extends Component {
   }
 
   componentWillMount() {
+    console.log('mount');
     const token = sessionStorage.getItem('jwt');
     if (token) {
       jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
@@ -40,7 +43,7 @@ class Body extends Component {
           TableName: 'users',
         };
 
-        dynamodb.get(params, (err, data) => {
+        dynamodb.get(params, (error, data) => {
           this.setState({
             attempts: data.Item.attempts,
             feedback: '',
@@ -51,6 +54,7 @@ class Body extends Component {
   }
 
   componentWillReceiveProps() {
+    console.log('props');
     const token = sessionStorage.getItem('jwt');
     if (token) {
       jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
@@ -63,7 +67,7 @@ class Body extends Component {
           TableName: 'users',
         };
 
-        dynamodb.get(params, (err, data) => {
+        dynamodb.get(params, (error, data) => {
           this.setState({
             attempts: data.Item.attempts,
             feedback: '',
@@ -86,7 +90,7 @@ class Body extends Component {
       <div style={bodyStyles}>
         <AuthRoute
           Component={() => (
-            <ClassHome
+            <Assignment
               attempts={this.state.attempts}
               feedback={this.state.feedback}
               setAttempts={this.setAttempts}

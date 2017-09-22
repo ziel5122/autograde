@@ -6,21 +6,39 @@ import React from 'react';
 
 import github from '../images/GitHub-Mark-32px.png';
 
+const anchorOrigin = {
+  horizontal: 'right',
+  vertical: 'top',
+};
+
+const imgStyles = {
+  marginTop: '16px',
+};
+
+const menuItemStyles = {
+  textAlign: 'center',
+};
+
+const targetOrigin = {
+  horizontal: 'right',
+  vertical: 'top',
+};
+
 const Menu = () => (
   <IconMenu
-    anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+    anchorOrigin={anchorOrigin}
     iconButtonElement={
       <IconButton>
         <MoreVertIcon color={'white'} />
       </IconButton>
     }
-    targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+    targetOrigin={targetOrigin}
   >
     <MenuItem primaryText="Demo" />
     <MenuItem primaryText="Report a Problem" />
     <a href="http://github.com/ziel5122/autograde">
-      <MenuItem style={{ textAlign: 'center' }}>
-        <img style={{ marginTop: '16px' }} src={github} alt="github" />
+      <MenuItem style={menuItemStyles}>
+        <img style={imgStyles} src={github} alt="github" />
       </MenuItem>
     </a>
   </IconMenu>

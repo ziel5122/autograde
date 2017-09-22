@@ -1,18 +1,21 @@
-import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 
-import { login } from '../utils/login';
+import LoginButton from '../components/LoginButton';
+
+const ENTER_KEY = 13;
 
 const bottomStyles = {
   display: 'flex',
 };
 
-const buttonStyles = {
-  marginTop: '24px',
+const errorTextStyles = {
+  color: 'red',
+  height: '18px',
+  marginTop: '18px',
 };
 
 const forgotStyles = {
@@ -31,9 +34,9 @@ const loginStyles = {
 };
 
 const loginPaperStyles = {
-  paddingBottom: '48px',
-  paddingLeft: '48px',
-  paddingRight: '48px',
+  paddingBottom: '56px',
+  paddingLeft: '60px',
+  paddingRight: '60px',
   paddingTop: '40px',
 };
 
@@ -41,12 +44,87 @@ const textFieldStyles = {
   display: 'block',
 };
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      errorText: '',
-    };
+const textFieldProps = {
+  floatingLabelFocusStyle: { color: 'orangered' },
+  floatingLabelShrinkStyle: { color: 'orangered' },
+  floatingLabelStyle: { color: 'darkgray' },
+  style: textFieldStyles,
+  underlineFocusStyle: { borderColor: 'orangered' },
+  underlineStyle: { borderColor: 'white' },
+};
+
+class Login extends PureComponent {
+  constructor() {
+    super();
+    this.state = { errorText: '' };
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleLoginResponse = this.handleLoginResponse.bind(this);
+    this.login = this.login.bind(this);
+  }
+
+  componentWillMount() {
+    document.addEventListener('keydown', this.handleKeyDown);
+  }
+
+  componentWillUnmount() {
+    document.addEventListener('keydown', this.handleKeyDown);
+  }
+
+  handleKeyDown(event) {
+    switch (event.keyCode) {
+      case ENTER_KEY:
+        this.login();
+        break;
+      default:
+        break;
+    }
+  }
+
+  handleLoginResponse(loginResponse) {
+    switch (loginResponse.status) {
+      case 200:
+        loginResponse.text()
+          .then((jwt) => {
+            sessionStorage.setItem('jwt', jwt);
+            this.props.setLoggedIn(true);
+          })
+          .catch((err) => {
+            throw new Error(err);
+          });
+        break;
+      case 400:
+        this.setState({ errorText: 'username or password incorrect' });
+        break;
+      case 500:
+        this.setState({ errorText: 'server exploded' });
+        break;
+      default:
+        throw new Error('unexpected status code');
+    }
+  }
+
+  login() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    if (username && password) {
+      fetch('/login/authorize', {
+        body: JSON.stringify({ password, username }),
+        headers: { 'content-type': 'application/json' },
+        method: 'post',
+      })
+        .then(this.handleLoginResponse)
+        .catch((err) => {
+          console.log(err, err.stack);
+          this.setState({ errorText: 'error connecting to server' });
+        });
+    } else if (!username && !password) {
+      this.setState({ errorText: 'username and password required' });
+    } else if (!username) {
+      this.setState({ errorText: 'username required' });
+    } else {
+      this.setState({ errorText: 'password required' });
+    }
   }
 
   render() {
@@ -56,65 +134,35 @@ class Login extends Component {
     }
 
     return (
-      <div id="login" style={loginStyles}>
-        <Paper style={loginPaperStyles}>
+      <div style={loginStyles}>
+        <Paper style={loginPaperStyles} zDepth={5}>
           <TextField
-            floatingLabelFocusStyle={{ color: 'orangered' }}
-            floatingLabelShrinkStyle={{ color: 'orangered' }}
-            floatingLabelStyle={{ color: 'darkgray' }}
+            defaultValue={this.props.username}
             floatingLabelText="username"
             id="username"
-            style={textFieldStyles}
-            underlineFocusStyle={{ borderColor: 'orangered' }}
-            underlineStyle={{ borderColor: 'white' }}
+            {...textFieldProps}
           />
           <TextField
-            floatingLabelFocusStyle={{ color: 'orangered' }}
-            floatingLabelShrinkStyle={{ color: 'orangered' }}
-            floatingLabelStyle={{ color: 'darkgray' }}
+            defaultValue={this.props.password}
             floatingLabelText="password"
             id="password"
-            style={textFieldStyles}
             type="password"
-            underlineFocusStyle={{ borderColor: 'orangered' }}
-            underlineStyle={{ borderColor: 'white' }}
+            {...textFieldProps}
           />
-        <div style={{ color: 'red' }}>
-            {this.state.errorText}
-          </div>
           <div style={bottomStyles}>
-            <div style={{ flex: 1 }}>
-              <FlatButton
-                backgroundColor="darkgray"
-                hoverColor="orangered"
-                onClick={() => {
-                  login(
-                    document.getElementById('username').value,
-                    document.getElementById('password').value,
-                  )
-                    .then((jwt) => {
-                      sessionStorage.setItem('jwt', jwt);
-                      this.props.setLoggedIn(true);
-                    })
-                    .catch(err => {
-                      this.setState({ errorText: err.message });
-                    });
-                }}
-                label="login"
-                labelStyle={{ color: 'white' }}
-                style={buttonStyles}
-              />
-            </div>
+            <LoginButton login={this.login} />
             <div style={forgotStyles}>
               Forgot your<br />password?
             </div>
+          </div>
+          <div style={errorTextStyles}>
+            {this.state.errorText}
           </div>
         </Paper>
       </div>
     );
   }
 }
-
 
 const mapStateToProps = ({ loggedIn }) => ({
   loggedIn,
@@ -125,6 +173,20 @@ const mapDispatchToProps = dispatch => ({
     dispatch({
       loggedIn,
       type: 'SET_LOGGED_IN',
+    });
+  },
+
+  setUsername(username) {
+    dispatch({
+      username,
+      type: 'SET_USERNAME',
+    });
+  },
+
+  setPassword(password) {
+    dispatch({
+      password,
+      type: 'SET_PASSWORD',
     });
   },
 });
