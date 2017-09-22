@@ -1,17 +1,17 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-import Header from './Header';
+import Header from '../header/Header';
 import Body from './Body';
 
-const appStyles = {
+const style = {
   display: 'flex',
   height: '100%',
   flexDirection: 'column',
 };
 
 const App = () => (
-  <div style={appStyles}>
+  <div style={style}>
     <Header />
     <Body />
   </div>
