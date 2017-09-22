@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Right from './Right';
-import Subheader from './Subheader';
+import Right from '../header/Right';
+import Subheader from '../header/Subheader';
 
 const headerStyle = {
   display: 'flex',

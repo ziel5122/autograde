@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-import Header from '../header/Header';
+import Header from './Header';
 import Body from './Body';
 
 const style = {

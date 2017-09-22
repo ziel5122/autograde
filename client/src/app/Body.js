@@ -5,6 +5,7 @@ import { Route, withRouter } from 'react-router-dom';
 import AuthRoute from '../containers/AuthRoute';
 import Assignment from '../assignment/Assignment';
 import dynamodb from '../../../server/src/aws/dynamo-db';
+import Home from '../class/Home';
 import Login from '../containers/Login';
 
 const bodyStyles = {
@@ -16,6 +17,23 @@ const bodyStyles = {
   padding: '24px',
 };
 
+const style = {
+  alignItems: 'center',
+  display: 'flex',
+  flex: 1,
+  flexDirection: 'column',
+  justifyContent: 'center',
+  padding: '24px',
+};
+
+const Body = () => (
+  <div style={style}>
+    <AuthRoute exact path="/" component={Home} />
+    <Route path="/login" component={Login} />
+    <Route path="*" component={null} />
+  </div>
+);
+/*
 class Body extends Component {
   constructor() {
     super();
@@ -88,23 +106,9 @@ class Body extends Component {
   render() {
     return (
       <div style={bodyStyles}>
-        <AuthRoute
-          Component={() => (
-            <Assignment
-              attempts={this.state.attempts}
-              feedback={this.state.feedback}
-              setAttempts={this.setAttempts}
-              setFeedback={this.setFeedback}
-            />
-          )}
-          exact
-          path="/"
-        />
-        <Route path="/login" component={Login} />
-        <Route path="*" component={null} />
       </div>
     );
   }
 }
-
+*/
 export default withRouter(Body);

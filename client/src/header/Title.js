@@ -1,14 +1,24 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
+const linkStyle = {
+  textDecoration: 'none',
+};
 
 const style = {
+  color: 'whitesmoke',
   fontSize: '24px',
   lineHeight: '24px',
   padding: '8px',
 };
 
 const Title = () => (
-  <div className="title" style={style}>
-    autograde
+  <div>
+    <Link to="/" style={linkStyle}>
+      <div className="title" style={style}>
+        autograde
+      </div>
+    </Link>
     <style jsx>{`
       .title {
         cursor: hand;
