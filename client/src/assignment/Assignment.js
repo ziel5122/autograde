@@ -1,6 +1,6 @@
 import Divider from 'material-ui/Divider';
 import Paper from 'material-ui/Paper';
-import React, { Component } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
 
 import Actions from './Actions';

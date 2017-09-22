@@ -1,5 +1,4 @@
 import FlatButton from 'material-ui/FlatButton';
-import Subheader from 'material-ui/Subheader';
 import React from 'react';
 import { connect } from 'react-redux';
 
@@ -29,23 +28,23 @@ const Actions = ({ attempts, code }) => (
       hoverColor="orangered"
       label="submit"
       labelStyle={{ color: 'white' }}
-      onClick={(e) => {
+      onClick={() => {
         fetch('/docker/run', {
           body: JSON.stringify({
             code,
             token: sessionStorage.getItem('jwt'),
           }),
           headers: {
-              'content-type': 'application/json',
+            'content-type': 'application/json',
           },
-            method: 'post',
+          method: 'post',
         })
-        .then(response => response.json())
-        .then(({ results, newAttempts }) => {
-          setFeedback(results);
-          setAttempts(newAttempts);
-        })
-        .catch(err => console.error(err));
+          .then(response => response.json())
+          .then(({ results, newAttempts }) => {
+            setFeedback(results);
+            setAttempts(newAttempts);
+          })
+          .catch(err => console.error(err));
       }}
       style={{ marginBottom: '8px', marginTop: '8px' }}
     />
@@ -53,7 +52,7 @@ const Actions = ({ attempts, code }) => (
 );
 
 const mapStateToProps = ({ attempts, code }) => ({
-  attempts: 1,
+  attempts,
   code,
 });
 
@@ -71,6 +70,6 @@ const mapDispatchToProps = dispatch => ({
       type: 'SET_FEEDBACK',
     });
   },
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Actions);

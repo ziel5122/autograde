@@ -4,7 +4,7 @@ import React from 'react';
 const InstructionList = ({
   bullet,
   instructions,
-  style
+  style,
 }) => (
   <div style={style}>
     {

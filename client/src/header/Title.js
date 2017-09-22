@@ -1,14 +1,25 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 
-const Title = ({ style }) => (
-  <div style={style}>
+const style = {
+  fontSize: '24px',
+  lineHeight: '24px',
+  padding: '8px',
+};
+
+const Title = () => (
+  <div className="title" style={style}>
     autograde
+    <style jsx>{`
+      .title {
+        cursor: hand;
+        cursor: pointer;
+      }
+
+      .title:hover {
+        background: rgba(106, 90, 205, .25);
+      }
+    `}</style>
   </div>
 );
-
-Title.propTypes = {
-  style: PropTypes.objectOf(PropTypes.string),
-};
 
 export default Title;
