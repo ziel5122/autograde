@@ -5,7 +5,7 @@ const path = require('path');
 
 const docker = require('./api/docker');
 const login = require('./api/login');
-const middleware = require('./api/middleware');
+const { applyMiddleware } = require('./api/middleware');
 
 const PORT = process.env.PORT || 3000;
 const STATIC_PATH = path.join(__dirname, '../../static');
@@ -14,6 +14,6 @@ const app = express();
 
 app.use(express.static(STATIC_PATH));
 
-middleware.applyMiddleware(app);
+const server = applyMiddleware(app);
 
-app.listen(PORT);
+server.listen(PORT);

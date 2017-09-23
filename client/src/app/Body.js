@@ -4,7 +4,6 @@ import { Route, withRouter } from 'react-router-dom';
 
 import AuthRoute from '../containers/AuthRoute';
 import Assignment from '../assignment/Assignment';
-import dynamodb from '../../../server/src/aws/dynamo-db';
 import Home from '../class/Home';
 import Login from '../containers/Login';
 
@@ -28,7 +27,7 @@ const style = {
 
 const Body = () => (
   <div style={style}>
-    <AuthRoute exact path="/" component={Home} />
+    <AuthRoute exact path="/" Component={Home} />
     <Route path="/login" component={Login} />
     <Route path="*" component={null} />
   </div>

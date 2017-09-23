@@ -1,7 +1,8 @@
 const bcrypt = require('bcryptjs');
-const dynamodb = require('../aws/dynamo-db');
 const express = require('express');
 const jwt = require('jsonwebtoken');
+
+const { docClient } = require('../aws');
 
 const router = express.Router();
 
@@ -15,18 +16,20 @@ router.post('/authorize', ({ body }, res) => {
     TableName: 'users',
   };
 
-  dynamodb.get(params, (err, data) => {
+  docClient.get(params, (err, data) => {
     if (err) {
       console.log(err, err.stack);
       res.sendStatus(500);
     } else {
       const { Item } = data;
       if (Item && bcrypt.compareSync(password, Item.passwordHash)) {
-        const token = jwt.sign({
-          username,
-          privilege: Item.privilege,
-        }, process.env.JWT_SECRET);
-        res.status(200).send(token);
+        const payload = { username, privilege: Item.privilege };
+        const token = jwt.sign(payload, process.env.JWT_SECRET);
+        const assignments = Item.assignments.filter((assignment) => (
+          assignment.visible
+        ));
+        const response = { assignments, payload };
+        res.status(200).send(response);
       } else {
         res.sendStatus(400);
       }

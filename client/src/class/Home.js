@@ -24,18 +24,6 @@ const style = {
 
 class Home extends PureComponent {
   componentDidMount() {
-    fetch('/assignments/visible', {
-      body: JSON.stringify({
-        token: sessionStorage.getItem('jwt'),
-      }),
-      headers: {
-        'content-type': 'application/json',
-      },
-      method: 'post',
-    })
-      .then(response => response.json())
-      .then(json => conosle.log(json.assignments))
-      .catch(err => console.log(err, err.stack));
   }
 
   render() {

@@ -29,6 +29,7 @@
     "redux": "^3.7.2",
     "request": "^2.82.0",
     "request-promise": "^4.2.1",
+    "socket.io": "^2.0.3",
     "styled-jsx": "^1.0.10",
     "uuid": "^3.1.0"
   },

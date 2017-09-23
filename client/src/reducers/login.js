@@ -1,5 +1,5 @@
 const loggedIn = (
-  state = typeof window !== 'undefined' ? sessionStorage.getItem('jwt') !== null : false,
+  state = !!sessionStorage.getItem('jwt'),
   action,
 ) => {
   switch (action.type) {
