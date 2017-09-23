@@ -9,10 +9,6 @@ const { JWT_SECRET } = process.env;
 const assignments = (socket) => {
   const router = Router();
 
-  router.get('/get', (req, res) => {
-    res.sendStatus(200)
-  });
-
   router.post('/get-visible', ({ body: { token } }, res) => {
     verify(token, JWT_SECRET, (err, decoded) => {
       if (err) {
