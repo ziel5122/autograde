@@ -85,8 +85,6 @@ class Login extends PureComponent {
       case 200:
         loginResponse.json()
           .then(({ assignments, token }) => {
-            console.log(token);
-            console.log(assignments);
             sessionStorage.setItem('jwt', token);
             this.props.setLoggedIn(true);
           })
