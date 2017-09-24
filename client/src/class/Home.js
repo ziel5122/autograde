@@ -3,7 +3,8 @@ import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import Paper from 'material-ui/Paper';
 import Subheader from 'material-ui/Subheader';
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
+import io from 'socket.io-client';
 
 const menuStyle = {
   display: 'flex',
@@ -22,8 +23,31 @@ const style = {
   width: '100%',
 };
 
-class Home extends PureComponent {
+class Home extends Component {
+  constructor() {
+    super();
+    const socket = io();
+    socket.on('assignments', (data) => {
+      console.log(data);
+    });
+    this.state = {
+      Items: [],
+    };
+  }
+
   componentDidMount() {
+    fetch('http://localhost:3000/assignments/get-visible', {
+      body: JSON.stringify({ token: sessionStorage.getItem('jwt') }),
+      headers: { 'content-type': 'application/json' },
+      method: 'post',
+    })
+      .then(response => response.json())
+      .then(({ Items }) => {
+        this.setState({
+          Items: Items.filter(Item => Item.visible),
+        });
+      })
+      .catch(err => console.log(err, err.stack));
   }
 
   render() {
@@ -33,8 +57,11 @@ class Home extends PureComponent {
           <div style={menuStyle}>
             <Menu>
               <Subheader>Assignments</Subheader>
-              <MenuItem>Homework 5</MenuItem>
-              <MenuItem>Homework 6</MenuItem>
+              {
+                this.state.Items.map((Item) => {
+                  return <MenuItem key={Item.id}>{Item.id}</MenuItem>;
+                })
+              }
               <Divider />
               <Subheader>Options</Subheader>
             </Menu>

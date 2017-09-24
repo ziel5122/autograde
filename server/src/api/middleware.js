@@ -1,7 +1,6 @@
 const bodyParser = require('body-parser');
-const { createServer } = require('http');
+const { Server } = require('http');
 const { join } = require('path');
-const socket = require('socket.io');
 
 const assignments = require('./assignments');
 const docker = require('./docker');
@@ -10,8 +9,8 @@ const login = require('./login');
 const INDEX_PATH = join(__dirname, '../../../public/index.html');
 
 const applyMiddleware = (app) => {
-  const server = createServer(app);
-  const io = socket(server);
+  const httpServer = new Server(app);
+  const io = require('socket.io')(httpServer);
 
   app.use(bodyParser.json());
   app.use('/assignments', assignments(io))
@@ -22,7 +21,7 @@ const applyMiddleware = (app) => {
     res.sendFile(INDEX_PATH);
   });
 
-  return server;
+  return httpServer;
 };
 
 module.exports = { applyMiddleware };

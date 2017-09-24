@@ -76,6 +76,7 @@ const assignments = (socket) => {
               } else {
                 console.log(data);
                 res.sendStatus(200);
+                socket.emit('assignments', [params.Item]);
               }
             });
           }

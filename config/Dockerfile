@@ -1,3 +1,4 @@
-FROM alpine
+FROM ubuntu
 
-RUN apk add --no-cache gcc musl-dev
+RUN apt-get update -y
+RUN apt-get install gcc -y
