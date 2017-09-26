@@ -18,6 +18,9 @@ const muiTheme = getMuiTheme({
     trackColorSelected: 'orangered',
     trackSize: 4,
   },
+  stepper: {
+    iconColor: 'orangered',
+  },
   toggle: {
     thumbOnColor: 'orangered',
     trackOnColor: 'orangered',

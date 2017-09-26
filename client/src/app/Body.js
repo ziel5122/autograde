@@ -5,6 +5,7 @@ import { Route, withRouter } from 'react-router-dom';
 import AuthRoute from '../containers/AuthRoute';
 import Assignment from '../assignment/Assignment';
 import Assignments from '../admin/Assignments';
+import Demo from '../demo/Demo';
 import Home from '../class/Home';
 import Login from '../containers/Login';
 
@@ -30,6 +31,7 @@ const Body = () => (
   <div style={style}>
     <AuthRoute exact path="/" Component={Home} />
     <AuthRoute path="/admin" Component={Assignments} />
+    <Route path="/demo" component={Demo} />
     <Route path="/login" component={Login} />
     <Route path="*" component={null} />
   </div>
