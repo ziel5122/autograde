@@ -32,6 +32,10 @@ const LogoutButton = ({ logout }) => (
 const mapDispatchToProps = dispatch => ({
   logout() {
     dispatch({
+      admin: false,
+      type: 'SET_ADMIN',
+    });
+    dispatch({
       loggedIn: false,
       type: 'SET_LOGGED_IN',
     });

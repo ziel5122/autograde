@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -14,12 +13,12 @@ const style = {
   padding: '12px',
 };
 
-const DemoButton = ({ loggedIn }) => (
-  loggedIn ? null : (
+const AdminButton = ({ admin }) => (
+  admin ? (
     <div>
-      <Link to="/demo" style={linkStyle}>
+      <Link to="/admin" style={linkStyle}>
         <div className="demoButton" style={style}>
-          demo
+          admin
         </div>
       </Link>
       <style jsx>{`
@@ -33,15 +32,11 @@ const DemoButton = ({ loggedIn }) => (
         }
       `}</style>
     </div>
-  )
+  ) : null
 );
 
-DemoButton.propTypes = {
-  loggedIn: PropTypes.bool.isRequired,
-};
-
-const mapStateToProps = ({ login: { loggedIn } }) => ({
-  loggedIn,
+const mapStateToProps = ({ login: { admin } }) => ({
+  admin,
 });
 
-export default connect(mapStateToProps)(DemoButton);
+export default connect(mapStateToProps)(AdminButton);

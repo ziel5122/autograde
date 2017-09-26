@@ -9,7 +9,7 @@ const { JWT_SECRET } = process.env;
 const assignments = (socket) => {
   const router = Router();
 
-  router.post('/get-visible', ({ body: { token } }, res) => {
+  router.post('/get-assignments', ({ body: { token } }, res) => {
     verify(token, JWT_SECRET, (err, decoded) => {
       if (err) {
         console.log(err, err.stack);
@@ -19,12 +19,12 @@ const assignments = (socket) => {
           TableName: ASSIGNMENTS_TABLE,
         };
 
-        docClient.scan(params, (error, data) => {
+        docClient.scan(params, (error, { Items }) => {
           if (error) {
             console.log(err, err.stack);
             res.sendStatus(500);
           } else {
-            res.status(200).send(data);
+            res.status(200).send(Items);
           }
         });
       }
@@ -61,6 +61,7 @@ const assignments = (socket) => {
               } else {
                 console.log(data);
                 res.sendStatus(200);
+                socket.emit('assignments', changes);
               }
             });
           } else {

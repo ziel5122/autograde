@@ -28,7 +28,7 @@ router.post('/authorize', ({ body }, res) => {
         const assignments = Item.assignments.filter((assignment) => (
           assignment.visible
         ));
-        const response = { assignments, token };
+        const response = { assignments, token, privilege: Item.privilege };
         res.status(200).send(response);
       } else {
         res.sendStatus(400);

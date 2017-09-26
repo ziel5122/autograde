@@ -1,5 +1,20 @@
+import jwt from 'jsonwebtoken';
+import { combineReducers } from 'redux';
+
+const token = sessionStorage.getItem('jwt');
+const { privilege } = jwt.decode(token);
+
+const admin = (state = (privilege === 'admin'), action) => {
+  switch (action.type) {
+    case 'SET_ADMIN':
+      return action.admin;
+    default:
+      return state;
+  }
+}
+
 const loggedIn = (
-  state = !!sessionStorage.getItem('jwt'),
+  state = !!token,
   action,
 ) => {
   switch (action.type) {
@@ -37,4 +52,10 @@ const username = (state = '', action) => {
   }
 };
 
-export { loggedIn, loginErrorText, password, username };
+export default combineReducers({
+  admin,
+  loggedIn,
+  loginErrorText,
+  username,
+  password,
+});

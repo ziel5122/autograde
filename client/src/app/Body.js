@@ -2,11 +2,12 @@ import jwt from 'jsonwebtoken';
 import React, { Component } from 'react';
 import { Route, withRouter } from 'react-router-dom';
 
+import AdminRoute from '../containers/AdminRoute';
+import AdminHome from '../admin/Home';
 import AuthRoute from '../containers/AuthRoute';
 import Assignment from '../assignment/Assignment';
-import Assignments from '../admin/Assignments';
 import Demo from '../demo/Demo';
-import Home from '../class/Home';
+import Home from '../student/Home';
 import Login from '../containers/Login';
 
 const bodyStyles = {
@@ -30,7 +31,7 @@ const style = {
 const Body = () => (
   <div style={style}>
     <AuthRoute exact path="/" Component={Home} />
-    <AuthRoute path="/admin" Component={Assignments} />
+    <AdminRoute path="/admin" Component={AdminHome} />
     <Route path="/demo" component={Demo} />
     <Route path="/login" component={Login} />
     <Route path="*" component={null} />
