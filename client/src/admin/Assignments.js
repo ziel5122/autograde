@@ -4,6 +4,8 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+import AssignmentRow from './AssignmentRow';
+
 const flexTdStyle = {
 
 };
@@ -33,6 +35,7 @@ class Assignments extends PureComponent {
           <thead>
             <tr>
               <td></td>
+              <td>ID</td>
               <td>Assignment</td>
               <td>Due</td>
               <td style={{ textAlign: 'center' }}>Attempts</td>
@@ -41,29 +44,8 @@ class Assignments extends PureComponent {
           </thead>
           <tbody>
             {
-              this.props.assignments.map(({
-                attempts,
-                dueDate,
-                id,
-                name,
-                visible,
-              }, index) => (
-                <tr key={id}>
-                  <td
-                    onClick={() => this.setState({ editing: index })}
-                    style={{ textAlign: 'center' }}
-                  >
-                    &#9998;
-                  </td>
-                  <td>{name}</td>
-                  <td>{dueDate}</td>
-                  <td style={{ textAlign: 'center' }}>
-                    {
-                      this.state.editing === index ? <input id={id} type="number" /> : attempts
-                    }
-                  </td>
-                  <td style={{ textAlign: 'center' }}>&#10004;</td>
-                </tr>
+              this.props.assignments.map(assignment => (
+                <AssignmentRow key={assignment.id} {...assignment} />
               ))
             }
           </tbody>
