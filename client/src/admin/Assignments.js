@@ -2,9 +2,10 @@ import MenuItem from 'material-ui/MenuItem';
 import Paper from 'material-ui/Paper';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 const flexTdStyle = {
-  flex: 1,
+
 };
 
 const style = {
@@ -20,12 +21,9 @@ const tableStyle = {
   width: '100%',
 };
 
-const visibleStyle = {
-};
-
 class Assignments extends PureComponent {
   state = {
-    editing: null,
+    editing: -1,
   };
 
   render() {
@@ -33,19 +31,38 @@ class Assignments extends PureComponent {
       <div style={style}>
         <table style={tableStyle}>
           <thead>
-            <tr style={{ display: 'flex', flex: 1 }}>
-              <td style={flexTdStyle}>Assignment</td>
-              <td style={flexTdStyle}>Due</td>
-              <td style={visibleStyle}>Visible</td>
+            <tr>
+              <td></td>
+              <td>Assignment</td>
+              <td>Due</td>
+              <td style={{ textAlign: 'center' }}>Attempts</td>
+              <td style={{ textAlign: 'center' }}>Visible</td>
             </tr>
           </thead>
           <tbody>
             {
-              this.props.assignments.map(({ id, name, dueDate, visible }) => (
-                <tr key={id} stlye={{ display: 'flex' }}>
-                  <td style={flexTdStyle}>{name}</td>
-                  <td style={flexTdStyle}>{dueDate}</td>
-                  <td><MenuItem style={visibleStyle} checked={visible} /></td>
+              this.props.assignments.map(({
+                attempts,
+                dueDate,
+                id,
+                name,
+                visible,
+              }, index) => (
+                <tr key={id}>
+                  <td
+                    onClick={() => this.setState({ editing: index })}
+                    style={{ textAlign: 'center' }}
+                  >
+                    &#9998;
+                  </td>
+                  <td>{name}</td>
+                  <td>{dueDate}</td>
+                  <td style={{ textAlign: 'center' }}>
+                    {
+                      this.state.editing === index ? <input id={id} type="number" /> : attempts
+                    }
+                  </td>
+                  <td style={{ textAlign: 'center' }}>&#10004;</td>
                 </tr>
               ))
             }
@@ -60,6 +77,6 @@ const mapStateToProps = ({ assignments: { assignments } }) => ({
   assignments,
 });
 
-export default connect(mapStateToProps)(Assignments);
+export default withRouter(connect(mapStateToProps)(Assignments));
 
 // <td style={{ background: visible ? 'green' : 'red' }}></td>

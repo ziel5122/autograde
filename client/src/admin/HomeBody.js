@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, withRouter } from 'react-router-dom';
+import { Redirect, Route, withRouter } from 'react-router-dom';
 
 import Assignments from './Assignments';
 import Grades from './Grades';
@@ -10,12 +10,20 @@ const style = {
   width: '100%',
 };
 
-const HomeBody = ({ match: { url } }) => (
-  <div style={style}>
-    <Route path={`${url}/assignments`} component={Assignments} />
-    <Route path={`${url}/grades`} component={Grades} />
-    <Route path={`${url}/users`} component={Users} />
-  </div>
-);
+const HomeBody = ({ match }) => {
+  const { url } = match;
+
+  if (match.isExact) {
+    return <Redirect to={`${url}/assignments`} />
+  }
+
+  return (
+    <div style={style}>
+      <Route path={`${url}/assignments`} component={Assignments} />
+      <Route path={`${url}/grades`} component={Grades} />
+      <Route path={`${url}/users`} component={Users} />
+    </div>
+  );
+}
 
 export default withRouter(HomeBody);
