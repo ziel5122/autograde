@@ -76,8 +76,20 @@ const assignments = (socket) => {
                 res.sendStatus(500);
               } else {
                 console.log(data);
-                res.sendStatus(200);
-                socket.emit('assignments', [params.Item]);
+
+                const params = {
+                  TableName: ASSIGNMENTS_TABLE,
+                };
+
+                docClient.scan(params, (error, { Items }) => {
+                  if (error) {
+                    console.log(err, err.stack);
+                    res.sendStatus(500);
+                  } else {
+                    res.sendStatus(200);
+                    socket.emit('assignments', Items);
+                  }
+                });
               }
             });
           }

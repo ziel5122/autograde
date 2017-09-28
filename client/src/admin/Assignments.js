@@ -4,11 +4,8 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+import AssignmentEdit from './AssignmentEdit';
 import AssignmentRow from './AssignmentRow';
-
-const flexTdStyle = {
-
-};
 
 const style = {
   display: 'flex',
@@ -23,12 +20,48 @@ const tableStyle = {
   width: '100%',
 };
 
+const $ = document.getElementById.bind(document);
+
 class Assignments extends PureComponent {
-  state = {
-    editing: -1,
-  };
+  constructor() {
+    super();
+    this.state = {
+      editing: -1,
+    };
+    this.edit = this.edit.bind(this);
+    this.save = this.save.bind(this);
+  }
+
+  edit(index) {
+    this.setState({ editing: index });
+  }
+
+  save(id) {
+    const name = $('name').value;
+    const dueDate = $('due').value;
+    const attempts = $('attempts').value;
+    const visible = $('visible').checked;
+
+    const assignment = { id, name, dueDate, attempts, visible };
+
+    console.log(assignment);
+
+    fetch('http://localhost:3000/assignments/set-visible', {
+      body: JSON.stringify({
+        token: sessionStorage.getItem('jwt'),
+        changes: [assignment],
+      }),
+      headers: { 'content-type': 'application/json' },
+      method: 'post',
+    })
+    .then(() => {
+      this.setState({ editing: -1 });
+    })
+    .catch(err => console.log(err, err.stack));
+  }
 
   render() {
+    console.log(this.state);
     return (
       <div style={style}>
         <table style={tableStyle}>
@@ -44,8 +77,19 @@ class Assignments extends PureComponent {
           </thead>
           <tbody>
             {
-              this.props.assignments.map(assignment => (
-                <AssignmentRow key={assignment.id} {...assignment} />
+              this.props.assignments.map((assignment, index) => (
+                this.state.editing === index ?
+                  <AssignmentEdit
+                    assignment={assignment}
+                    key={assignment.id}
+                    save={() => this.save(assignment.id)}
+                  />
+                :
+                <AssignmentRow
+                  assignment={assignment}
+                  edit={() => this.edit(index)}
+                  key={assignment.id}
+                />
               ))
             }
           </tbody>
