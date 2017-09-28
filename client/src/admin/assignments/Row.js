@@ -4,7 +4,7 @@ const editStyle = {
   textAlign: 'center',
 };
 
-const AssignmentRow = ({
+const Row = ({
   assignment: {
     attempts,
     dueDate,
@@ -24,4 +24,4 @@ const AssignmentRow = ({
   </tr>
 );
 
-export default AssignmentRow;
+export default Row;

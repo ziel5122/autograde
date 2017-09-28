@@ -4,22 +4,17 @@ const editStyle = {
   border: 'solid orangered 2px',
 };
 
-const leftFormStyle = {
-  textAlign: 'right',
-};
-
-const AssignmentEdit = ({
+const Edit = ({
   assignment: {
     attempts,
     dueDate,
-    id,
     name,
     visible,
   },
   save,
 }) => (
   <tr>
-    <td colSpan={6}>
+    <td colSpan={5}>
       <div style={editStyle}>
         <div
           onClick={save}
@@ -73,4 +68,4 @@ const AssignmentEdit = ({
   </tr>
 );
 
-export default AssignmentEdit;
+export default Edit;

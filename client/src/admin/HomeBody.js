@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Route, withRouter } from 'react-router-dom';
 
-import Assignments from './Assignments';
+import Assignments from './assignments/Assignments';
 import Grades from './Grades';
 import Users from './Users';
 

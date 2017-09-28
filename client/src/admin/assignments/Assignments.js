@@ -1,11 +1,13 @@
 import MenuItem from 'material-ui/MenuItem';
 import Paper from 'material-ui/Paper';
+import ActionAdd from 'material-ui/svg-icons/content/add';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import AssignmentEdit from './AssignmentEdit';
-import AssignmentRow from './AssignmentRow';
+import Edit from './Edit';
+import New from './New';
+import Row from './Row';
 
 const style = {
   display: 'flex',
@@ -26,6 +28,7 @@ class Assignments extends PureComponent {
   constructor() {
     super();
     this.state = {
+      addAssignment: false,
       editing: -1,
     };
     this.edit = this.edit.bind(this);
@@ -42,7 +45,7 @@ class Assignments extends PureComponent {
     const attempts = $('attempts').value;
     const visible = $('visible').checked;
 
-    const assignment = { id, name, dueDate, attempts, visible };
+    const assignment = { name, dueDate, attempts, visible };
 
     console.log(assignment);
 
@@ -68,7 +71,6 @@ class Assignments extends PureComponent {
           <thead>
             <tr>
               <td></td>
-              <td>ID</td>
               <td>Assignment</td>
               <td>Due</td>
               <td style={{ textAlign: 'center' }}>Attempts</td>
@@ -79,13 +81,13 @@ class Assignments extends PureComponent {
             {
               this.props.assignments.map((assignment, index) => (
                 this.state.editing === index ?
-                  <AssignmentEdit
+                  <Edit
                     assignment={assignment}
                     key={assignment.id}
                     save={() => this.save(assignment.id)}
                   />
                 :
-                <AssignmentRow
+                <Row
                   assignment={assignment}
                   edit={() => this.edit(index)}
                   key={assignment.id}
@@ -94,6 +96,23 @@ class Assignments extends PureComponent {
             }
           </tbody>
         </table>
+        <ActionAdd
+          hoverColor="orangered"
+          onClick={() => {
+            this.setState({ addAssignment: !this.state.addAssignment });
+          }}
+          style={{
+            alignSelf: 'flex-start',
+            color: 'darkgray',
+            cursor: 'hand',
+            cursor: 'pointer',
+            height: '36px',
+            width: 'auto',
+          }}
+        />
+        {
+          this.state.addAssignment ? <New /> : null
+        }
       </div>
     );
   }
