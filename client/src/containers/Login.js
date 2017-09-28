@@ -85,7 +85,7 @@ class Login extends PureComponent {
     switch (loginResponse.status) {
       case 200:
         loginResponse.json()
-          .then(({ assignments, token, privilege }) => {
+          .then(({ token, privilege }) => {
             sessionStorage.setItem('jwt', token);
             this.props.setLoggedIn(true);
             this.props.setAdmin(privilege === 'admin');

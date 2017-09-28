@@ -1,0 +1,13 @@
+{
+  "name": "Homework 6",
+  "dueDate": "2017-10-02",
+  "attempts": 5,
+  "visible": true,
+  "parts": [
+    "freesize.awk",
+    "count_allocs.awk",
+    "num_bytes.awk",
+    "succ_reqs.awk",
+    "list_sizes.awk"
+  ]
+}
