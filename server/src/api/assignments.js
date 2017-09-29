@@ -1,5 +1,7 @@
 const { Router } = require('express');
+const fs = require('fs-extra');
 const { verify } = require('jsonwebtoken');
+const zlib = require('zlib');
 
 const { docClient } = require('../aws');
 
@@ -27,6 +29,17 @@ const assignments = (socket) => {
             res.status(200).send(Items);
           }
         });
+      }
+    });
+  });
+
+  router.post('/set', ({ body: { configJson, token } }, res) => {
+    verify(token, JWT_SECRET, (err, decoded) => {
+      if (err) {
+        console.log(err, err.stack);
+        res.sendStatus(400);
+      } else {
+        res.sendStatus(200);
       }
     });
   });

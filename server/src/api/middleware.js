@@ -12,7 +12,7 @@ const applyMiddleware = (app) => {
   const httpServer = new Server(app);
   const io = require('socket.io')(httpServer);
 
-  app.use(bodyParser.json());
+  app.use(bodyParser.json({ limit: '5mb' }));
   app.use('/assignments', assignments(io))
   app.use('/docker', docker);
   app.use('/login', login);
