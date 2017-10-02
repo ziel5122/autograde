@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import React, { Component } from 'react';
-import { Route, withRouter } from 'react-router-dom';
+import { Redirect, Route, withRouter } from 'react-router-dom';
 
 import AdminRoute from '../containers/AdminRoute';
 import AdminHome from '../admin/Home';
@@ -28,91 +28,20 @@ const style = {
   padding: '24px',
 };
 
-const Body = () => (
-  <div style={style}>
-    <AuthRoute path="/home" Component={Home} />
-    <AdminRoute path="/admin" Component={AdminHome} />
-    <Route path="/demo" component={Demo} />
-    <Route path="/login" component={Login} />
-    <Route path="*" component={null} />
-  </div>
-);
-/*
-class Body extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      attempts: 0,
-      feedback: '',
-    };
-
-    this.setAttempts = this.setAttempts.bind(this);
-    this.setFeedback = this.setFeedback.bind(this);
+const Body = ({ match }) => {
+  if (match.isExact) {
+    return <Redirect to="/home" />;
   }
 
-  componentWillMount() {
-    console.log('mount');
-    const token = sessionStorage.getItem('jwt');
-    if (token) {
-      jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-        const { username } = decoded;
-
-        const params = {
-          Key: {
-            username,
-          },
-          TableName: 'users',
-        };
-
-        dynamodb.get(params, (error, data) => {
-          this.setState({
-            attempts: data.Item.attempts,
-            feedback: '',
-          });
-        });
-      });
-    }
-  }
-
-  componentWillReceiveProps() {
-    console.log('props');
-    const token = sessionStorage.getItem('jwt');
-    if (token) {
-      jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-        const { username } = decoded;
-
-        const params = {
-          Key: {
-            username,
-          },
-          TableName: 'users',
-        };
-
-        dynamodb.get(params, (error, data) => {
-          this.setState({
-            attempts: data.Item.attempts,
-            feedback: '',
-          });
-        });
-      });
-    }
-  }
-
-  setAttempts(attempts) {
-    this.setState({ attempts });
-  }
-
-  setFeedback(feedback) {
-    this.setState({ feedback });
-  }
-
-  render() {
-    return (
-      <div style={bodyStyles}>
-      </div>
-    );
-  }
+  return (
+    <div style={style}>
+      <AdminRoute path="/admin" Component={AdminHome} />
+      <Route path="/demo" component={Demo} />
+      <AuthRoute path="/home" Component={Home} />
+      <Route path="/login" component={Login} />
+      <Route path="*" component={null} />
+    </div>
+  );
 }
-*/
+
 export default withRouter(Body);

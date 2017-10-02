@@ -29,13 +29,13 @@ class Sidebar extends PureComponent {
     return (
       <div style={style}>
         <MenuToggle open={open} toggleOpen={this.toggleOpen} />
-        <Menu open={open} />
+        <Menu open={open} toggleOpen={this.toggleOpen} />
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ assignments: { assignments } }) => ({
+const mapStateToProps = ({ assignments }) => ({
   assignments,
 });
 

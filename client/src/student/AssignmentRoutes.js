@@ -9,10 +9,10 @@ const style = {
   width: '100%',
 };
 
-const AssignmentRoutes = ({ assignments: { assignments }, match: { url } }) => (
+const AssignmentRoutes = ({ assignments: { assignments } }) => (
   <div style={style}>{
     assignments.map(({ id, parts }) => (
-      <Route key={id} path={`${url}/${id}`} component={() => <Assignment parts={parts} />} />
+      <Route key={id} path={`/${id}`} component={() => <Assignment parts={parts} />} />
     ))
   }</div>
 );

@@ -15,11 +15,11 @@ const style = {
   position: 'absolute',
 };
 
-const Menu = ({ open }) => (
+const Menu = ({ open, toggleOpen }) => (
   <div>{
     open ? (
       <MaterialMenu style={style}>
-        <AssignmentList />
+        <AssignmentList toggleOpen={toggleOpen} />
         <Divider />
         <OptionList />
       </MaterialMenu>

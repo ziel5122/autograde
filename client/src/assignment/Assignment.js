@@ -1,4 +1,6 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Tabs from './Tabs';
 
@@ -6,10 +8,16 @@ const style = {
   width: '100%',
 };
 
-const Assignment = ({ parts }) => (
+const Assignment = ({ assignments, match: { params: { id } } }) => (
   <div style={style}>{
-    parts ? <Tabs parts={parts} /> : null
+    assignments[id] && assignments[id].parts ?
+      <Tabs parts={assignments[id].parts} /> :
+      `no parts ${id}`
   }</div>
 );
 
-export default Assignment;
+const mapStateToProps = ({ assignments }) => ({
+  assignments,
+});
+
+export default connect(mapStateToProps)(Assignment);

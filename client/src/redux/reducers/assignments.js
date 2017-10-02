@@ -6,18 +6,19 @@ const compare = (a, b) => {
   return 0;
 };
 
-const assignments = (state = [], action) => {
+const assignments = (state = {}, action) => {
   switch (action.type) {
     case 'ADD_ASSIGNMENT':
       const temp = [...state, action.assignment];
       return temp.sort(compare);
     case 'SET_ASSIGNMENTS':
-      return action.assignments;
+      return action.assignments.reduce((newState, { id, ...rest }) => {
+        newState[id] = rest;
+        return newState;
+      }, {});
     default:
       return state;
   }
 }
 
-export default combineReducers({
-  assignments,
-});
+export default assignments;

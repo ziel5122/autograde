@@ -2,9 +2,9 @@ import Paper from 'material-ui/Paper';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 
-import AssignmentRoutes from './AssignmentRoutes';
+import Assignment from '../assignment/Assignment';
 import Sidebar from './Sidebar';
 
 const paperStyle = {
@@ -25,7 +25,8 @@ const Home = ({ assignments }) => (
   <div style={style}>
     <Paper style={paperStyle} zDepth={5}>
       <Sidebar />
-      <AssignmentRoutes />
+      <Route path="/home/:id" component={Assignment} />
+      <Route path="*" component={null} />
     </Paper>
   </div>
 );

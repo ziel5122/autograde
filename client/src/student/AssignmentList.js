@@ -1,23 +1,34 @@
-import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import Subheader from 'material-ui/Subheader';
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link, withRouter } from 'react-router-dom';
 
-const AssignmentList = ({ assignments }) => (
+const AssignmentList = ({ assignments, match: { url }, toggleOpen }) => (
   <div>
     <Subheader style={{ background: 'white' }}>Assignments</Subheader>
     {
-      assignments.filter(({ visible }) => visible)
-      .map(({ id, name, dueDate, parts }) => (
-        <MenuItem key={id} primaryText={name} />
-      ))
+      //assignments ?
+      const ass = Object.keys(assignments).map((id) => ({
+          ...id,
+          ...assignments[id],
+        }));
+        console.log(ass);
+        /*
+          .filter(({ visible }) => visible)
+          .map(({ id, name, dueDate, parts }) => (
+            <Link key={id} to={`${url}/${id}`}>
+              <MenuItem onClick={toggleOpen} primaryText={name} />
+            </Link>
+          )) :
+        null
+        */
     }
   </div>
 );
 
-const mapStateToProps = ({ assignments: { assignments } }) => ({
+const mapStateToProps = ({ assignments }) => ({
   assignments,
 });
 
-export default connect(mapStateToProps)(AssignmentList);
+export default withRouter(connect(mapStateToProps)(AssignmentList));
