@@ -49,6 +49,14 @@ fetch('http://localhost:3000/assignments/get-assignments', {
 
 const socket = io();
 
+socket.on('assignment', (assignment) => {
+  store.dispatch({
+    assignment,
+    type: 'ADD_ASSIGNMENT',
+  });
+  console.log(store.getState());
+});
+
 socket.on('assignments', (assignments) => {
   store.dispatch({
     assignments,

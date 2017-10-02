@@ -12,7 +12,7 @@ import New from './New';
 import Row from './Row';
 
 const style = {
-  height: '100%',
+  margin: '24px',
   width: '100%',
 };
 
@@ -38,7 +38,7 @@ const Assignments = ({ assignments }) => (
         name,
         visible,
       }) => (
-        <tr>
+        <tr key={id}>
           <td><ConfigUpload button={<ContentCreate />} type="update" /></td>
           <td>{id}</td>
           <td>{name}</td>

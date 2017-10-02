@@ -30,7 +30,7 @@ const style = {
 
 const Body = () => (
   <div style={style}>
-    <AuthRoute exact path="/" Component={Home} />
+    <AuthRoute path="/home" Component={Home} />
     <AdminRoute path="/admin" Component={AdminHome} />
     <Route path="/demo" component={Demo} />
     <Route path="/login" component={Login} />

@@ -13,6 +13,8 @@ const style = {
 const HomeBody = ({ match }) => {
   const { url } = match;
 
+  console.log(url);
+
   if (match.isExact) {
     return <Redirect to={`${url}/assignments`} />
   }

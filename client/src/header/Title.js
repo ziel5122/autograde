@@ -14,7 +14,7 @@ const style = {
 
 const Title = () => (
   <div>
-    <Link to="/" style={linkStyle}>
+    <Link to="/home" style={linkStyle}>
       <div className="title" style={style}>
         autograde
       </div>

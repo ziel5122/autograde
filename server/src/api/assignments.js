@@ -39,7 +39,30 @@ const assignments = (socket) => {
         console.log(err, err.stack);
         res.sendStatus(400);
       } else {
-        res.sendStatus(200);
+        console.log(configJson);
+        const params = {
+          TableName: 'assignments',
+          Item: {
+            class: 334,
+            ...configJson,
+          },
+        };
+        docClient.put(params, (err, data) => {
+          if (err) {
+            console.log(err, err.stack);
+            res.sendStatus(500);
+          } else {
+            console.log(data);
+            const { id, name, dueDate, attempts, visible } = configJson;
+            socket.emit('assignment', {
+              id,
+              name,
+              dueDate,
+              attempts,
+            visible });
+            res.sendStatus(200);
+          }
+        });
       }
     });
   });
@@ -72,7 +95,6 @@ const assignments = (socket) => {
                 console.log(err, err.stack);
                 res.sendStatus(500);
               } else {
-                console.log(data);
                 res.sendStatus(200);
                 socket.emit('assignments', changes);
               }
