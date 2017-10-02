@@ -9,6 +9,7 @@ const LogoutButton = ({ history, loggedIn, setLoggedIn }) => (
       label="logout"
       onClick={() => {
         sessionStorage.removeItem('jwt');
+        setAdmin(false);
         setLoggedIn(false);
         history.push('/');
         location.reload();
@@ -18,11 +19,18 @@ const LogoutButton = ({ history, loggedIn, setLoggedIn }) => (
   ) : null
 );
 
-const mapStateToProps = ({ loggedIn }) => ({
+const mapStateToProps = ({ login: { loggedIn } }) => ({
   loggedIn,
 });
 
 const mapDispatchToProps = dispatch => ({
+  setAdmin(admin) {
+    dispatch({
+      admin,
+      type: 'SET_ADMIN',
+    });
+  },
+
   setLoggedIn(loggedIn) {
     dispatch({
       loggedIn,

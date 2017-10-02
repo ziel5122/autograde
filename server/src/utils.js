@@ -1,10 +1,10 @@
 const diff = require('diff');
-const dynamodb = require('./aws/dynamo-db');
 const fs = require('fs-extra');
 const path = require('path');
 const request = require('request-promise');
 const uuid = require('uuid');
 
+const docClient = require('./aws');
 const options = require('./docker/options');
 
 const join = path.join;

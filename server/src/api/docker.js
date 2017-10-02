@@ -1,4 +1,3 @@
-const dynamodb = require('../aws/dynamo-db');
 const express = require('express');
 const fs = require('fs-extra');
 const jwt = require('jsonwebtoken');
@@ -6,6 +5,8 @@ const path = require('path');
 const request = require('request-promise');
 const options = require('../docker/options');
 const utils = require('../utils');
+
+const docClient = require('../aws');
 
 const join = path.join;
 
@@ -31,7 +32,7 @@ const update = (username, attempts) => (
       },
     };
 
-    dynamodb.update(params, (err, data) => {
+    docClient.update(params, (err, data) => {
       if (err) {
         console.log(err, err.stack);
         reject();
@@ -54,7 +55,7 @@ router.post('/run', ({ body }, res) => {
       });
     } else {
       const params = getUser(decoded.username);
-      dynamodb.get(params, (err, { Item : { attempts } }) => {
+      docClient.get(params, (err, { Item : { attempts } }) => {
         if (err) {
           res.sendStatus(500).send('db');
         } else {
@@ -90,7 +91,7 @@ router.post('/run', ({ body }, res) => {
                         },
                       };
 
-                      dynamodb.update(params, (err, data) => {
+                      docClient.update(params, (err, data) => {
                         if (err) throw new Error(err);
                       });
                     }

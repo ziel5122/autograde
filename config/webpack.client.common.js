@@ -21,7 +21,7 @@ const config = {
       },
       {
         include: path.join(APP_DIR, 'images'),
-        test: /\.png$/,
+        test: /\.svg$/,
         use: [
           'url-loader',
         ],

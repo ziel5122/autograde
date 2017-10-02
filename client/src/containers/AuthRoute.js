@@ -11,7 +11,7 @@ const AuthRoute = ({ Component, loggedIn, ...rest }) => (
   />
 );
 
-const mapStateToProps = ({ loggedIn }) => ({
+const mapStateToProps = ({ login: { loggedIn } }) => ({
   loggedIn,
 });
 

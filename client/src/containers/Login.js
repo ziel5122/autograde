@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import React, { PureComponent } from 'react';
@@ -83,10 +84,11 @@ class Login extends PureComponent {
   handleLoginResponse(loginResponse) {
     switch (loginResponse.status) {
       case 200:
-        loginResponse.text()
-          .then((jwt) => {
-            sessionStorage.setItem('jwt', jwt);
+        loginResponse.json()
+          .then(({ token, privilege }) => {
+            sessionStorage.setItem('jwt', token);
             this.props.setLoggedIn(true);
+            this.props.setAdmin(privilege === 'admin');
           })
           .catch((err) => {
             throw new Error(err);
@@ -129,7 +131,7 @@ class Login extends PureComponent {
 
   render() {
     if (this.props.loggedIn) {
-      const { from } = this.props.location.state || { from: { pathname: '/' } };
+      const { from } = this.props.location.state || { from: { pathname: '/home' } };
       return <Redirect to={from} />;
     }
 
@@ -164,11 +166,19 @@ class Login extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ loggedIn }) => ({
+const mapStateToProps = ({ login: { loggedIn } }) => ({
   loggedIn,
 });
 
 const mapDispatchToProps = dispatch => ({
+  setAdmin(admin) {
+    dispatch({
+      admin,
+      type: 'SET_ADMIN',
+    });
+    console.log('admin set');
+  },
+
   setLoggedIn(loggedIn) {
     dispatch({
       loggedIn,

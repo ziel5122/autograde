@@ -1,4 +1,3 @@
-import MenuItem from 'material-ui/MenuItem';
 import Slider from 'material-ui/Slider';
 import Subheader from 'material-ui/Subheader';
 import Toggle from 'material-ui/Toggle';
@@ -13,15 +12,11 @@ const sliderSliderStyles = {
   margin: 0,
 };
 
-const tableStyles = {
-  width: '100%',
-};
-
 const Options = ({
   darkTheme,
   fontSize,
   setFontSize,
-  toggleDarkTheme
+  toggleDarkTheme,
 }) => (
   <div style={{ display: 'flex', flexDirection: 'column', paddingLeft: '8px', paddingRight: '8px', marginBottom: '8px' }}>
     <Subheader>Options</Subheader>
