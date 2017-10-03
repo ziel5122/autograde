@@ -5,16 +5,16 @@ import Editor from './Editor';
 
 const Routes = ({ match: { url }, parts }) => (
   <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>{
-    parts.map(({ name, editors }) => (
+    parts.map(({ name, editors }, partsIndex) => (
       <Route
-        key={name}
-        path={`${url}/${name}`}
+        key={partsIndex}
+        path={`${url}/${partsIndex}`}
         component={() => (
           <div style={{ display: 'flex', flex: 1, flexDirection: 'column', overflow: 'scroll' }}>{
-            editors.map((name) => (
-              <div style={{ flex: 1 }} key={name}>
+            editors.map(({ name }, editorIndex) => (
+              <div style={{ flex: 1 }} key={`${partsIndex}${editorIndex}`}>
                 <div>{name}</div>
-                <Editor id={name} />
+                <Editor id={`${partsIndex}${editorIndex}`} />
               </div>
             ))
           }</div>

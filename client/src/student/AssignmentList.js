@@ -9,12 +9,12 @@ const AssignmentList = ({ assignments, match: { url }, toggleOpen }) => (
     <Subheader style={{ background: 'white' }}>Assignments</Subheader>
     {
       assignments ?
-        Object.keys(assignments).map((id) => ({
-          id,
-          ...assignments[id],
+        Object.keys(assignments).map((name) => ({
+          name,
+          ...assignments[name],
         })).filter(({ visible }) => visible)
-        .map(({ id, name, dueDate, parts }) => (
-          <Link key={id} to={`${url}/${id}`}>
+        .map(({ name, dueDate, parts }) => (
+          <Link key={name} to={`${url}/${name}`}>
             <MenuItem onClick={toggleOpen} primaryText={name} />
           </Link>
         )) :

@@ -13,12 +13,12 @@ const style = {
   width: '100%',
 };
 
-const Assignment = ({ assignments, match: { params: { id } } }) => (
+const Assignment = ({ assignments, match: { params: { name } } }) => (
   <div style={style}>{
-    assignments[id] ? (
+    assignments[name] ? (
       <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-        <Tabs parts={assignments[id].parts} />
-        <Routes parts={assignments[id].parts} />
+        <Tabs parts={assignments[name].parts} />
+        <Routes parts={assignments[name].parts} />
       </div>
     ) : null
   }</div>

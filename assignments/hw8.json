@@ -1,5 +1,5 @@
 {
-  "id": "hw8",
+  "class": "cst334",
   "name": "Homework 8",
   "dueDate": "2017-10-16",
   "attempts": 5,
@@ -8,8 +8,14 @@
     {
       "name": "caching",
       "editors": [
-        "lru_cache.h",
-        "lru_cache.c"
+        {
+          "name": "lru_cache.h",
+          "filename": "lru_cache.h"
+        },
+        {
+          "name": "lru_cache.c",
+          "filename": "lru_cache.x"
+        }
       ]
     }
   ]

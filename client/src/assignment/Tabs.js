@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PurComponent } from 'react';
 
 const style = {
   display: 'flex',
@@ -19,12 +19,17 @@ const tabStyle = (selected, me) => ({
   textDecoration: 'none',
 });
 
-const Tabs = ({ parts }) => (
-  <div style={style}>{
-    parts.map(({ name }) => (
-      <div key={name} style={tabStyle()}>{name}</div>
-    ))
-  }</div>
-);
+class Tabs extends PureComponent {
+
+  render() {
+    return (
+      <div style={style}>{
+        parts.map(({ name }) => (
+          <div key={name} style={tabStyle()}>{name}</div>
+        ))
+      }</div>
+    );
+  }
+}
 
 export default Tabs;

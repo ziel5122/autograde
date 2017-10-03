@@ -10,7 +10,7 @@ reader.onload = ({ target }) => {
   const configJson = JSON.parse(target.result);
   fetch('http://localhost:3000/assignments/set', {
     body: JSON.stringify({
-      configJson: configJson,
+      configJson,
       token: sessionStorage.getItem('jwt'),
     }),
     headers: { 'content-type': 'application/json' },

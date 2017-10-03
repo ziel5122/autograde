@@ -2,7 +2,7 @@ import Paper from 'material-ui/Paper';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Route, withRouter } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 import Assignment from '../assignment/Assignment';
 import Sidebar from './Sidebar';
@@ -21,11 +21,11 @@ const style = {
   width: '100%',
 };
 
-const Home = ({ assignments }) => (
+const Home = ({ assignments, match: { url } }) => (
   <div style={style}>
     <Paper style={paperStyle} zDepth={5}>
       <Sidebar />
-      <Route path="/home/:id" component={Assignment} />
+      <Route path={`${url}/:name`} component={Assignment} />
       <Route path="*" component={null} />
     </Paper>
   </div>
@@ -35,4 +35,4 @@ const mapStateToProps = ({ assignments: { assignments } }) => ({
   assignments,
 });
 
-export default withRouter(connect(mapStateToProps)(Home));
+export default connect(mapStateToProps)(Home);

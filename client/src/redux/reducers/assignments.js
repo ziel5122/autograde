@@ -12,8 +12,8 @@ const assignments = (state = {}, action) => {
       const temp = [...state, action.assignment];
       return temp.sort(compare);
     case 'SET_ASSIGNMENTS':
-      return action.assignments.reduce((newState, { id, ...rest }) => {
-        newState[id] = rest;
+      return action.assignments.reduce((newState, { name, ...rest }) => {
+        newState[name] = rest;
         return newState;
       }, {});
     default:

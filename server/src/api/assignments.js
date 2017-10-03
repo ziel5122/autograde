@@ -42,10 +42,7 @@ const assignments = (socket) => {
         console.log(configJson);
         const params = {
           TableName: 'assignments',
-          Item: {
-            class: 334,
-            ...configJson,
-          },
+          Item: configJson,
         };
         docClient.put(params, (err, data) => {
           if (err) {
@@ -53,13 +50,6 @@ const assignments = (socket) => {
             res.sendStatus(500);
           } else {
             console.log(data);
-            const { id, name, dueDate, attempts, visible } = configJson;
-            socket.emit('assignment', {
-              id,
-              name,
-              dueDate,
-              attempts,
-            visible });
             res.sendStatus(200);
           }
         });
