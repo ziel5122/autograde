@@ -7,7 +7,8 @@ import 'brace/theme/clouds';
 import 'brace/theme/clouds_midnight';
 
 const editorStyles = {
-  height: '100%',
+  height: '500px',
+  width: '100%',
 };
 
 const getAceTheme = darkTheme => (
@@ -16,7 +17,7 @@ const getAceTheme = darkTheme => (
 
 class Editor extends PureComponent {
   componentDidMount() {
-    this.editor = ace.edit('editor');
+    this.editor = ace.edit(this.props.id);
     this.editor.on('change', () => this.props.setCode(this.editor.getValue()));
     this.editor.setFontSize(this.props.fontSize);
     this.editor.setPrintMarginColumn(80);
@@ -35,7 +36,7 @@ class Editor extends PureComponent {
   }
 
   render() {
-    return <div id="editor" style={editorStyles} />;
+    return <div id={this.props.id} style={editorStyles} />;
   }
 }
 

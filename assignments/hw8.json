@@ -1,0 +1,16 @@
+{
+  "id": "hw8",
+  "name": "Homework 8",
+  "dueDate": "2017-10-16",
+  "attempts": 5,
+  "visible": true,
+  "parts": [
+    {
+      "name": "caching",
+      "editors": [
+        "lru_cache.h",
+        "lru_cache.c"
+      ]
+    }
+  ]
+}

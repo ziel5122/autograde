@@ -8,21 +8,17 @@ const AssignmentList = ({ assignments, match: { url }, toggleOpen }) => (
   <div>
     <Subheader style={{ background: 'white' }}>Assignments</Subheader>
     {
-      //assignments ?
-      const ass = Object.keys(assignments).map((id) => ({
-          ...id,
+      assignments ?
+        Object.keys(assignments).map((id) => ({
+          id,
           ...assignments[id],
-        }));
-        console.log(ass);
-        /*
-          .filter(({ visible }) => visible)
-          .map(({ id, name, dueDate, parts }) => (
-            <Link key={id} to={`${url}/${id}`}>
-              <MenuItem onClick={toggleOpen} primaryText={name} />
-            </Link>
-          )) :
+        })).filter(({ visible }) => visible)
+        .map(({ id, name, dueDate, parts }) => (
+          <Link key={id} to={`${url}/${id}`}>
+            <MenuItem onClick={toggleOpen} primaryText={name} />
+          </Link>
+        )) :
         null
-        */
     }
   </div>
 );

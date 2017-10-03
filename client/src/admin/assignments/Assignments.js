@@ -31,20 +31,14 @@ const Assignments = ({ assignments }) => (
       </tr>
     </thead>
     <tbody>{
-      assignments.map(({
-        attempts,
-        dueDate,
-        id,
-        name,
-        visible,
-      }) => (
+      Object.keys(assignments).map((id) => (
         <tr key={id}>
           <td><ConfigUpload button={<ContentCreate />} type="update" /></td>
           <td>{id}</td>
-          <td>{name}</td>
-          <td>{dueDate}</td>
-          <td>{attempts}</td>
-          <td>{visible ? 'visible' : ''}</td>
+          <td>{assignments[id].name}</td>
+          <td>{assignments[id].dueDate}</td>
+          <td>{assignments[id].attempts}</td>
+          <td>{assignments[id].visible ? 'visible' : ''}</td>
         </tr>
       ))
     }</tbody>
@@ -56,7 +50,7 @@ const Assignments = ({ assignments }) => (
   </table>
 );
 
-const mapStateToProps = ({ assignments: { assignments } }) => ({
+const mapStateToProps = ({ assignments }) => ({
   assignments,
 });
 
