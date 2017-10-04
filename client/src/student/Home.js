@@ -26,7 +26,6 @@ const Home = ({ assignments, match: { url } }) => (
     <Paper style={paperStyle} zDepth={5}>
       <Sidebar />
       <Route path={`${url}/:name`} component={Assignment} />
-      <Route path="*" component={null} />
     </Paper>
   </div>
 );

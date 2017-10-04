@@ -68,7 +68,7 @@ class Login extends PureComponent {
   }
 
   componentWillUnmount() {
-    document.addEventListener('keydown', this.handleKeyDown);
+    document.removeEventListener('keydown', this.handleKeyDown);
   }
 
   handleKeyDown(event) {

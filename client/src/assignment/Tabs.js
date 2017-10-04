@@ -1,4 +1,5 @@
-import React, { PurComponent } from 'react';
+import React, { PureComponent } from 'react';
+import { Link, withRouter } from 'react-router-dom';
 
 const style = {
   display: 'flex',
@@ -8,8 +9,8 @@ const style = {
 
 const tabStyle = (selected, me) => ({
   alignItems: 'center',
-  background: selected === me ? 'white' : 'steelblue',
-  color: selected === me ? 'slateblue' : 'white',
+  background: selected === me ? 'white' : 'whitesmoke',
+  color: selected === me ? 'slateblue' : 'steelblue',
   display: 'flex',
   flex: 1,
   fontSize: '16px',
@@ -20,16 +21,36 @@ const tabStyle = (selected, me) => ({
 });
 
 class Tabs extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selected: this.props.parts[0].name,
+    };
+    this.handleTabSelect = this.handleTabSelect.bind(this);
+  }
+
+  handleTabSelect(tabName) {
+    this.setState({ selected: tabName });
+  }
 
   render() {
+    const { parts, match: { url } } = this.props;
+
     return (
       <div style={style}>{
-        parts.map(({ name }) => (
-          <div key={name} style={tabStyle()}>{name}</div>
+        parts.map(({ name }, index) => (
+          <Link key={name} to={`${url}/${index}`}>
+            <div
+              onClick={() => this.handleTabSelect(name)}
+              style={tabStyle(this.state.selected, name)}
+            >
+              {name}
+            </div>
+          </Link>
         ))
       }</div>
     );
   }
 }
 
-export default Tabs;
+export default withRouter(Tabs);

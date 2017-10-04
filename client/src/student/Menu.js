@@ -12,6 +12,7 @@ const style = {
   borderRight: 'orangered 2px solid',
   borderTop: 'orangered 2px solid',
   height: 'calc(100% - 92px)',
+  maxWidth: '168px',
   position: 'absolute',
 };
 

@@ -22,6 +22,10 @@ class Sidebar extends PureComponent {
     this.setState({ open: !this.state.open });
   }
 
+  handleClick() {
+    this.toggleOpen();
+  }
+
   render() {
     const { assignments } = this.props;
     const { open } = this.state;
@@ -29,7 +33,7 @@ class Sidebar extends PureComponent {
     return (
       <div style={style}>
         <MenuToggle open={open} toggleOpen={this.toggleOpen} />
-        <Menu open={open} toggleOpen={this.toggleOpen} />
+        <Menu id="MMMenu" open={open} toggleOpen={this.toggleOpen} />
       </div>
     );
   }
