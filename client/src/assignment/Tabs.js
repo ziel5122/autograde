@@ -39,7 +39,9 @@ class Tabs extends PureComponent {
     return (
       <div style={style}>{
         parts.map(({ name }, index) => (
-          <Link key={name} to={`${url}/${index}`}>
+          <Link style={{ flex: 1 }}
+            key={name} to={`${url}/${index}`}
+          >
             <div
               onClick={() => this.handleTabSelect(name)}
               style={tabStyle(this.state.selected, name)}

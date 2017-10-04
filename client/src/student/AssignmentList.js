@@ -14,7 +14,7 @@ const AssignmentList = ({ assignments, match: { url }, toggleOpen }) => (
           ...assignments[name],
         })).filter(({ visible }) => visible)
         .map(({ name, dueDate, parts }) => (
-          <Link key={name} to={`${url}/${name}`}>
+          <Link key={name} to={`${url}/${name}/0`}>
             <MenuItem onClick={toggleOpen} primaryText={name} />
           </Link>
         )) :

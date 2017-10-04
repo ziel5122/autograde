@@ -6,6 +6,12 @@ import Editor from '../assignment/Editor';
 import Routes from './Routes';
 import Tabs from './Tabs';
 
+const assignmentStyle = {
+  display: 'flex',
+  flex: 1,
+  flexDirection: 'column',
+};
+
 const style = {
   display: 'flex',
   flexDirection: 'column',
@@ -16,7 +22,7 @@ const style = {
 const Assignment = ({ assignments, match: { params: { name } } }) => (
   <div style={style}>{
     assignments[name] ? (
-      <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+      <div style={assignmentStyle}>
         <Tabs parts={assignments[name].parts} />
         <Routes parts={assignments[name].parts} />
       </div>
