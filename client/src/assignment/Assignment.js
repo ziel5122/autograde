@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import Editor from '../assignment/Editor';
 import Routes from './Routes';
-import Tabs from './Tabs';
+import Tabs from '../home/Tabs';
 
 const assignmentStyle = {
   display: 'flex',

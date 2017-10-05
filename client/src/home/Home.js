@@ -4,9 +4,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 
+import Actions from './Actions';
 import Assignment from '../assignment/Assignment';
 import Sidebar from './Sidebar';
-import Tabs from '../assignment/Tabs';
+import Tabs from './Tabs';
 
 const paperStyle = {
   background: 'whitesmoke',
@@ -27,13 +28,11 @@ const style = {
 
 const Home = ({ assignments, match: { url } }) => (
   <div style={style}>
-    <div style={{ height: '36px' }}> TABS </div>
+    <Route path={`${url}/:name`} component={Tabs} />
     <Paper style={paperStyle} zDepth={5}>
       <Sidebar />
       <Route path={`${url}/:name`} component={Assignment} />
-      <div style={{ background: 'whitesmoke', height: '100%', width: '200px' }}>
-        Actions
-      </div>
+      <Actions />
     </Paper>
   </div>
 );

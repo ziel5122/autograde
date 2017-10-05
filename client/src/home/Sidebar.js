@@ -7,7 +7,7 @@ import MenuToggle from './MenuToggle';
 
 const style = {
   display: 'flex',
-  height: 'calc(100% - 36px)',
+  height: '100%',
 };
 
 class Sidebar extends PureComponent {

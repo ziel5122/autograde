@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 
 const style = {
@@ -24,9 +25,6 @@ const tabStyle = (selected, me) => ({
 class Tabs extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = {
-      selected: this.props.parts[0].name,
-    };
     this.handleTabSelect = this.handleTabSelect.bind(this);
   }
 
@@ -35,7 +33,8 @@ class Tabs extends PureComponent {
   }
 
   render() {
-    const { parts, match: { url } } = this.props;
+    const { assignments, match: { params: { name }, url } } = this.props;
+    const parts = assignments[name] ? assignments[name].parts : [];
 
     return (
       <div style={style}>{
@@ -46,13 +45,13 @@ class Tabs extends PureComponent {
             style={{
               flex: 1,
               textDecoration: 'none',
-              marginLeft: index === 0 ? '0px' : '4px',
+              marginLeft: index === 0 ? '24px' : '4px',
               marginRight: index === parts.length - 1 ? '0px' : '4px'
             }}
           >
             <div
               onClick={() => this.handleTabSelect(name)}
-              style={tabStyle(this.state.selected, name)}
+              style={tabStyle(true, name)}
             >
               {name}
             </div>
@@ -63,4 +62,8 @@ class Tabs extends PureComponent {
   }
 }
 
-export default withRouter(Tabs);
+const mapStateToProps = ({ assignments }) => ({
+  assignments,
+});
+
+export default withRouter(connect(mapStateToProps)(Tabs));

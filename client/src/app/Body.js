@@ -7,7 +7,7 @@ import AdminHome from '../admin/Home';
 import AuthRoute from '../containers/AuthRoute';
 import Assignment from '../assignment/Assignment';
 import Demo from '../demo/Demo';
-import Home from '../student/Home';
+import Home from '../home/Home';
 import Login from '../containers/Login';
 
 const bodyStyles = {
