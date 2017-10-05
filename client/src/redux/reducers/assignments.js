@@ -1,5 +1,3 @@
-import { combineReducers } from 'redux';
-
 const compare = (a, b) => {
   if (a.dueDate < b.dueDate) return -1;
   if (a.dueDate > b.dueDate) return 1;

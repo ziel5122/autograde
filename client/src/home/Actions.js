@@ -14,9 +14,8 @@ const dividerStyle = {
 };
 
 const errorStyle = {
-  background: 'rgba(255, 255, 0, .25)',
   flex: '1',
-  margin: '8px',
+  width: '100%',
 };
 
 const segmentStyle = {
@@ -31,6 +30,7 @@ const style = {
   display: 'flex',
   flexDirection: 'column',
   height: '100%',
+  width: '250px',
 };
 
 const Actions = ({
@@ -42,9 +42,14 @@ const Actions = ({
   result = 'incorrect',
 }) => (
   <div style={style}>
-    <div style={segmentStyle}>
-      <FlatButton label="clear" style={buttonStyle} />
-      <RaisedButton label="submit" style={buttonStyle} />
+    <div
+      style={{
+        display: 'flex',
+        padding: '8px',
+      }}
+    >
+      <FlatButton label="clear" style={{ marginRight: '4px' }} />
+      <RaisedButton label="submit" style={{ marginLeft: '4px' }} />
     </div>
     <Divider style={dividerStyle} />
     <div style={segmentStyle}>
@@ -52,18 +57,26 @@ const Actions = ({
     </div>
     <Divider style={dividerStyle} />
     <div style={segmentStyle}>
-      <div style={buttonStyle}>Result:</div>
-      <div>{result}</div>
+      <div style={buttonStyle}>{`Result: ${result}`}</div>
     </div>
     <Divider style={dividerStyle} />
     <div style={segmentStyle}>
       <div style={buttonStyle}>Updated:</div>
-      <div>{lastUpdate.date}</div>
-      <div>{lastUpdate.time}</div>
+      <div>{lastUpdate.date}:{lastUpdate.time}</div>
     </div>
     <Divider style={dividerStyle}/>
     <div style={errorStyle}>
-      lots of text
+      <div
+        style={{
+          background: 'rgba(255, 255, 0, .25)',
+          color: 'red',
+          flex: 1,
+          height: 'calc(100% - 16px)',
+          margin: '8px',
+        }}
+      >
+        error text
+      </div>
     </div>
   </div>
 );
