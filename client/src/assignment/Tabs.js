@@ -2,8 +2,9 @@ import React, { PureComponent } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 
 const style = {
+  background: 'lightgray',
   display: 'flex',
-  height: '24px',
+  height: '36px',
   width: '100%',
 };
 
@@ -39,8 +40,15 @@ class Tabs extends PureComponent {
     return (
       <div style={style}>{
         parts.map(({ name }, index) => (
-          <Link style={{ flex: 1 }}
-            key={name} to={`${url}/${index}`}
+          <Link
+            key={name}
+            to={`${url}/${index}`}
+            style={{
+              flex: 1,
+              textDecoration: 'none',
+              marginLeft: index === 0 ? '0px' : '4px',
+              marginRight: index === parts.length - 1 ? '0px' : '4px'
+            }}
           >
             <div
               onClick={() => this.handleTabSelect(name)}

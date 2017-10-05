@@ -1,3 +1,4 @@
+import Paper from 'material-ui/Paper';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -23,7 +24,6 @@ const Assignment = ({ assignments, match: { params: { name } } }) => (
   <div style={style}>{
     assignments[name] ? (
       <div style={assignmentStyle}>
-        <Tabs parts={assignments[name].parts} />
         <Routes parts={assignments[name].parts} />
       </div>
     ) : null

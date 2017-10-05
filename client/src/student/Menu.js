@@ -11,7 +11,7 @@ const style = {
   borderBottom: 'orangered 2px solid',
   borderRight: 'orangered 2px solid',
   borderTop: 'orangered 2px solid',
-  height: 'calc(100% - 92px)',
+  height: 'calc(100% - 128px)',
   maxWidth: '168px',
   position: 'absolute',
 };

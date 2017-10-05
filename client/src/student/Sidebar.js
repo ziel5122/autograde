@@ -1,3 +1,4 @@
+import Paper from 'material-ui/Paper';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 
@@ -6,7 +7,7 @@ import MenuToggle from './MenuToggle';
 
 const style = {
   display: 'flex',
-  height: '100%',
+  height: 'calc(100% - 36px)',
 };
 
 class Sidebar extends PureComponent {
@@ -31,10 +32,10 @@ class Sidebar extends PureComponent {
     const { open } = this.state;
 
     return (
-      <div style={style}>
+      <Paper style={style} zDepth={5}>
         <MenuToggle open={open} toggleOpen={this.toggleOpen} />
         <Menu id="MMMenu" open={open} toggleOpen={this.toggleOpen} />
-      </div>
+      </Paper>
     );
   }
 }
