@@ -1,30 +1,15 @@
-import jwt from 'jsonwebtoken';
-import React, { Component } from 'react';
+import React from 'react';
 import { Redirect, Route, withRouter } from 'react-router-dom';
 
 import AdminRoute from '../containers/AdminRoute';
 import AdminHome from '../admin/Home';
 import AuthRoute from '../containers/AuthRoute';
-import Assignment from '../assignment/Assignment';
 import Demo from '../demo/Demo';
 import Home from '../home/Home';
 import Login from '../containers/Login';
 
-const bodyStyles = {
-  alignItems: 'center',
-  display: 'flex',
-  flex: 1,
-  flexDirection: 'column',
-  justifyContent: 'center',
-  padding: '24px',
-};
-
 const style = {
-  alignItems: 'center',
-  display: 'flex',
   flex: 1,
-  flexDirection: 'column',
-  justifyContent: 'center',
   padding: '24px',
 };
 

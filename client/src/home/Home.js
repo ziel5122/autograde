@@ -16,18 +16,21 @@ const paperStyle = {
 };
 
 const style = {
-  alignItems: 'flex-start',
-  background: 'lightgray',
   display: 'flex',
-  flex: 1,
   flexDirection: 'column',
+  height: '100%',
   maxWidth: '1000px',
+  width: '100%',
+};
+
+const tabsWrapperStyle = {
+  height: '36px',
   width: '100%',
 };
 
 const Home = ({ match: { url } }) => (
   <div style={style}>
-    <div style={{ height: '36px', width: '100%' }}>
+    <div style={tabsWrapperStyle}>
       <Route path={`${url}/:name`} component={Tabs} />
     </div>
     <Paper style={paperStyle} zDepth={5}>

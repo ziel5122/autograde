@@ -8,7 +8,7 @@ import 'brace/theme/clouds_midnight';
 
 const editorStyles = {
   height: '500px',
-  width: '100%',
+  flex: 1,
 };
 
 const getAceTheme = darkTheme => (

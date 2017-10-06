@@ -13,11 +13,6 @@ const dividerStyle = {
   width: '100%',
 };
 
-const errorStyle = {
-  flex: '1',
-  width: '100%',
-};
-
 const segmentStyle = {
   alignItems: 'center',
   display: 'flex',
@@ -30,7 +25,7 @@ const style = {
   display: 'flex',
   flexDirection: 'column',
   height: '100%',
-  width: '250px',
+  justifyContent: 'center',
 };
 
 const Actions = ({
@@ -42,14 +37,8 @@ const Actions = ({
   result = 'incorrect',
 }) => (
   <div style={style}>
-    <div
-      style={{
-        display: 'flex',
-        padding: '8px',
-      }}
-    >
-      <FlatButton label="clear" style={{ marginRight: '4px' }} />
-      <RaisedButton label="submit" style={{ marginLeft: '4px' }} />
+    <div style={segmentStyle}>
+      <RaisedButton label="submit" />
     </div>
     <Divider style={dividerStyle} />
     <div style={segmentStyle}>
@@ -57,26 +46,16 @@ const Actions = ({
     </div>
     <Divider style={dividerStyle} />
     <div style={segmentStyle}>
-      <div style={buttonStyle}>{`Result: ${result}`}</div>
+      <div style={buttonStyle}>Result:</div>
+      <div>{result}</div>
     </div>
     <Divider style={dividerStyle} />
     <div style={segmentStyle}>
       <div style={buttonStyle}>Updated:</div>
-      <div>{lastUpdate.date}:{lastUpdate.time}</div>
+      <div>{lastUpdate.date}</div>
+      <div>{lastUpdate.time}</div>
     </div>
     <Divider style={dividerStyle}/>
-    <div style={errorStyle}>
-      <div
-        style={{
-          background: 'rgba(255, 255, 0, .25)',
-          color: 'red',
-          flex: 1,
-          margin: '8px',
-        }}
-      >
-        error text
-      </div>
-    </div>
   </div>
 );
 
