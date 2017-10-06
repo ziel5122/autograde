@@ -46,7 +46,7 @@ class Tabs extends PureComponent {
               flex: 1,
               textDecoration: 'none',
               marginLeft: index === 0 ? '24px' : '4px',
-              marginRight: index === parts.length - 1 ? '0px' : '4px'
+              marginRight: index === parts.length - 1 ? '200px' : '4px'
             }}
           >
             <div

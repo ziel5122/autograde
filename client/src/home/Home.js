@@ -13,11 +13,10 @@ const paperStyle = {
   background: 'whitesmoke',
   display: 'flex',
   flex: 1,
-  width: '100%',
 };
 
 const style = {
-  alignItems: 'flex-end',
+  alignItems: 'flex-start',
   background: 'lightgray',
   display: 'flex',
   flex: 1,
@@ -26,19 +25,16 @@ const style = {
   width: '100%',
 };
 
-const Home = ({ assignments, match: { url } }) => (
+const Home = ({ match: { url } }) => (
   <div style={style}>
-    <Route path={`${url}/:name`} component={Tabs} />
+    <div style={{ height: '36px', width: '100%' }}>
+      <Route path={`${url}/:name`} component={Tabs} />
+    </div>
     <Paper style={paperStyle} zDepth={5}>
       <Sidebar />
       <Route path={`${url}/:name`} component={Assignment} />
-      <Actions />
     </Paper>
   </div>
 );
 
-const mapStateToProps = ({ assignments: { assignments } }) => ({
-  assignments,
-});
-
-export default connect(mapStateToProps)(Home);
+export default Home;

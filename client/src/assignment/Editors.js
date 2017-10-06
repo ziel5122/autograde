@@ -9,7 +9,7 @@ const Editors = ({ parts, match: { params: { index } } }) => {
   const { editors } = parts[index];
 
   return (
-    <div style={{ background: 'white' }}>{
+    <div style={{ background: 'white', display: 'flex', flex: 1, }}>{
       editors.map(({ name, filename }, index) => (
         <div style={{ flex: 1 }} key={filename}>
           <div>{name}</div>

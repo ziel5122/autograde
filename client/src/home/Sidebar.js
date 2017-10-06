@@ -14,7 +14,7 @@ class Sidebar extends PureComponent {
   constructor() {
     super();
     this.state = {
-      open: false,
+      open: true,
     };
     this.toggleOpen = this.toggleOpen.bind(this);
   }

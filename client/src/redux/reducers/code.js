@@ -1,6 +1,7 @@
 const code = (state = {}, action) => {
   switch (action.type) {
     case 'SET_CODE':
+    /*
       const { name, index } = action;
       return {
         ...state,
@@ -10,6 +11,7 @@ const code = (state = {}, action) => {
           ...state[name].slice(index),
         ],
       };
+      */
     default:
       return state;
   }

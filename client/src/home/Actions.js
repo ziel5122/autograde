@@ -71,7 +71,6 @@ const Actions = ({
           background: 'rgba(255, 255, 0, .25)',
           color: 'red',
           flex: 1,
-          height: 'calc(100% - 16px)',
           margin: '8px',
         }}
       >
