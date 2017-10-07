@@ -7,7 +7,6 @@ import 'brace/theme/clouds';
 import 'brace/theme/clouds_midnight';
 
 const editorStyles = {
-  height: '500px',
   flex: 1,
 };
 

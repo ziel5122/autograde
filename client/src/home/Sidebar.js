@@ -11,10 +11,11 @@ const style = {
 };
 
 class Sidebar extends PureComponent {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    console.log(this.props.match.params.name);
     this.state = {
-      open: true,
+      open: !this.props.match.params.name,
     };
     this.toggleOpen = this.toggleOpen.bind(this);
   }

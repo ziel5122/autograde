@@ -4,17 +4,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 
-const AssignmentList = ({ assignments, match: { url }, toggleOpen }) => (
+const AssignmentList = ({ data, match: { url }, openTab, toggleOpen }) => (
   <div>
     <Subheader style={{ background: 'white' }}>Assignments</Subheader>
     {
-      assignments ?
-        Object.keys(assignments).map((name) => ({
+      data ?
+        Object.keys(data).map((name) => ({
           name,
-          ...assignments[name],
+          ...data[name],
         })).filter(({ visible }) => visible)
-        .map(({ name, dueDate, parts }) => (
-          <Link key={name} to={`${url}/${name}/0`}>
+        .map(({ dueDate, name, parts }) => (
+          <Link key={name} to={`/home/${name}`}>
             <MenuItem onClick={toggleOpen} primaryText={name} />
           </Link>
         )) :
@@ -23,8 +23,9 @@ const AssignmentList = ({ assignments, match: { url }, toggleOpen }) => (
   </div>
 );
 
-const mapStateToProps = ({ assignments }) => ({
-  assignments,
+const mapStateToProps = ({ assignments: { data, openTab } }) => ({
+  data,
+  openTab,
 });
 
 export default withRouter(connect(mapStateToProps)(AssignmentList));

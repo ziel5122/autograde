@@ -9,16 +9,16 @@ const style = {
   width: '100%',
 };
 
-const AssignmentRoutes = ({ assignments }) => (
+const AssignmentRoutes = ({ data }) => (
   <div style={style}>{
-    assignments.map(({ name, parts }) => (
+    data.map(({ name, parts }) => (
       <Route key={name} path={`/${name}`} component={() => <Assignment parts={parts} />} />
     ))
   }</div>
 );
 
-const mapStateToProps = ({ assignments }) => ({
-  assignments,
+const mapStateToProps = ({ assignments: { data } }) => ({
+  data,
 });
 
 export default withRouter(connect(mapStateToProps)(AssignmentRoutes));

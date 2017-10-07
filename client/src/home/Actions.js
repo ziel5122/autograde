@@ -22,6 +22,7 @@ const segmentStyle = {
 
 const style = {
   alignItems: 'center',
+  background: 'whitesmoke',
   display: 'flex',
   flexDirection: 'column',
   height: '100%',

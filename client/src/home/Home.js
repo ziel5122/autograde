@@ -13,6 +13,7 @@ const paperStyle = {
   background: 'whitesmoke',
   display: 'flex',
   flex: 1,
+  overflow: 'hidden',
 };
 
 const style = {
@@ -20,6 +21,7 @@ const style = {
   flexDirection: 'column',
   height: '100%',
   maxWidth: '1000px',
+  overflow: 'hidden',
   width: '100%',
 };
 
@@ -33,10 +35,10 @@ const Home = ({ match: { url } }) => (
     <div style={tabsWrapperStyle}>
       <Route path={`${url}/:name`} component={Tabs} />
     </div>
-    <Paper style={paperStyle} zDepth={5}>
-      <Sidebar />
+    <div style={paperStyle}>
+      <Route path={`${url}/:name?`} component={Sidebar} />
       <Route path={`${url}/:name`} component={Assignment} />
-    </Paper>
+    </div>
   </div>
 );
 

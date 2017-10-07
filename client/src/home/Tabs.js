@@ -9,16 +9,20 @@ const style = {
   width: '100%',
 };
 
-const tabStyle = (selected, me) => ({
+const tabStyle = (selected, me, length) => ({
   alignItems: 'center',
   background: selected === me ? 'white' : 'whitesmoke',
   color: selected === me ? 'slateblue' : 'steelblue',
+  cursor: 'hand',
+  cursor: 'pointer',
   display: 'flex',
   flex: 1,
   fontSize: '16px',
   height: '36px',
   justifyContent: 'center',
   lineHeight: '16px',
+  marginLeft: me === 0 ? '24px' : '4px',
+  marginRight: me === length - 1 ? '200px' : '4px',
   textDecoration: 'none',
 });
 
@@ -33,37 +37,44 @@ class Tabs extends PureComponent {
   }
 
   render() {
-    const { assignments, match: { params: { name }, url } } = this.props;
-    const parts = assignments[name] ? assignments[name].parts : [];
+    const {
+      data,
+      match: { params: { name }, url },
+      openTab,
+      setOpenTab,
+    } = this.props;
+    const parts = data[name] ? data[name].parts : [];
 
     return (
       <div style={style}>{
-        parts.map(({ name }, index) => (
-          <Link
-            key={name}
-            to={`${url}/${index}`}
-            style={{
-              flex: 1,
-              textDecoration: 'none',
-              marginLeft: index === 0 ? '24px' : '4px',
-              marginRight: index === parts.length - 1 ? '200px' : '4px'
-            }}
+        parts.map((part, index) => (
+          <div
+            key={part.name}
+            onClick={() => setOpenTab(name, index)}
+            style={tabStyle(openTab[name], index, parts.length)}
           >
-            <div
-              onClick={() => this.handleTabSelect(name)}
-              style={tabStyle(true, name)}
-            >
-              {name}
-            </div>
-          </Link>
+            {part.name}
+          </div>
         ))
       }</div>
     );
   }
 }
 
-const mapStateToProps = ({ assignments }) => ({
-  assignments,
+const mapStateToProps = ({ assignments: { data, openTab } }) => ({
+  data,
+  openTab,
 });
 
-export default withRouter(connect(mapStateToProps)(Tabs));
+const mapDispatchToProps = dispatch => ({
+  setOpenTab(assignmentName, openTab) {
+    console.log('set');
+    dispatch({
+      assignmentName,
+      openTab,
+      type: 'SET_OPEN_TAB',
+    });
+  },
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Tabs));

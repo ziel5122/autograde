@@ -10,27 +10,29 @@ import Tabs from '../home/Tabs';
 const assignmentStyle = {
   display: 'flex',
   flex: 1,
+  overflow: 'hidden'
 };
 
 const style = {
+  background: 'white',
   display: 'flex',
   flex: 1,
   flexDirection: 'column',
 };
 
-const Assignment = ({ assignments, match: { params: { name }, url } }) => (
+const Assignment = ({ data, match: { params: { name }, url } }) => (
   <div style={style}>{
-    assignments[name] ? (
+    data[name] ? (
       <div style={assignmentStyle}>
-        <Route component={() => <Editors parts={assignments[name].parts} />} path={`${url}/:index`} />
+        <Editors parts={data[name].parts} />
         <Actions />
       </div>
     ) : null
   }</div>
 );
 
-const mapStateToProps = ({ assignments }) => ({
-  assignments,
+const mapStateToProps = ({ assignments: { data } }) => ({
+  data,
 });
 
 export default connect(mapStateToProps)(Assignment);
