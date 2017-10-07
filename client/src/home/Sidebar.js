@@ -13,7 +13,6 @@ const style = {
 class Sidebar extends PureComponent {
   constructor(props) {
     super(props);
-    console.log(this.props.match.params.name);
     this.state = {
       open: !this.props.match.params.name,
     };
@@ -30,8 +29,8 @@ class Sidebar extends PureComponent {
 
   render() {
     const { assignments } = this.props;
-    const { open } = this.state;
-
+    const open = this.state.open || !this.props.match.params.name;
+    
     return (
       <Paper style={style} zDepth={5}>
         <MenuToggle open={open} toggleOpen={this.toggleOpen} />
