@@ -1,22 +1,16 @@
 {
-  "class": "cst334",
+  "classCode": "cst334",
   "name": "Homework 8",
   "dueDate": "2017-10-16",
-  "attempts": 5,
-  "visible": true,
   "parts": [
-    {
-      "name": "caching",
-      "editors": [
-        {
-          "name": "lru_cache.h",
-          "filename": "lru_cache.h"
-        },
-        {
-          "name": "lru_cache.c",
-          "filename": "lru_cache.x"
-        }
-      ]
-    }
+    [
+      "caching",
+      {
+        "editors": [
+          [ "lru_cache.h", "lru_cache.h" ],
+          [ "lru_cache.c", "lru_cache.c" ]
+        ]
+      }
+    ]
   ]
 }

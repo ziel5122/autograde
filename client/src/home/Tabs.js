@@ -37,12 +37,8 @@ class Tabs extends PureComponent {
   }
 
   render() {
-    const {
-      data,
-      match: { params: { name }, url },
-      openTab,
-      setOpenTab,
-    } = this.props;
+    const { data, match: { params: { name }, url }, setOpenTab } = this.props;
+    const openTab = data[name] ? data[name].openTab : 0;
     const parts = data[name] ? data[name].parts : [];
 
     return (
@@ -51,7 +47,7 @@ class Tabs extends PureComponent {
           <div
             key={part.name}
             onClick={() => setOpenTab(name, index)}
-            style={tabStyle(openTab[name], index, parts.length)}
+            style={tabStyle(openTab, index, parts.length)}
           >
             {part.name}
           </div>
@@ -61,16 +57,14 @@ class Tabs extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ assignments: { data, openTab } }) => ({
+const mapStateToProps = ({ assignments: { data } }) => ({
   data,
-  openTab,
 });
 
 const mapDispatchToProps = dispatch => ({
-  setOpenTab(assignmentName, openTab) {
-    console.log('set');
+  setOpenTab(name, openTab) {
     dispatch({
-      assignmentName,
+      name,
       openTab,
       type: 'SET_OPEN_TAB',
     });

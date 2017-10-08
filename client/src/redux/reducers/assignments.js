@@ -1,38 +1,47 @@
 import { combineReducers } from 'redux';
 
-const compare = (a, b) => {
-  if (a.dueDate < b.dueDate) return -1;
-  if (a.dueDate > b.dueDate) return 1;
-  return 0;
-};
+// Helper Functions
+const addAssignment = (state, { attempts, visible, ...rest }) => ({
+  ...rest,
+  attempts: attempts || 5,
+  openTab: 0,
+  visible: !!visible,
+});
+
+const setOpenTab = (state, openTab) => ({
+  ...state,
+  openTab,
+});
 
 const data = (state = {}, action) => {
   switch (action.type) {
     case 'ADD_ASSIGNMENT':
-      const temp = [...state, action.assignment];
-      return temp.sort(compare);
+      const { name, ...rest } = action.assignment;
+      return {
+        ...state,
+        [name]: addAssignment(undefined, rest),
+      };
     case 'SET_ASSIGNMENTS':
-      return action.assignments.reduce((newState, { name, ...rest }) => {
-        newState[name] = rest;
-        return newState;
-      }, {});
-    default:
-      return state;
-  }
-};
-
-const openTab = (state = {}, action) => {
-  switch (action.type) {
-    case 'SET_ASSIGNMENTS':
-      return action.assignments.reduce((newState, { name }) => {
-        newState[name] = 0;
+      return action.assignments.reduce((newState, { name, ...rest, }) => {
+        newState[name] = addAssignment(undefined, rest);
         return newState;
       }, {});
     case 'SET_OPEN_TAB':
       return {
         ...state,
-        [action.assignmentName]: action.openTab,
+        [action.name]: setOpenTab(state[action.name], action.openTab),
       };
+    default:
+      return state;
+  }
+}
+
+const names = (state = [], action) => {
+  switch (action.type) {
+    case 'ADD_ASSIGNMENT':
+      return [...state, action.name].sort();
+    case 'SET_ASSIGNMENTS':
+      return action.assignments.map(assignment => assignment.name).sort();
     default:
       return state;
   }
@@ -40,5 +49,5 @@ const openTab = (state = {}, action) => {
 
 export default combineReducers({
   data,
-  openTab,
+  names,
 });
