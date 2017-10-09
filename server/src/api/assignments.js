@@ -8,6 +8,17 @@ const { docClient } = require('../aws');
 const ASSIGNMENTS_TABLE = 'assignments';
 const { JWT_SECRET } = process.env;
 
+const assignment = ({ attempts = 5, parts, visible = false, ...rest }) => ({
+  ...rest,
+  attempts,
+  partNames: parts.map(part => part[0]),
+  parts: parts.reduce((partObj, part) => {
+    partObj[part[0]] = part[1];
+    return partObj;
+  }, {}),
+  visible,
+});
+
 const assignments = (socket) => {
   const router = Router();
 
@@ -34,23 +45,24 @@ const assignments = (socket) => {
   });
 
   router.post('/set', ({ body: { configJson, token } }, res) => {
-    verify(token, JWT_SECRET, (err, decoded) => {
+    verify(token, JWT_SECRET, { privilege: 'admin' }, (err, decoded) => {
       if (err) {
         console.log(err, err.stack);
         res.sendStatus(400);
       } else {
         console.log(configJson);
+        const assignmentJson = assignment(configJson);
+        console.log(assignmentJson);
         const params = {
           TableName: 'assignments',
-          Item: configJson,
+          Item: assignmentJson,
         };
         docClient.put(params, (err, data) => {
           if (err) {
             console.log(err, err.stack);
             res.sendStatus(500);
           } else {
-            console.log(data);
-            res.sendStatus(200);
+            res.status(200).send(assignmentJson);
           }
         });
       }

@@ -1,5 +1,4 @@
 import ContentAdd from 'material-ui/svg-icons/content/add';
-import ContentCreate from 'material-ui/svg-icons/content/create';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -8,11 +7,11 @@ import { withRouter } from 'react-router-dom';
 import ConfigUpload from './ConfigUpload';
 
 const style = {
-  margin: '24px',
+  padding: '24px',
   width: '100%',
 };
 
-const Assignments = ({ assignments }) => (
+const Assignments = ({ data, names }) => (
   <table style={style}>
     <thead>
       <tr>
@@ -24,19 +23,25 @@ const Assignments = ({ assignments }) => (
       </tr>
     </thead>
     <tbody>{
-      Object.keys(assignments).map(name => (
+      names.map(name => (
         <tr key={name}>
-          <td><ConfigUpload button={<ContentCreate />} type="update" /></td>
+          <td><ConfigUpload /></td>
           <td>{name}</td>
-          <td>{assignments[name].dueDate}</td>
-          <td>{assignments[name].attempts}</td>
-          <td>{assignments[name].visible ? 'visible' : ''}</td>
+          <td>{data[name].dueDate}</td>
+          <td>{data[name].attempts}</td>
+          <td
+            onClick={() => alert('clicked')}
+            style={{
+              background: data[name].visible ? 'green' : 'red',
+            }}
+          >
+          </td>
         </tr>
       ))
     }</tbody>
     <tfoot>
       <tr>
-        <td><ConfigUpload button={<ContentAdd />} type="add" /></td>
+        <td><ConfigUpload /></td>
       </tr>
     </tfoot>
   </table>
@@ -46,8 +51,9 @@ Assignments.propTypes = {
   assignments: PropTypes.arrayOf(PropTypes.object),
 };
 
-const mapStateToProps = ({ assignments }) => ({
-  assignments,
+const mapStateToProps = ({ assignments: { data, names } }) => ({
+  data,
+  names,
 });
 
 export default withRouter(connect(mapStateToProps)(Assignments));

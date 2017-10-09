@@ -20,16 +20,24 @@ const style = {
   flexDirection: 'column',
 };
 
-const Assignment = ({ data, match: { params: { name }, url } }) => (
-  <div style={style}>{
-    data[name] ? (
-      <div style={assignmentStyle}>
-        <Editors parts={data[name].parts} />
-        <Actions />
-      </div>
-    ) : null
-  }</div>
-);
+const Assignment = ({ data, match: { params: { name }, url } }) => {
+  console.log(data[name]);
+
+  return (
+    <div style={style}>{
+      data[name] ? (
+        <div style={assignmentStyle}>
+          <Editors
+            openTab={data[name].openTab}
+            partNames={data[name].partNames}
+            parts={data[name].parts}
+          />
+          <Actions />
+        </div>
+      ) : null
+    }</div>
+  );
+};
 
 const mapStateToProps = ({ assignments: { data } }) => ({
   data,

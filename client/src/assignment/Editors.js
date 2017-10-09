@@ -16,12 +16,12 @@ const style = {
   overflow: 'auto',
 };
 
-const Editors = ({ parts, openTab }) => {
-  const { editors } = parts[0];
+const Editors = ({ openTab, partNames, parts }) => {
+  const { editors } = parts[partNames[openTab]];
 
   return (
     <div style={style}>{
-      editors.map(({ name, filename }, index) => (
+      editors.map(([ filename, name ], index) => (
         <div key={filename} style={wrapperStyle}>
           <Subheader>{name}</Subheader>
           <Editor id={filename} />
@@ -30,9 +30,5 @@ const Editors = ({ parts, openTab }) => {
     }</div>
   );
 }
-
-const mapStateToProps = ({ assignments: { openTab } }) => ({
-  openTab,
-});
 
 export default withRouter(Editors);

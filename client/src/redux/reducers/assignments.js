@@ -1,11 +1,9 @@
 import { combineReducers } from 'redux';
 
 // Helper Functions
-const addAssignment = (state, { attempts, visible, ...rest }) => ({
-  ...rest,
-  attempts: attempts || 5,
+const addAssignment = (state, assignment) => ({
+  ...assignment,
   openTab: 0,
-  visible: !!visible,
 });
 
 const setOpenTab = (state, openTab) => ({
@@ -27,6 +25,7 @@ const data = (state = {}, action) => {
         return newState;
       }, {});
     case 'SET_OPEN_TAB':
+      console.log('setting openTab');
       return {
         ...state,
         [action.name]: setOpenTab(state[action.name], action.openTab),

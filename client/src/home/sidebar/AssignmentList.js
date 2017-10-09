@@ -4,28 +4,28 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 
-const AssignmentList = ({ data, match: { url }, openTab, toggleOpen }) => (
+const AssignmentList = ({ data, match: { url }, names, toggleOpen }) => (
   <div>
     <Subheader style={{ background: 'white' }}>Assignments</Subheader>
     {
       data ?
-        Object.keys(data).map((name) => ({
-          name,
-          ...data[name],
-        })).filter(({ visible }) => visible)
-        .map(({ dueDate, name, parts }) => (
-          <Link key={name} to={`/home/${name}`}>
-            <MenuItem onClick={toggleOpen} primaryText={name} />
-          </Link>
-        )) :
-        null
+        names.map(name => {
+          const assignment = data[name];
+          if (assignment.visible) {
+            return (
+              <Link key={name} to={`/home/${name}`}>
+                <MenuItem onClick={toggleOpen} primaryText={name} />
+              </Link>
+            );
+          }
+        }) : null
     }
   </div>
 );
 
-const mapStateToProps = ({ assignments: { data, openTab } }) => ({
+const mapStateToProps = ({ assignments: { data, names } }) => ({
   data,
-  openTab,
+  names,
 });
 
 export default withRouter(connect(mapStateToProps)(AssignmentList));

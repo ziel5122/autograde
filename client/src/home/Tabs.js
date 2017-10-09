@@ -39,17 +39,18 @@ class Tabs extends PureComponent {
   render() {
     const { data, match: { params: { name }, url }, setOpenTab } = this.props;
     const openTab = data[name] ? data[name].openTab : 0;
-    const parts = data[name] ? data[name].parts : [];
+    const partNames = data[name] ? data[name].partNames : [];
+    const parts = data[name] ? data[name].parts : {};
 
     return (
       <div style={style}>{
-        parts.map((part, index) => (
+        partNames.map((partName, index) => (
           <div
-            key={part.name}
+            key={partName}
             onClick={() => setOpenTab(name, index)}
-            style={tabStyle(openTab, index, parts.length)}
+            style={tabStyle(openTab, index, partNames.length)}
           >
-            {part.name}
+            {partName}
           </div>
         ))
       }</div>

@@ -1,3 +1,4 @@
+import ContentCreate from 'material-ui/svg-icons/content/create';
 import React from 'react';
 
 const reader = new FileReader();
@@ -16,7 +17,8 @@ reader.onload = ({ target }) => {
     headers: { 'content-type': 'application/json' },
     method: 'post',
   })
-    .then(response => console.log(response.status))
+    .then(response => response.json())
+    .then(json => console.log(json))
     .catch(err => console.log(err, err.stack));
 };
 
@@ -29,10 +31,10 @@ const inputStyle = {
   display: 'none',
 };
 
-const ConfigUpload = ({ button, type }) => (
+const ConfigUpload = () => (
   <div>
     <label htmlFor="configInput" style={buttonStyle}>
-      {button}
+      <ContentCreate />
       <input
         id="configInput"
         onChange={handleInputChange}
