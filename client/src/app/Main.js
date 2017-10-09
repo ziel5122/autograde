@@ -29,10 +29,17 @@ const muiTheme = getMuiTheme({
   },
 });
 
-const store = createStore(reducers);
+// Grab the state from a global variable injected into the server-generated HTML
+const preloadedState = window.__PRELOADED_STATE__
+
+// Allow the passed state to be garbage-collected
+delete window.__PRELOADED_STATE__
+
+// Create Redux store with initial state
+const store = createStore(reducers, preloadedState)
 
 const token = jwt.sign({}, process.env.JWT_SECRET);
-
+/*
 fetch('http://localhost:3000/assignments/get-assignments', {
   body: JSON.stringify({ token }),
   headers: { 'content-type': 'application/json' },
@@ -46,7 +53,7 @@ fetch('http://localhost:3000/assignments/get-assignments', {
     });
   })
   .catch(err => console.log(err, err.stack));
-
+*/
 const socket = io();
 
 socket.on('assignment', (assignment) => {
