@@ -4,28 +4,40 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 
-const AssignmentList = ({ data, match: { url }, names, toggleOpen }) => (
+const linkStyle = {
+  textDecoration: 'none',
+};
+
+const AssignmentList = ({
+  assignmentIds,
+  assignments,
+  match: { url },
+  toggleOpen
+}) => (
   <div>
     <Subheader style={{ background: 'white' }}>Assignments</Subheader>
     {
-      data ?
-        names.map(name => {
-          const assignment = data[name];
-          if (assignment.visible) {
-            return (
-              <Link key={name} to={`/home/${name}`}>
-                <MenuItem onClick={toggleOpen} primaryText={name} />
-              </Link>
-            );
-          }
-        }) : null
+      assignmentIds.map(assignmentId => {
+        const { name, visible } = assignments[assignmentId];
+        if (visible) {
+          return (
+            <Link
+              key={assignmentId}
+              style={linkStyle}
+              to={`/home/${assignmentId}`}
+            >
+              <MenuItem onClick={toggleOpen} primaryText={name} />
+            </Link>
+          );
+        }
+      })
     }
   </div>
 );
 
-const mapStateToProps = ({ assignments: { data, names } }) => ({
-  data,
-  names,
+const mapStateToProps = ({ assignmentIds, assignments }) => ({
+  assignmentIds,
+  assignments,
 });
 
 export default withRouter(connect(mapStateToProps)(AssignmentList));

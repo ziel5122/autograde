@@ -1,52 +1,28 @@
-import { combineReducers } from 'redux';
-
-// Helper Functions
-const addAssignment = (state, assignment) => ({
-  ...assignment,
-  openTab: 0,
-});
-
 const setOpenTab = (state, openTab) => ({
   ...state,
   openTab,
 });
 
-const data = (state = {}, action) => {
-  switch (action.type) {
-    case 'ADD_ASSIGNMENT':
-      const { name, ...rest } = action.assignment;
-      return {
-        ...state,
-        [name]: addAssignment(undefined, rest),
-      };
-    case 'SET_ASSIGNMENTS':
-      return action.assignments.reduce((newState, { name, ...rest, }) => {
-        newState[name] = addAssignment(undefined, rest);
-        return newState;
-      }, {});
-    case 'SET_OPEN_TAB':
-      console.log('setting openTab');
-      return {
-        ...state,
-        [action.name]: setOpenTab(state[action.name], action.openTab),
-      };
-    default:
-      return state;
-  }
-}
+const setVisible = (state, visible) => ({
+  ...state,
+  visible,
+});
 
-const names = (state = [], action) => {
+const assignments = (state = {}, action) => {
   switch (action.type) {
-    case 'ADD_ASSIGNMENT':
-      return [...state, action.name].sort();
-    case 'SET_ASSIGNMENTS':
-      return action.assignments.map(assignment => assignment.name).sort();
+    case 'SET_OPEN_TAB':
+      return {
+        ...state,
+        [action.id]: setOpenTab(state[action.id], action.partId),
+      };
+    case 'SET_VISIBLE':
+      return {
+        ...state,
+        [action.id]: setVisible(state[action.id], action.visible),
+      };
     default:
       return state;
-  }
+  };
 };
 
-export default combineReducers({
-  data,
-  names,
-});
+export default assignments;

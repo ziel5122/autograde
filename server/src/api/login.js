@@ -25,6 +25,7 @@ router.post('/authorize', ({ body }, res) => {
       if (Item && bcrypt.compareSync(password, Item.passwordHash)) {
         const payload = { username, privilege: Item.privilege };
         const token = jwt.sign(payload, process.env.JWT_SECRET);
+
         const response = { token, privilege: Item.privilege };
         res.status(200).send(response);
       } else {

@@ -39,10 +39,9 @@ class Editor extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ editor: { code, darkTheme, fontSize } }) => ({
-  code,
-  darkTheme,
-  fontSize,
+const mapStateToProps = () => ({
+  darkTheme: 'ace/theme/clouds_midnight',
+  fontSize: 14,
 });
 
 const mapDispatchToProps = dispatch => ({

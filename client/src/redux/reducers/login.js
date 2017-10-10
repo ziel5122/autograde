@@ -2,8 +2,9 @@ import jwt from 'jsonwebtoken';
 import { combineReducers } from 'redux';
 
 let privilege;
+let token;
 
-const token = sessionStorage.getItem('jwt');
+token = sessionStorage.getItem('jwt');
 if (token) privilege = jwt.decode(token).privilege;
 
 const admin = (state = (privilege === 'admin'), action) => {

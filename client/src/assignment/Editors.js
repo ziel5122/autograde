@@ -17,6 +17,7 @@ const style = {
 };
 
 const Editors = ({ openTab, partNames, parts }) => {
+  console.log(partNames[openTab]);
   const { editors } = parts[partNames[openTab]];
 
   return (

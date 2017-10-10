@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { createStore } from 'redux';
 import io from 'socket.io-client';
 
+import { assignments, assignmentIds, editors, parts } from '../../../data';
 import App from './App';
 import reducers from '../redux/reducers';
 
@@ -29,52 +30,29 @@ const muiTheme = getMuiTheme({
   },
 });
 
-// Grab the state from a global variable injected into the server-generated HTML
-const preloadedState = window.__PRELOADED_STATE__
-
-// Allow the passed state to be garbage-collected
-delete window.__PRELOADED_STATE__
-
-// Create Redux store with initial state
-const store = createStore(reducers, preloadedState)
-
-const token = jwt.sign({}, process.env.JWT_SECRET);
-/*
-fetch('http://localhost:3000/assignments/get-assignments', {
-  body: JSON.stringify({ token }),
-  headers: { 'content-type': 'application/json' },
-  method: 'post',
-})
-  .then(response => response.json())
-  .then(assignments => {
-    store.dispatch({
-      assignments,
-      type: 'SET_ASSIGNMENTS',
-    });
-  })
-  .catch(err => console.log(err, err.stack));
-*/
 const socket = io();
 
-socket.on('assignment', (assignment) => {
-  store.dispatch({
-    assignment,
-    type: 'ADD_ASSIGNMENT',
-  });
-  console.log(store.getState());
-});
+const initialState = {
+  assignments,
+  assignmentIds,
+  editors,
+  parts,
+};
 
-socket.on('assignments', (assignments) => {
-  store.dispatch({
-    assignments,
-    type: 'SET_ASSIGNMENTS',
-  });
-  console.log(store.getState());
-});
+initialState.assignments = initialState.assignmentIds.reduce((
+  newAssignments,
+  assignmentId,
+) => {
+  newAssignments[assignmentId] = {
+    ...initialState.assignments[assignmentId],
+    openTab: initialState.assignments[assignmentId].partIds[0],
+  };
+  return newAssignments;
+}, {});
 
-socket.on('client', (message) => {
-  console.log(message);
-});
+const store = createStore(reducers, initialState);
+
+console.log(store.getState());
 
 const Main = () => (
   <MuiThemeProvider muiTheme={muiTheme}>

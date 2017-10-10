@@ -1,13 +1,15 @@
 import { combineReducers } from 'redux';
 
+import assignmentIds from './assignmentIds';
 import assignments from './assignments';
-import code from './code';
-import editor from './editor';
+import editors from './editors';
 import login from './login';
+import parts from './parts';
 
 export default combineReducers({
+  assignmentIds,
   assignments,
-  code,
-  editor,
+  editors,
   login,
+  parts,
 });

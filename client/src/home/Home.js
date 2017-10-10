@@ -33,11 +33,11 @@ const tabsWrapperStyle = {
 const Home = ({ match: { url } }) => (
   <div style={style}>
     <div style={tabsWrapperStyle}>
-      <Route path={`${url}/:name`} component={Tabs} />
+      <Route path={`${url}/:assignmentId`} component={Tabs} />
     </div>
     <div style={paperStyle}>
       <Route path={`${url}/:name?`} component={Sidebar} />
-      <Route path={`${url}/:name`} component={Assignment} />
+      <Route path={`${url}/:assignmentId`} component={Assignment} />
     </div>
   </div>
 );

@@ -37,20 +37,24 @@ class Tabs extends PureComponent {
   }
 
   render() {
-    const { data, match: { params: { name }, url }, setOpenTab } = this.props;
-    const openTab = data[name] ? data[name].openTab : 0;
-    const partNames = data[name] ? data[name].partNames : [];
-    const parts = data[name] ? data[name].parts : {};
+    const {
+      assignments,
+      match: { params: { assignmentId }, url },
+      parts,
+      setOpenTab
+    } = this.props;
+    const assignment = assignments[assignmentId];
+    const { openTab, partIds } = assignment;
 
     return (
       <div style={style}>{
-        partNames.map((partName, index) => (
+        partIds.map((partId) => (
           <div
-            key={partName}
-            onClick={() => setOpenTab(name, index)}
-            style={tabStyle(openTab, index, partNames.length)}
+            key={partId}
+            onClick={() => setOpenTab(assignmentId, partId)}
+            style={tabStyle(openTab, partId, partIds.length)}
           >
-            {partName}
+            {parts[partId].name}
           </div>
         ))
       }</div>
@@ -58,15 +62,16 @@ class Tabs extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ assignments: { data } }) => ({
-  data,
+const mapStateToProps = ({ assignments, parts }) => ({
+  assignments,
+  parts,
 });
 
 const mapDispatchToProps = dispatch => ({
-  setOpenTab(name, openTab) {
+  setOpenTab(assignmentId, partId) {
     dispatch({
-      name,
-      openTab,
+      partId,
+      id: assignmentId,
       type: 'SET_OPEN_TAB',
     });
   },

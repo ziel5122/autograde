@@ -51,12 +51,13 @@ const applyMiddleware = (app) => {
   app.use('/docker', docker);
   app.use('/login', login);
 
-  const store = createStore(reducers);
+  //const store = createStore(reducers);
 
-  const token = jwt.sign({}, process.env.JWT_SECRET);
+  //const token = jwt.sign({}, process.env.JWT_SECRET);
 
   app.get('*', (req, res) => {
-    //res.sendFile(INDEX_PATH);
+    res.sendFile(INDEX_PATH);
+    /*
     request({
       body: JSON.stringify({ token }),
       headers: { 'content-type': 'application/json' },
@@ -76,6 +77,7 @@ const applyMiddleware = (app) => {
         res.send(renderFullPage(store.getState()));
       })
       .catch(err => console.log(err, err.stack));
+      */
   });
 
   return httpServer;

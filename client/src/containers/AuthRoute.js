@@ -2,14 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Route, withRouter } from 'react-router-dom';
 
-const AuthRoute = ({ Component, loggedIn, ...rest }) => (
-  <Route
-    {...rest}
-    render={props => (
-      loggedIn ? <Component {...props} /> : <Redirect to="/login" />
-    )}
-  />
-);
+const AuthRoute = ({ Component, loggedIn, ...rest }) => {
+  console.log(loggedIn);
+
+  return (
+    <Route
+      {...rest}
+      render={props => (
+        loggedIn ? <Component {...props} /> : <Redirect to="/login" />
+      )}
+    />
+  );
+};
 
 const mapStateToProps = ({ login: { loggedIn } }) => ({
   loggedIn,
