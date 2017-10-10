@@ -41,19 +41,31 @@ const Assignment = ({
 }) => {
   const partId = assignments[assignmentId].openTab;
   const editorIds = parts[partId].editorIds;
-  const editorObjs = editorIds.map(editorId => editors[editorId]);
-  console.log(editorObjs);
 
   return (
     <div style={style}>
       <div style={assignmentStyle}>
         <div style={subStyle}>{
-          editorObjs.map(({ code, filename, title }, index) => (
-            <div key={filename} style={wrapperStyle}>
-              { title ? <Subheader>{filename}</Subheader> : null }
-              <Editor code={code} id={filename} />
-            </div>
-          ))
+          editorIds.map(editorId => {
+            const { code, filename, title, type } = editors[editorId];
+            const mode = ((fileType) => {
+              switch (fileType) {
+                case 'c/c++':
+                  return 'ace/mode/c_cpp';
+                case 'sh':
+                  return 'ace/mode/sh';
+                default:
+                  return '';
+              }
+            })(type);
+
+            return (
+              <div key={filename} style={wrapperStyle}>
+                { title ? <Subheader>{filename}</Subheader> : null }
+                <Editor code={code} id={editorId} mode={mode} />
+              </div>
+            );
+          })
         }</div>
         <Actions />
       </div>
