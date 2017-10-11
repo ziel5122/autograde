@@ -38,6 +38,12 @@ const Actions = ({
   result = 'incorrect',
 }) => (
   <div style={style}>
+    <Divider
+      style={{
+        ...dividerStyle,
+        marginBottom: '8px',
+      }}
+    />
     <div style={segmentStyle}>
       <RaisedButton label="submit" />
     </div>
@@ -56,7 +62,7 @@ const Actions = ({
       <div>{lastUpdate.date}</div>
       <div>{lastUpdate.time}</div>
     </div>
-    <Divider style={dividerStyle}/>
+    <Divider style={dividerStyle} />
   </div>
 );
 
