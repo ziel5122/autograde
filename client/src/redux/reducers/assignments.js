@@ -13,7 +13,10 @@ const assignments = (state = {}, action) => {
     case 'SET_OPEN_TAB':
       return {
         ...state,
-        [action.id]: setOpenTab(state[action.id], action.partId),
+        [action.assignmentId]: setOpenTab(
+          state[action.assignmentId],
+          action.partId
+        ),
       };
     case 'SET_VISIBLE':
       return {

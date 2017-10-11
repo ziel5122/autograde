@@ -23,12 +23,12 @@ class Editor extends PureComponent {
     this.editor.setPrintMarginColumn(80);
     this.editor.setTheme(getAceTheme(this.props.darkTheme));
     this.editor.getSession().setMode(this.props.mode);
-    this.editor.setValue(this.props.code);
+    this.editor.setValue(this.props.defaultValue);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.editor.setFontSize(nextProps.fontSize);
     this.editor.setTheme(getAceTheme(nextProps.darkTheme));
+    this.editor.setFontSize(nextProps.fontSize);
   }
 
   componentWillUnmount() {

@@ -62,12 +62,16 @@ const Assignment = ({
             return (
               <div key={filename} style={wrapperStyle}>
                 { title ? <Subheader>{filename}</Subheader> : null }
-                <Editor code={code} id={editorId} mode={mode} />
+                <Editor defaultValue={code} id={editorId} mode={mode} />
               </div>
             );
           })
         }</div>
-        <Actions />
+        <Actions
+          assignmentId={assignmentId}
+          editorIds={editorIds}
+          partId={partId}
+        />
       </div>
     </div>
   );
