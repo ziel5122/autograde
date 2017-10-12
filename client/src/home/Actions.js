@@ -2,6 +2,7 @@ import Divider from 'material-ui/Divider';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
 
 const buttonStyle = {
   marginLeft: '8px',
@@ -36,8 +37,26 @@ class Actions extends PureComponent {
   }
 
   handleSubmitClick() {
-    const { assignmentId, editorIds, partId } = this.props;
-    console.log(assignmentId, editorIds, partId);
+    const { assignmentId, editorIds, editors, partId, username } = this.props;
+    const codeMap = editorIds.reduce((codeByFilename, editorId) => {
+      const { code, filename } = editors[editorId];
+      codeByFilename[filename] = code;
+      return codeByFilename;
+    }, {});
+
+    fetch('/docker/post', {
+      body: JSON.stringify({
+        assignmentId,
+        codeMap,
+        partId,
+        token: sessionStorage.getItem('jwt'),
+        username,
+      }),
+      headers: { 'content-type': 'application/json' },
+      method: 'post',
+    })
+      .then(response => console.log(response.status))
+      .catch(err => console.log(err, err.stack));
   }
 
   render() {
@@ -80,4 +99,8 @@ class Actions extends PureComponent {
   }
 }
 
-export default Actions;
+const mapStateToProps = ({ editors }) => ({
+  editors,
+});
+
+export default connect(mapStateToProps)(Actions);
