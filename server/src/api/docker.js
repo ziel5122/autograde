@@ -7,6 +7,7 @@ const options = require('../docker/options');
 const utils = require('../utils');
 
 const { prepareTemp } = require('../docker/fs-utils');
+const { run } = require('../docker/utils');
 const docClient = require('../aws');
 
 const join = path.join;
@@ -60,13 +61,7 @@ router.post('/post', ({ body }, res) => {
       res.sendStatus(400);
     } else {
       prepareTemp(assignmentId, codeMap, partId)
-        .then(tempStudentDir => {
-          if (compile) {
-            return compile(tempStudentDir);
-          } else {
-            return tempStudentDir;
-          }
-        })
+        .then(tempStudentDir => run(tempStudentDir))
         .then(tempStudentDir => console.log(tempStudentDir))
         .catch((err) => {
           console.log(err, err.stack);
