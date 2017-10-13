@@ -7,7 +7,7 @@ const options = require('../docker/options');
 const utils = require('../utils');
 
 const { prepareTemp } = require('../docker/fs-utils');
-const { run } = require('../docker/utils');
+const { evaluate, run, updateDb } = require('../docker/utils');
 const docClient = require('../aws');
 
 const join = path.join;
@@ -51,22 +51,28 @@ const update = (username, attempts) => (
 );
 
 router.post('/post', ({ body }, res) => {
-  const { assignmentId, codeMap, partId, token, username } = body;
+  const { assignmentId, attempts, codeMap, partId, token } = body;
 
-  const compile = false;
-
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+  jwt.verify(token, process.env.JWT_SECRET, (err, { privilege, username }) => {
     if (err) {
       console.log(err, err.stack);
       res.sendStatus(400);
     } else {
-      prepareTemp(assignmentId, codeMap, partId)
-        .then(tempStudentDir => run(tempStudentDir))
-        .then(tempStudentDir => console.log(tempStudentDir))
-        .catch((err) => {
-          console.log(err, err.stack);
-          res.sendStatus(500);
-        });
+      if (attempts > 0 || privilege === 'admin') {
+        prepareTemp(assignmentId, codeMap, partId)
+          .then(tempStudentDir => run(tempStudentDir))
+          .then(tempStudentDir => {
+            console.log(tempStudentDir);
+            return evaluate(assignmentId, tempStudentDir, username);
+          })
+          .then(result => res.status(200).send(result))
+          .catch((err) => {
+            console.log(err, err.stack);
+            res.sendStatus(500);
+          });
+      } else {
+        res.status(200).send('insufficient attempts');
+      }
     }
   });
 });

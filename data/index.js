@@ -99,8 +99,8 @@ const parts = {
   '5170e444-7f63-467f-88cc-b859bd437591': {
     name: 'caching',
     editorIds: [
-      '27a62a64-e9d9-41f0-885c-ee621ca46247',
       'f474a2fe-b253-4e37-8413-2c2c18910001',
+      '27a62a64-e9d9-41f0-885c-ee621ca46247',
     ],
   },
 };
