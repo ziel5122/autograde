@@ -14,8 +14,9 @@ const PROJECT_DIR = join(__dirname, '../../../');
 const CODE_DIR = join(PROJECT_DIR, 'code');
 const TEMP_DIR = join(PROJECT_DIR, 'temp');
 
-const evaluate = (assignmentId, tempStudentDir, username) => (
+const evaluate = (assignmentId, attempts, tempStudentDir, username) => (
   new Promise((resolve, reject) => {
+    console.log(attempts);
     const promises = [
       readFile(join(tempStudentDir, 'result'), 'utf-8'),
       readFile(join(tempStudentDir, 'output'), 'utf-8'),
@@ -23,7 +24,35 @@ const evaluate = (assignmentId, tempStudentDir, username) => (
     Promise.all(promises)
       .then(([ result, output ]) => {
         result = result.replace(/\n/g, '');
-        output = `${output}${new Date()}`;
+        const date = new Date().toString();
+
+        const params = {
+          TableName: 'users-assignments',
+          Key: {
+            username,
+            assignmentId,
+          },
+          UpdateExpression: 'set #a = :a, #anum = :rod',
+          ExpressionAttributeNames: {
+            '#a': 'attempts',
+            '#anum': `attempt${attempts}`,
+          },
+          ExpressionAttributeValues: {
+            ':a': `${attempts - 1}`,
+            ':rod': {
+              result,
+              output,
+              date,
+            },
+          },
+        };
+
+        docClient.update(params).promise()
+          .then(data => {
+            console.log(data);
+            resolve({ attempts: attempts - 1, result });
+          })
+          .catch(err => reject(err));
       })
       .catch(err => reject(err));
   })

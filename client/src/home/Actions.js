@@ -47,6 +47,7 @@ class Actions extends PureComponent {
     fetch('/docker/post', {
       body: JSON.stringify({
         assignmentId,
+        attempts: 5,
         codeMap,
         partId,
         token: sessionStorage.getItem('jwt'),
@@ -55,7 +56,14 @@ class Actions extends PureComponent {
       headers: { 'content-type': 'application/json' },
       method: 'post',
     })
-      .then(response => console.log(response.status))
+      .then(response => {
+        if (response.status === 500) throw new Error();
+        else {
+          console.log(response);
+          return response.json()
+        }
+      })
+      .then(({ attempts, result }) => console.log(attempts, result))
       .catch(err => console.log(err, err.stack));
   }
 

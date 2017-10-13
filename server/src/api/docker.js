@@ -63,9 +63,12 @@ router.post('/post', ({ body }, res) => {
           .then(tempStudentDir => run(tempStudentDir))
           .then(tempStudentDir => {
             console.log(tempStudentDir);
-            return evaluate(assignmentId, tempStudentDir, username);
+            return evaluate(assignmentId, attempts, tempStudentDir, username);
           })
-          .then(result => res.status(200).send(result))
+          .then(({ attempts, result }) => {
+            console.log(attempts, result);
+            res.status(200).send({ attempts, result });
+          })
           .catch((err) => {
             console.log(err, err.stack);
             res.sendStatus(500);
