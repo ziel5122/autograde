@@ -11,12 +11,10 @@ const setVisible = (state, visible) => ({
 const assignments = (state = {}, action) => {
   switch (action.type) {
     case 'SET_OPEN_TAB':
+    const { assignmentId } = action;
       return {
         ...state,
-        [action.assignmentId]: setOpenTab(
-          state[action.assignmentId],
-          action.partId
-        ),
+        [assignmentId]: setOpenTab(state[assignmentId], action.partId),
       };
     case 'SET_VISIBLE':
       return {

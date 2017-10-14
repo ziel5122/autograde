@@ -33,21 +33,34 @@ const style = {
 class Actions extends PureComponent {
   constructor() {
     super();
+    this.state = {
+      errorText: '',
+      result: '',
+    };
     this.handleSubmitClick = this.handleSubmitClick.bind(this);
   }
 
   handleSubmitClick() {
-    const { assignmentId, editorIds, editors, partId, username } = this.props;
+    const {
+      assignmentId,
+      editorIds,
+      editors,
+      partId,
+      user: { parts },
+      username
+    } = this.props;
     const codeMap = editorIds.reduce((codeByFilename, editorId) => {
       const { code, filename } = editors[editorId];
       codeByFilename[filename] = code;
       return codeByFilename;
     }, {});
 
+    const { attempts } = studentParts[partId];
+
     fetch('/docker/post', {
       body: JSON.stringify({
         assignmentId,
-        attempts: 5,
+        attempts,
         codeMap,
         partId,
         token: sessionStorage.getItem('jwt'),
@@ -57,23 +70,25 @@ class Actions extends PureComponent {
       method: 'post',
     })
       .then(response => {
-        if (response.status === 500) throw new Error();
-        else {
-          console.log(response);
-          return response.json()
+        switch (response.status) {
+          case 500:
+            this.setState({ errorText: 'something went wrong' });
+            throw new Error('server error');
+          case 400:
+            this.setState({ errorText: 'error authorizing' });
+            throw new Error('auth error');
+          default:
+            return response.json();
         }
       })
-      .then(({ attempts, result }) => console.log(attempts, result))
+      .then(({ newAttempts, result }) => console.log(attempts, result))
       .catch(err => console.log(err, err.stack));
   }
 
   render() {
-    const attempts = 0;
-    const lastUpdate = {
-      date: '2017-09-06',
-      time: '12:12:12',
-    };
-    const result = 'incorrect';
+    const { errorText, lastUpdated, restult } = this.state;
+    const { partId, studentAssignments, user: { parts } } = this.props;
+    const attempts = parts[partId].attempts;
 
     return (
       <div style={style}>
@@ -107,8 +122,9 @@ class Actions extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ editors }) => ({
+const mapStateToProps = ({ editors, user }) => ({
   editors,
+  user,
 });
 
 export default connect(mapStateToProps)(Actions);

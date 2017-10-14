@@ -53,29 +53,24 @@ const update = (username, attempts) => (
 router.post('/post', ({ body }, res) => {
   const { assignmentId, attempts, codeMap, partId, token } = body;
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, { privilege, username }) => {
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
       console.log(err, err.stack);
       res.sendStatus(400);
     } else {
-      if (attempts > 0 || privilege === 'admin') {
-        prepareTemp(assignmentId, codeMap, partId)
-          .then(tempStudentDir => run(tempStudentDir))
-          .then(tempStudentDir => {
-            console.log(tempStudentDir);
-            return evaluate(assignmentId, attempts, tempStudentDir, username);
-          })
-          .then(({ attempts, result }) => {
-            console.log(attempts, result);
-            res.status(200).send({ attempts, result });
-          })
-          .catch((err) => {
-            console.log(err, err.stack);
-            res.sendStatus(500);
-          });
-      } else {
-        res.status(200).send('insufficient attempts');
-      }
+      const { privilege, username } = decoded;
+      prepareTemp(assignmentId, codeMap, partId)
+        .then(tempStudentDir => run(tempStudentDir))
+        .then(tempStudentDir => {
+          return evaluate(attempts, partId, tempStudentDir, username);
+        })
+        .then(({ newAttempts, result }) => {
+          res.status(200).send({ newAttempts, result });
+        })
+        .catch((err) => {
+          console.log(err, err.stack);
+          res.sendStatus(500);
+        });
     }
   });
 });

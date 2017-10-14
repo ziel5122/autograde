@@ -14,9 +14,8 @@ const PROJECT_DIR = join(__dirname, '../../../');
 const CODE_DIR = join(PROJECT_DIR, 'code');
 const TEMP_DIR = join(PROJECT_DIR, 'temp');
 
-const evaluate = (assignmentId, attempts, tempStudentDir, username) => (
+const evaluate = (attempts, partId, tempStudentDir, username) => (
   new Promise((resolve, reject) => {
-    console.log(attempts);
     const promises = [
       readFile(join(tempStudentDir, 'result'), 'utf-8'),
       readFile(join(tempStudentDir, 'output'), 'utf-8'),
@@ -25,12 +24,13 @@ const evaluate = (assignmentId, attempts, tempStudentDir, username) => (
       .then(([ result, output ]) => {
         result = result.replace(/\n/g, '');
         const date = new Date().toString();
+        const newAttempts = attempts - 1;
 
         const params = {
-          TableName: 'users-assignments',
+          TableName: 'users-parts',
           Key: {
             username,
-            assignmentId,
+            partId,
           },
           UpdateExpression: 'set #a = :a, #anum = :rod',
           ExpressionAttributeNames: {
@@ -38,7 +38,7 @@ const evaluate = (assignmentId, attempts, tempStudentDir, username) => (
             '#anum': `attempt${attempts}`,
           },
           ExpressionAttributeValues: {
-            ':a': `${attempts - 1}`,
+            ':a': newAttempts,
             ':rod': {
               result,
               output,
@@ -49,8 +49,7 @@ const evaluate = (assignmentId, attempts, tempStudentDir, username) => (
 
         docClient.update(params).promise()
           .then(data => {
-            console.log(data);
-            resolve({ attempts: attempts - 1, result });
+            resolve({ newAttempts, result });
           })
           .catch(err => reject(err));
       })
@@ -73,7 +72,8 @@ const run = (tempStudentDir) => (
         const optionsLogs = logsOptions(Id);
         return request(optionsStart)
           .then(() => request(optionsWait))
-          .then(() => request(optionsLogs));
+          .then(() => request(optionsLogs))
+          .catch(err => reject(err));
       })
       .then(logs => console.log(logs))
       .then(() => resolve(tempStudentDir))
