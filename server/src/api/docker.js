@@ -14,11 +14,6 @@ const join = path.join;
 
 const router = express.Router();
 
-const usersAssignments = {
-  austin: {
-  },
-};
-
 const getUser = (username) => ({
   Key: {
     username,
