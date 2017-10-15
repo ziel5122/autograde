@@ -5,7 +5,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 
-import LoginButton from '../components/LoginButton';
+import LoginButton from './LoginButton';
 
 const ENTER_KEY = 13;
 

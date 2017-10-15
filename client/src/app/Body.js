@@ -6,7 +6,7 @@ import AdminHome from '../admin/Home';
 import AuthRoute from '../containers/AuthRoute';
 import Demo from '../demo/Demo';
 import Home from '../home/Home';
-import Login from '../containers/Login';
+import Login from '../login/Login';
 
 const style = {
   display: 'flex',
