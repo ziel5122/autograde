@@ -4,12 +4,10 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { createStore } from 'redux';
 import io from 'socket.io-client';
 
-import { assignments, assignmentIds, editors, parts } from '../../../data';
 import App from './App';
-import reducers from '../redux/reducers';
+import configureStore from '../redux/utils/configureStore';
 
 const muiTheme = getMuiTheme({
   slider: {
@@ -32,27 +30,7 @@ const muiTheme = getMuiTheme({
 
 const socket = io();
 
-const initialState = {
-  assignments,
-  assignmentIds,
-  editors,
-  parts,
-};
-
-initialState.assignments = initialState.assignmentIds.reduce((
-  newAssignments,
-  assignmentId,
-) => {
-  newAssignments[assignmentId] = {
-    ...initialState.assignments[assignmentId],
-    openTab: initialState.assignments[assignmentId].partIds[0],
-  };
-  return newAssignments;
-}, {});
-
-const store = createStore(reducers, initialState);
-
-console.log(store.getState());
+const store = configureStore();
 
 const Main = () => (
   <MuiThemeProvider muiTheme={muiTheme}>

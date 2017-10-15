@@ -35,6 +35,10 @@ class Actions extends PureComponent {
     super();
     this.state = {
       errorText: '',
+      lastUpdated: {
+        date: 'date',
+        time: 'time',
+      },
       result: '',
     };
     this.handleSubmitClick = this.handleSubmitClick.bind(this);
@@ -55,7 +59,7 @@ class Actions extends PureComponent {
       return codeByFilename;
     }, {});
 
-    const { attempts } = studentParts[partId];
+    const { attempts } = parts[partId];
 
     fetch('/docker/post', {
       body: JSON.stringify({
@@ -86,9 +90,10 @@ class Actions extends PureComponent {
   }
 
   render() {
-    const { errorText, lastUpdated, restult } = this.state;
+    const { errorText, lastUpdated, result } = this.state;
     const { partId, studentAssignments, user: { parts } } = this.props;
-    const attempts = parts[partId].attempts;
+    console.log('parts', parts);
+    const attempts = parts[partId] ? parts[partId].attempts : 0;
 
     return (
       <div style={style}>
@@ -113,8 +118,8 @@ class Actions extends PureComponent {
         <Divider style={dividerStyle} />
         <div style={segmentStyle}>
           <div style={buttonStyle}>Updated:</div>
-          <div>{lastUpdate.date}</div>
-          <div>{lastUpdate.time}</div>
+          <div>{lastUpdated.date}</div>
+          <div>{lastUpdated.time}</div>
         </div>
         <Divider style={dividerStyle} />
       </div>

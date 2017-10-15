@@ -1,8 +1,14 @@
 import { combineReducers } from 'redux';
 
 const parts = (state = {}, action) => {
+  console.log(state);
   switch (action.type) {
-    case 'SET_STUDENT_PARTS':
+    case 'SET_USER_PART':
+      return {
+        ...state,
+        [action.partId]: action.part,
+      }
+    case 'SET_USER_PARTS':
       return action.studentParts;
     case 'SET_ATTEMPTS':
       const { partId } = action;

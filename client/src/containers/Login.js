@@ -82,13 +82,25 @@ class Login extends PureComponent {
   }
 
   handleLoginResponse(loginResponse) {
+    const { parts, setAdmin, setLoggedIn, setUserPart } = this.props;
+
     switch (loginResponse.status) {
       case 200:
         loginResponse.json()
-          .then(({ token, privilege }) => {
+          .then(({ privilege, token, userParts }) => {
             sessionStorage.setItem('jwt', token);
-            this.props.setLoggedIn(true);
-            this.props.setAdmin(privilege === 'admin');
+            setLoggedIn(true);
+            setAdmin(privilege === 'admin');
+            Object.keys(parts).forEach(partId => {
+              const part = userParts.find(userPart => (
+                userPart.partId === partId
+              ));
+              if (part) {
+                setUserPart(part.id, { attempts: part.attempts });
+              } else {
+                setUserPart(partId, { attempts: parts[partId].attempts });
+              }
+            });
           })
           .catch((err) => {
             throw new Error(err);
@@ -166,8 +178,9 @@ class Login extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ login: { loggedIn } }) => ({
+const mapStateToProps = ({ login: { loggedIn }, parts }) => ({
   loggedIn,
+  parts,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -176,13 +189,19 @@ const mapDispatchToProps = dispatch => ({
       admin,
       type: 'SET_ADMIN',
     });
-    console.log('admin set');
   },
 
   setLoggedIn(loggedIn) {
     dispatch({
       loggedIn,
       type: 'SET_LOGGED_IN',
+    });
+  },
+
+  setPassword(password) {
+    dispatch({
+      password,
+      type: 'SET_PASSWORD',
     });
   },
 
@@ -193,10 +212,11 @@ const mapDispatchToProps = dispatch => ({
     });
   },
 
-  setPassword(password) {
+  setUserPart(partId, part) {
     dispatch({
-      password,
-      type: 'SET_PASSWORD',
+      part,
+      partId,
+      type: 'SET_USER_PART',
     });
   },
 });
