@@ -1,8 +1,9 @@
+import Paper from 'material-ui/Paper';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 
-import Menu from './Menu';
-import MenuToggle from './MenuToggle';
+import Menu from './sidebar/Menu';
+import MenuToggle from './sidebar/MenuToggle';
 
 const style = {
   display: 'flex',
@@ -10,10 +11,10 @@ const style = {
 };
 
 class Sidebar extends PureComponent {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      open: false,
+      open: !this.props.match.params.name,
     };
     this.toggleOpen = this.toggleOpen.bind(this);
   }
@@ -22,20 +23,24 @@ class Sidebar extends PureComponent {
     this.setState({ open: !this.state.open });
   }
 
+  handleClick() {
+    this.toggleOpen();
+  }
+
   render() {
     const { assignments } = this.props;
-    const { open } = this.state;
-
+    const open = this.state.open || !this.props.match.params.name;
+    
     return (
-      <div style={style}>
+      <Paper style={style} zDepth={5}>
         <MenuToggle open={open} toggleOpen={this.toggleOpen} />
-        <Menu open={open} />
-      </div>
+        <Menu open={open} toggleOpen={this.toggleOpen} />
+      </Paper>
     );
   }
 }
 
-const mapStateToProps = ({ assignments: { assignments } }) => ({
+const mapStateToProps = ({ assignments }) => ({
   assignments,
 });
 

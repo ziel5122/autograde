@@ -1,14 +1,47 @@
 {
-  "id": "hw6",
+  "classCode": "cst334",
   "name": "Homework 6",
   "dueDate": "2017-10-02",
-  "attempts": 5,
-  "visible": true,
   "parts": [
-    { "name": "freesize.awk" },
-    { "name": "count_allocs.awk" },
-    { "name": "num_bytes.awk" },
-    { "name": "succ_reqs.awk" },
-    { "name": "list_sizes.awk" }
+    [
+      "freesize.awk",
+      {
+        "editors": [
+          [ "student_freesize.awk", null ]
+        ]
+      }
+    ],
+    [
+      "count_allocs.awk",
+      {
+        "editors": [
+          [ "count_allocs.awk", null ]
+        ]
+      }
+    ],
+    [
+      "num_bytes.awk",
+      {
+        "editors": [
+          [ "num_bytes.awk", null ]
+        ]
+      }
+    ],
+    [
+      "succ_reqs.awk",
+      {
+        "editors": [
+          [ "succ_reqs.awk", null ]
+        ]
+      }
+    ],
+    [
+      "list_sizes.awk",
+      {
+        "editors": [
+          [ "list_sizes.awk", null ]
+        ]
+      }
+    ]
   ]
 }

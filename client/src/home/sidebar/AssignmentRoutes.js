@@ -9,16 +9,16 @@ const style = {
   width: '100%',
 };
 
-const AssignmentRoutes = ({ assignments: { assignments }, match: { url } }) => (
+const AssignmentRoutes = ({ data }) => (
   <div style={style}>{
-    assignments.map(({ id, parts }) => (
-      <Route key={id} path={`${url}/${id}`} component={() => <Assignment parts={parts} />} />
+    data.map(({ name, parts }) => (
+      <Route key={name} path={`/${name}`} component={() => <Assignment parts={parts} />} />
     ))
   }</div>
 );
 
-const mapStateToProps = ({ assignments }) => ({
-  assignments,
+const mapStateToProps = ({ assignments: { data } }) => ({
+  data,
 });
 
 export default withRouter(connect(mapStateToProps)(AssignmentRoutes));

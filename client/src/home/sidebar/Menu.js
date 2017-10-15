@@ -11,15 +11,16 @@ const style = {
   borderBottom: 'orangered 2px solid',
   borderRight: 'orangered 2px solid',
   borderTop: 'orangered 2px solid',
-  height: 'calc(100% - 92px)',
+  height: 'calc(100% - 128px)',
+  maxWidth: '168px',
   position: 'absolute',
 };
 
-const Menu = ({ open }) => (
+const Menu = ({ open, toggleOpen }) => (
   <div>{
     open ? (
       <MaterialMenu style={style}>
-        <AssignmentList />
+        <AssignmentList toggleOpen={toggleOpen} />
         <Divider />
         <OptionList />
       </MaterialMenu>

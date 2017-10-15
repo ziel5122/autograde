@@ -6,11 +6,18 @@ const request = require('request-promise');
 const options = require('../docker/options');
 const utils = require('../utils');
 
+const { prepareTemp } = require('../docker/fs-utils');
+const { evaluate, run, updateDb } = require('../docker/utils');
 const docClient = require('../aws');
 
 const join = path.join;
 
 const router = express.Router();
+
+const usersAssignments = {
+  austin: {
+  },
+};
 
 const getUser = (username) => ({
   Key: {
@@ -43,8 +50,33 @@ const update = (username, attempts) => (
   })
 );
 
+router.post('/post', ({ body }, res) => {
+  const { assignmentId, attempts, codeMap, partId, token } = body;
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      console.log(err, err.stack);
+      res.sendStatus(400);
+    } else {
+      const { privilege, username } = decoded;
+      prepareTemp(assignmentId, codeMap, partId)
+        .then(tempStudentDir => run(tempStudentDir))
+        .then(tempStudentDir => {
+          return evaluate(attempts, partId, tempStudentDir, username);
+        })
+        .then(({ newAttempts, result }) => {
+          res.status(200).send({ newAttempts, result });
+        })
+        .catch((err) => {
+          console.log(err, err.stack);
+          res.sendStatus(500);
+        });
+    }
+  });
+});
+
 router.post('/run', ({ body }, res) => {
-  const { token, code } = body;
+  const { code, token } = body;
 
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {

@@ -3,11 +3,12 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 
 import 'brace/mode/c_cpp';
+import 'brace/mode/sh';
 import 'brace/theme/clouds';
 import 'brace/theme/clouds_midnight';
 
 const editorStyles = {
-  height: '100%',
+  flex: 1,
 };
 
 const getAceTheme = darkTheme => (
@@ -16,18 +17,18 @@ const getAceTheme = darkTheme => (
 
 class Editor extends PureComponent {
   componentDidMount() {
-    this.editor = ace.edit('editor');
-    this.editor.on('change', () => this.props.setCode(this.editor.getValue()));
+    this.editor = ace.edit(this.props.id);
+    this.editor.on('change', () => this.props.setCode(this.props.id, this.editor.getValue()));
     this.editor.setFontSize(this.props.fontSize);
     this.editor.setPrintMarginColumn(80);
     this.editor.setTheme(getAceTheme(this.props.darkTheme));
     this.editor.getSession().setMode(this.props.mode);
-    this.editor.setValue(this.props.code);
+    this.editor.setValue(this.props.defaultValue);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.editor.setFontSize(nextProps.fontSize);
     this.editor.setTheme(getAceTheme(nextProps.darkTheme));
+    this.editor.setFontSize(nextProps.fontSize);
   }
 
   componentWillUnmount() {
@@ -35,20 +36,20 @@ class Editor extends PureComponent {
   }
 
   render() {
-    return <div id="editor" style={editorStyles} />;
+    return <div id={this.props.id} style={editorStyles} />;
   }
 }
 
-const mapStateToProps = ({ editor: { code, darkTheme, fontSize } }) => ({
-  code,
-  darkTheme,
-  fontSize,
+const mapStateToProps = () => ({
+  darkTheme: false,
+  fontSize: 14,
 });
 
 const mapDispatchToProps = dispatch => ({
-  setCode(code) {
+  setCode(editorId, code) {
     dispatch({
       code,
+      id: editorId,
       type: 'SET_CODE',
     });
   },

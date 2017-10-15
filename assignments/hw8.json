@@ -1,0 +1,16 @@
+{
+  "classCode": "cst334",
+  "name": "Homework 8",
+  "dueDate": "2017-10-16",
+  "parts": [
+    [
+      "caching",
+      {
+        "editors": [
+          [ "lru_cache.h", "lru_cache.h" ],
+          [ "lru_cache.c", "lru_cache.c" ]
+        ]
+      }
+    ]
+  ]
+}

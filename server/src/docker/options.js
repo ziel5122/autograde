@@ -14,6 +14,7 @@ const createOptions = (cmd, binds, stopTimeout) => ({
     },
     image: 'autograde',
     stopTimeout,    //seconds
+    WorkingDir: '/code',
   }),
   method: 'post',
   tty: true,

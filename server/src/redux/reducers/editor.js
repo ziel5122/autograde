@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+const { combineReducers } = require('redux');
 
 const attempts = (state = 0, action) => {
   switch (action.type) {
@@ -45,7 +45,7 @@ const fontSize = (state = 14, action) => {
   }
 };
 
-export default combineReducers({
+module.exports = combineReducers({
   attempts,
   code,
   darkTheme,

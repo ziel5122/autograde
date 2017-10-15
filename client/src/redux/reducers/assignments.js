@@ -1,23 +1,29 @@
-import { combineReducers } from 'redux';
+const setOpenTab = (state, openTab) => ({
+  ...state,
+  openTab,
+});
 
-const compare = (a, b) => {
-  if (a.dueDate < b.dueDate) return -1;
-  if (a.dueDate > b.dueDate) return 1;
-  return 0;
-};
+const setVisible = (state, visible) => ({
+  ...state,
+  visible,
+});
 
-const assignments = (state = [], action) => {
+const assignments = (state = {}, action) => {
   switch (action.type) {
-    case 'ADD_ASSIGNMENT':
-      const temp = [...state, action.assignment];
-      return temp.sort(compare);
-    case 'SET_ASSIGNMENTS':
-      return action.assignments;
+    case 'SET_OPEN_TAB':
+    const { assignmentId } = action;
+      return {
+        ...state,
+        [assignmentId]: setOpenTab(state[assignmentId], action.partId),
+      };
+    case 'SET_VISIBLE':
+      return {
+        ...state,
+        [action.id]: setVisible(state[action.id], action.visible),
+      };
     default:
       return state;
-  }
-}
+  };
+};
 
-export default combineReducers({
-  assignments,
-});
+export default assignments;
