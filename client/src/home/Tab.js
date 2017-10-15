@@ -18,7 +18,9 @@ class Tab extends PureComponent {
     return (
       <div
         onClick={this.handleSetOpenTab}
+        role="button"
         style={style}
+        tabIndex={0}
       >
         {name}
       </div>

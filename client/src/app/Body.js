@@ -30,6 +30,6 @@ const Body = ({ match }) => {
       <Route path="*" component={null} />
     </div>
   );
-}
+};
 
 export default withRouter(Body);

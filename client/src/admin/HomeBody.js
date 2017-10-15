@@ -14,7 +14,7 @@ const HomeBody = ({ match }) => {
   const { url } = match;
 
   if (match.isExact) {
-    return <Redirect to={`${url}/assignments`} />
+    return <Redirect to={`${url}/assignments`} />;
   }
 
   return (
@@ -24,6 +24,6 @@ const HomeBody = ({ match }) => {
       <Route path={`${url}/users`} component={Users} />
     </div>
   );
-}
+};
 
 export default withRouter(HomeBody);

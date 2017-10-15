@@ -15,8 +15,10 @@ const tabStyle = (selected, me, length) => ({
   alignItems: 'center',
   background: selected === me ? 'white' : 'whitesmoke',
   color: selected === me ? 'slateblue' : 'steelblue',
+  /* eslint-disable no-dupe-keys */
   cursor: 'hand',
   cursor: 'pointer',
+  /* eslint-enable no-dupe-keys */
   display: 'flex',
   flex: 1,
   fontSize: '16px',
@@ -30,9 +32,8 @@ const tabStyle = (selected, me, length) => ({
 
 const Tabs = ({
   assignments,
-  match: { params: { assignmentId }, url },
+  match: { params: { assignmentId } },
   parts,
-  setOpenTab,
 }) => {
   const { openTab, partIds } = assignments[assignmentId];
 

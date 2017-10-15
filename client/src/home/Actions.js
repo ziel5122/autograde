@@ -1,5 +1,4 @@
 import Divider from 'material-ui/Divider';
-import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
@@ -50,12 +49,14 @@ class Actions extends PureComponent {
       editorIds,
       editors,
       partId,
+      setAttempts,
       user: { parts },
-      username
+      username,
     } = this.props;
     const codeMap = editorIds.reduce((codeByFilename, editorId) => {
       const { code, filename } = editors[editorId];
-      codeByFilename[filename] = code;
+      const codeByFilename2 = codeByFilename;
+      codeByFilename2[filename] = code;
       return codeByFilename;
     }, {});
 
@@ -73,7 +74,7 @@ class Actions extends PureComponent {
       headers: { 'content-type': 'application/json' },
       method: 'post',
     })
-      .then(response => {
+      .then((response) => {
         switch (response.status) {
           case 500:
             this.setState({ errorText: 'something went wrong' });
@@ -85,13 +86,16 @@ class Actions extends PureComponent {
             return response.json();
         }
       })
-      .then(({ newAttempts, result }) => console.log(attempts, result))
+      .then(({ newAttempts, result }) => {
+        this.setState({ result });
+        setAttempts(newAttempts, partId);
+      })
       .catch(err => console.log(err, err.stack));
   }
 
   render() {
     const { errorText, lastUpdated, result } = this.state;
-    const { partId, studentAssignments, user: { parts } } = this.props;
+    const { partId, user: { parts } } = this.props;
     console.log('parts', parts);
     const attempts = parts[partId] ? parts[partId].attempts : 0;
 
@@ -122,6 +126,11 @@ class Actions extends PureComponent {
           <div>{lastUpdated.time}</div>
         </div>
         <Divider style={dividerStyle} />
+        <div style={segmentStyle}>
+          <div style={buttonStyle}>Error:</div>
+          <div>{errorText}</div>
+        </div>
+        <Divider style={dividerStyle} />
       </div>
     );
   }
@@ -132,4 +141,14 @@ const mapStateToProps = ({ editors, user }) => ({
   user,
 });
 
-export default connect(mapStateToProps)(Actions);
+const mapDispatchToProps = dispatch => ({
+  setAttempts(attempts, partId) {
+    dispatch({
+      attempts,
+      partId,
+      type: 'SET_ATTEMPTS',
+    });
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Actions);

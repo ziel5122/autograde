@@ -1,10 +1,6 @@
-import Paper from 'material-ui/Paper';
-import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import React from 'react';
-import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 
-import Actions from './Actions';
 import Assignment from '../assignment/Assignment';
 import Sidebar from './Sidebar';
 import Tabs from './Tabs';

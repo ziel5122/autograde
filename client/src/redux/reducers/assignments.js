@@ -10,12 +10,13 @@ const setVisible = (state, visible) => ({
 
 const assignments = (state = {}, action) => {
   switch (action.type) {
-    case 'SET_OPEN_TAB':
-    const { assignmentId } = action;
+    case 'SET_OPEN_TAB': {
+      const { assignmentId } = action;
       return {
         ...state,
         [assignmentId]: setOpenTab(state[assignmentId], action.partId),
       };
+    }
     case 'SET_VISIBLE':
       return {
         ...state,
@@ -23,7 +24,7 @@ const assignments = (state = {}, action) => {
       };
     default:
       return state;
-  };
+  }
 };
 
 export default assignments;

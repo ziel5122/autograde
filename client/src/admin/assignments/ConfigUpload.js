@@ -23,8 +23,10 @@ reader.onload = ({ target }) => {
 };
 
 const buttonStyle = {
+/* eslint-disable no-dupe-keys */
   cursor: 'hand',
   cursor: 'pointer',
+/* eslint-enable no-dupe-keys */
 };
 
 const inputStyle = {

@@ -1,5 +1,4 @@
-import ContentAdd from 'material-ui/svg-icons/content/add';
-import PropTypes from 'prop-types';
+// import ContentAdd from 'material-ui/svg-icons/content/add';
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -29,12 +28,15 @@ const Assignments = ({ data, names }) => (
           <td>{name}</td>
           <td>{data[name].dueDate}</td>
           <td>{data[name].attempts}</td>
-          <td
-            onClick={() => alert('clicked')}
-            style={{
-              background: data[name].visible ? 'green' : 'red',
-            }}
-          >
+          <td>
+            <div
+              onClick={() => alert('clicked')}
+              role="button"
+              style={{
+                background: data[name].visible ? 'green' : 'red',
+              }}
+              tabIndex={0}
+            />
           </td>
         </tr>
       ))
@@ -46,10 +48,6 @@ const Assignments = ({ data, names }) => (
     </tfoot>
   </table>
 );
-
-Assignments.propTypes = {
-  assignments: PropTypes.arrayOf(PropTypes.object),
-};
 
 const mapStateToProps = ({ assignments: { data, names } }) => ({
   data,

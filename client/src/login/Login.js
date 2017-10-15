@@ -1,4 +1,3 @@
-import jwt from 'jsonwebtoken';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import React, { PureComponent } from 'react';
@@ -91,7 +90,7 @@ class Login extends PureComponent {
             sessionStorage.setItem('jwt', token);
             setLoggedIn(true);
             setAdmin(privilege === 'admin');
-            Object.keys(parts).forEach(partId => {
+            Object.keys(parts).forEach((partId) => {
               const part = userParts.find(userPart => (
                 userPart.partId === partId
               ));
