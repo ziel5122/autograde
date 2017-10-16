@@ -90,6 +90,8 @@ class Login extends PureComponent {
             sessionStorage.setItem('jwt', token);
             setLoggedIn(true);
             setAdmin(privilege === 'admin');
+            setUsername('');
+            setPassword('');
             Object.keys(parts).forEach((partId) => {
               const part = userParts.find(userPart => (
                 userPart.partId === partId

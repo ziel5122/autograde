@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken';
 import throttle from 'lodash/throttle';
 import { createStore } from 'redux';
 
@@ -27,13 +28,24 @@ const configureStore = () => {
 
   const initialState = persistedState || configureData(jsonData);
 
+  const token = sessionStorage.getItem('jwt');
+  if (token) {
+    const privilege = jwt.decode(token).privilege;
+    initialState.login = {
+      admin: (privilege === 'admin'),
+      loggedIn: true,
+    };
+  }
+
+  console.log(initialState);
+
   const store = createStore(reducers, initialState);
 
   store.subscribe(throttle(() => {
-    saveState(store.getState());
+    const state = {...store.getState()};
+    delete state.login;
+    saveState(state);
   }, 1000));
-
-  console.log(store.getState());
 
   return store;
 };
