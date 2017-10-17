@@ -109,7 +109,7 @@ const parts = {
   },
 };
 
-export {
+module.exports = {
   assignments,
   assignmentIds,
   editors,

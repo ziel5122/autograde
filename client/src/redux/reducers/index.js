@@ -7,7 +7,7 @@ import login from './login';
 import parts from './parts';
 import user from './user';
 
-export default combineReducers({
+const rootReducer = combineReducers({
   assignmentIds,
   assignments,
   editors,
@@ -15,3 +15,5 @@ export default combineReducers({
   parts,
   user,
 });
+
+export default rootReducer;

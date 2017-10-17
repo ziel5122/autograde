@@ -4,7 +4,7 @@ import { createStore } from 'redux';
 
 import jsonData from '../../../../data';
 import reducers from '../reducers';
-import { loadState, saveState } from './localStorage';
+import { loadState, saveState } from './sessionStorage';
 
 const configureData = (data) => {
   const dataTemp = data;

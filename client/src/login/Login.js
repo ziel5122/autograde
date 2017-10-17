@@ -81,7 +81,7 @@ class Login extends PureComponent {
   }
 
   handleLoginResponse(loginResponse) {
-    const { parts, setAdmin, setLoggedIn, setUserPart } = this.props;
+    const { clearState, parts, setAdmin, setLoggedIn, setUserPart } = this.props;
 
     switch (loginResponse.status) {
       case 200:
@@ -90,8 +90,7 @@ class Login extends PureComponent {
             sessionStorage.setItem('jwt', token);
             setLoggedIn(true);
             setAdmin(privilege === 'admin');
-            setUsername('');
-            setPassword('');
+            clearState();
             Object.keys(parts).forEach((partId) => {
               const part = userParts.find(userPart => (
                 userPart.partId === partId
@@ -185,6 +184,12 @@ const mapStateToProps = ({ login: { loggedIn }, parts }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  clearState() {
+    dispatch({
+      type: 'CLEAR_STATE',
+    });
+  },
+
   setAdmin(admin) {
     dispatch({
       admin,
