@@ -1,8 +1,8 @@
 import Paper from 'material-ui/Paper';
 import React from 'react';
 
-import HomeBody from './HomeBody';
-import HomeTabs from './HomeTabs';
+import Body from './Body';
+import Tabs from './Tabs';
 
 const paperStyle = {
   display: 'flex',
@@ -20,8 +20,8 @@ const style = {
 const Home = () => (
   <div style={style}>
     <Paper style={paperStyle} zDepth={5}>
-      <HomeTabs />
-      <HomeBody />
+      <Tabs />
+      <Body />
     </Paper>
   </div>
 );

@@ -1,11 +1,12 @@
 import React from 'react';
 import { Redirect, Route, withRouter } from 'react-router-dom';
 
-import Assignments from './assignments/Assignments';
+import Assignments from './Assignments';
 import Grades from './Grades';
 import Users from './Users';
 
 const style = {
+  background: 'whitesmoke',
   height: '100%',
   width: '100%',
 };
@@ -14,7 +15,7 @@ const HomeBody = ({ match }) => {
   const { url } = match;
 
   if (match.isExact) {
-    return <Redirect to={`${url}/assignments`} />;
+    //return <Redirect to={`${url}/assignments`} />;
   }
 
   return (

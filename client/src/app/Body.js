@@ -2,13 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Route, withRouter } from 'react-router-dom';
 
-import AdminRoute from '../containers/AdminRoute';
-import AdminHome from '../admin/Home';
-import AuthRoute from '../containers/AuthRoute';
+import Admin from '../admin/Admin';
 import Demo from '../demo/Demo';
 import Home from '../home/Home';
-import LockedRoute from '../login/LockedRoute';
-import Login from '../login/Login';
+import LockedRoute from '../auth/LockedRoute';
+import Login from '../auth/Login';
 
 const style = {
   display: 'flex',
@@ -26,7 +24,7 @@ const Body = ({ admin, loggedIn, match }) => {
   return (
     <div style={style}>
       <LockedRoute
-        Component={AdminHome}
+        Component={Admin}
         lockProp={admin}
         path="/admin"
         to="/login"

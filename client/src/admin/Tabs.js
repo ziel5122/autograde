@@ -3,8 +3,8 @@ import { Link, withRouter } from 'react-router-dom';
 
 const linkStyle = (selected, me) => ({
   alignItems: 'center',
-  background: selected === me ? 'white' : 'steelblue',
-  color: selected === me ? 'slateblue' : 'white',
+  background: selected === me ? 'whitesmoke' : 'steelblue',
+  color: selected === me ? 'slateblue' : 'whitesmoke',
   display: 'flex',
   flex: 1,
   fontSize: '16px',
