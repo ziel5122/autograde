@@ -1,8 +1,8 @@
-// import ContentAdd from 'material-ui/svg-icons/content/add';
 import ContentCreate from 'material-ui/svg-icons/content/create';
+import Done from 'material-ui/svg-icons/action/done';
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import ConfigUpload from './ConfigUpload';
 
@@ -16,33 +16,40 @@ const theadStyle = {
   color: 'whitesmoke',
 };
 
-const Assignments = ({ assignmentIds, assignments }) => (
+const Assignments = ({ assignmentIds, assignments, url }) => (
   <table style={style}>
     <thead style={theadStyle}>
       <tr>
         <td />
+        <td>ID</td>
         <td>Name</td>
         <td>Due</td>
-        <td>Visible</td>
+        <td style={{ textAlign: 'center' }}>Visible</td>
       </tr>
     </thead>
     <tbody>{
       assignmentIds.map((assignmentId, index) => {
         const { name, dueDate, visible } = assignments[assignmentId];
+        console.log(url);
 
         return (
           <tr key={index}>
-            <td><ContentCreate /></td>
+            <td style={{ textAlign: 'center' }}>
+              <Link to={`${url}/${assignmentId}`}>
+                <ContentCreate />
+              </Link>
+            </td>
+            <td>{assignmentId}</td>
             <td>{name}</td>
             <td>{dueDate}</td>
-            <td>{visible}</td>
+            <td style={{ textAlign: 'center' }}><Done /></td>
           </tr>
         );
       })
     }</tbody>
     <tfoot>
       <tr>
-        <td><ConfigUpload /></td>
+        <td style={{ textAlign: 'center' }}><ConfigUpload /></td>
       </tr>
     </tfoot>
   </table>

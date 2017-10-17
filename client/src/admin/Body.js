@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Route, withRouter } from 'react-router-dom';
 
-import Assignments from './Assignments';
+import Assignments from './assignments/Assignments';
 import Grades from './Grades';
 import Users from './Users';
 
@@ -20,7 +20,7 @@ const HomeBody = ({ match }) => {
 
   return (
     <div style={style}>
-      <Route path={`${url}/assignments`} component={Assignments} />
+      <Route path={`${url}/assignments/:assignmentId?`} component={Assignments} />
       <Route path={`${url}/grades`} component={Grades} />
       <Route path={`${url}/users`} component={Users} />
     </div>
