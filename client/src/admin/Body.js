@@ -7,6 +7,7 @@ import Users from './Users';
 
 const style = {
   background: 'whitesmoke',
+  display: 'flex',
   height: '100%',
   width: '100%',
 };
