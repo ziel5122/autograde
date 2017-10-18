@@ -5,7 +5,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, Route, withRouter } from 'react-router-dom';
 
-import Editors from './Editors';
+import EditEditors from './EditEditors';
 
 const assignmentsStyle = {
   marginBottom: '24px',
@@ -48,7 +48,7 @@ const textFieldProps = {
   underlineStyle: { borderColor: 'white' },
 };
 
-const Edit = ({ assignmentId, assignments, editors, match, parts }) => {
+const EditAssignment = ({ assignmentId, assignments, editors, match, parts }) => {
   const { dueDate, name, partIds } = assignments[assignmentId];
   const { url } = match;
   console.log(url);
@@ -96,7 +96,7 @@ const Edit = ({ assignmentId, assignments, editors, match, parts }) => {
         }
       </div>
       <div style={editorsStyle}>
-        <Route path={`${url}/:partId`} component={Editors} />
+        <Route path={`${url}/:partId`} component={EditEditors} />
       </div>
     </div>
   );
@@ -108,4 +108,4 @@ const mapStateToProps = ({ assignments, editors, parts }) => ({
   parts,
 });
 
-export default withRouter(connect(mapStateToProps)(Edit));
+export default withRouter(connect(mapStateToProps)(EditAssignment));

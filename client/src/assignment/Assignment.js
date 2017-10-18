@@ -47,8 +47,11 @@ const Assignment = ({
             const { code, filename, title, type } = editors[editorId];
             const mode = ((fileType) => {
               switch (fileType) {
-                case 'c/c++':
+                case 'C':
+                case 'C++':
+                case 'C/C++':
                   return 'ace/mode/c_cpp';
+                case 'bash':
                 case 'sh':
                   return 'ace/mode/sh';
                 default:

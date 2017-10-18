@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import AssignmentList from './List';
-import Edit from './Edit';
+import EditAssignment from './EditAssignment';
 import ConfigUpload from './ConfigUpload';
 
 const Assignments = ({ match }) => {
@@ -16,7 +16,7 @@ const Assignments = ({ match }) => {
   }
 
   return (
-    <Edit assignmentId={assignmentId} />
+    <EditAssignment assignmentId={assignmentId} />
   );
 };
 
