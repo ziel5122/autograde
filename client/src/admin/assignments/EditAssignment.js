@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { Link, Route, withRouter } from 'react-router-dom';
 
 import EditEditors from './EditEditors';
+import EditParts from './EditParts';
 
 const assignmentsStyle = {
   marginBottom: '24px',
@@ -77,24 +78,7 @@ const EditAssignment = ({ assignmentId, assignments, editors, match, parts }) =>
           />
         </div>
       </div>
-      <div style={partsStyle}>
-        Parts
-        {
-          partIds.map((partId) => {
-            const { attempts, name } = parts[partId];
-
-            return (
-              <Link
-                key={partId}
-                style={{ display: 'block' }}
-                to={`${url}/${partId}`}
-              >
-                {`${name} ${attempts}`}
-              </Link>
-            );
-          })
-        }
-      </div>
+      <EditParts />
       <div style={editorsStyle}>
         <Route path={`${url}/:partId`} component={EditEditors} />
       </div>
