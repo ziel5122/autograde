@@ -31,7 +31,7 @@ const configureStore = () => {
   const token = sessionStorage.getItem('jwt');
   if (token) {
     const privilege = jwt.decode(token).privilege;
-    initialState.login = {
+    initialState.auth = {
       admin: (privilege === 'admin'),
       loggedIn: true,
     };

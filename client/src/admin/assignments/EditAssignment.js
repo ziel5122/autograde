@@ -1,4 +1,5 @@
 import DatePicker from 'material-ui/DatePicker';
+import Subheader from 'material-ui/Subheader';
 import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
 import React from 'react';
@@ -9,28 +10,13 @@ import EditEditors from './EditEditors';
 import EditParts from './EditParts';
 
 const assignmentsStyle = {
-  marginBottom: '24px',
-  marginLeft: '24px',
+  background: 'white',
+  flex: '.3333333',
   marginRight: '12px',
-  marginTop: '24px',
-};
-
-const editorsStyle = {
-  marginBottom: '24px',
-  marginLeft: '12px',
-  marginRight: '24px',
-  marginTop: '24px',
-};
-
-const partsStyle = {
-  marginBottom: '24px',
-  marginLeft: '12px',
-  marginRight: '12px',
-  marginTop: '24px',
 };
 
 const style = {
-  background: 'white',
+  background: 'whitesmoke',
   display: 'flex',
   flex: 1,
   margin: '24px',
@@ -49,39 +35,55 @@ const textFieldProps = {
   underlineStyle: { borderColor: 'white' },
 };
 
-const EditAssignment = ({ assignmentId, assignments, editors, match, parts }) => {
-  const { dueDate, name, partIds } = assignments[assignmentId];
+const EditAssignment = ({
+  assignmentId,
+  assignments,
+  editors,
+  match,
+  parts,
+  setAdminPartIds,
+  setAdminParts,
+}) => {
+  const { dueDate, name, partIds, visible } = assignments[assignmentId];
   const { url } = match;
-  console.log(url);
+
+  setAdminPartIds(partIds);
+  const adminParts = partIds.reduce((newParts, partId) => {
+    newParts[partId] = parts[partId];
+    return newParts;
+  }, {});
+  setAdminParts(adminParts);
 
   return (
     <div style={style}>
       <div style={assignmentsStyle}>
-        {assignmentId}
-        <TextField
-          defaultValue={name}
-          floatingLabelText="name"
-          id="editName"
-          {...textFieldProps}
-        />
-        <DatePicker
-          defaultDate={new Date(dueDate)}
-          floatingLabelText="due date"
-          id="editDueDate"
-          onChange={(event, date) => console.log(date)}
-          {...textFieldProps}
-        />
-        <div style={{ color: 'orangered', fontSize: '12px' }}>
-          visible
-          <Toggle
-            style={{ display: 'inline-block' }}
+        <Subheader>Assignment</Subheader>
+        <div style={{ marginLeft: '12px', marginRight: '12px' }}>
+          {assignmentId}
+          <TextField
+            defaultValue={name}
+            floatingLabelText="name"
+            id="editName"
+            {...textFieldProps}
           />
+          <DatePicker
+            defaultDate={new Date(dueDate)}
+            floatingLabelText="due date"
+            id="editDueDate"
+            onChange={(event, date) => console.log(date)}
+            {...textFieldProps}
+          />
+          <div style={{ color: 'orangered', fontSize: '12px' }}>
+            visible
+            <Toggle
+              style={{ display: 'inline-block' }}
+              defaultToggled={visible}
+            />
+          </div>
         </div>
       </div>
       <EditParts />
-      <div style={editorsStyle}>
-        <Route path={`${url}/:partId`} component={EditEditors} />
-      </div>
+      <Route path={`${url}/:partId`} component={EditEditors} />
     </div>
   );
 };
@@ -92,4 +94,22 @@ const mapStateToProps = ({ assignments, editors, parts }) => ({
   parts,
 });
 
-export default withRouter(connect(mapStateToProps)(EditAssignment));
+const mapDispatchToProps = dispatch => ({
+  setAdminPartIds(partIds) {
+    dispatch({
+      partIds,
+      type: 'SET_ADMIN_PART_IDS',
+    });
+  },
+
+  setAdminParts(parts) {
+    dispatch({
+      parts,
+      type: 'SET_ADMIN_PARTS',
+    });
+  },
+});
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(EditAssignment)
+);

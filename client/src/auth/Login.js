@@ -178,7 +178,7 @@ class Login extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ login: { loggedIn }, parts }) => ({
+const mapStateToProps = ({ auth: { loggedIn }, parts }) => ({
   loggedIn,
   parts,
 });

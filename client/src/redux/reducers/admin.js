@@ -1,5 +1,14 @@
 import { combineReducers } from 'redux';
 
+const assignmentId = (state = '', action) => {
+  switch (action.type) {
+    case 'SET_ASSIGNMENT_ID':
+      return action.assignmentId;
+    default:
+      return state;
+  }
+};
+
 const editorIds = (state = [], action) => {
   switch (action.type) {
     case 'ADD_ADMIN_EDITOR_ID':
@@ -26,12 +35,23 @@ const editors = (state = {}, action) => {
   }
 };
 
+const partId = (state = '', action) => {
+  switch (action.type) {
+    case 'SET_PART_ID':
+      return action.partId;
+    default:
+      return state;
+  }
+};
+
 const partIds = (state = [], action) => {
   switch (action.type) {
     case 'ADD_ADMIN_PART_ID':
       return [...state, action.partId];
     case 'REMOVE_ADMIN_PART_ID':
       return state.slice(0, state.length - 1);
+    case 'SET_ADMIN_PART_IDS':
+      return action.partIds;
     default:
       return state;
   }
@@ -44,6 +64,8 @@ const parts = (state = {}, action) => {
         ...state,
         [action.partId]: action.part,
       };
+    case 'SET_ADMIN_PARTS':
+      return action.parts;
     case 'UNSET_ADMIN_PART':
       const { [action.partId]: {}, ...rest } = state;
       return rest;
@@ -52,11 +74,13 @@ const parts = (state = {}, action) => {
   }
 };
 
-export { editorIds, editors, partIds, parts };
+export { assignmentId, editorIds, editors, partId, partIds, parts };
 
 export default combineReducers({
+  assignmentId,
   editorIds,
   editors,
+  partId,
   partIds,
   parts
 });

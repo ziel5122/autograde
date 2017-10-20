@@ -42,7 +42,7 @@ const Body = ({ admin, loggedIn, match }) => {
   );
 };
 
-const mapStateToProps = ({ login: { admin, loggedIn } }) => ({
+const mapStateToProps = ({ auth: { admin, loggedIn } }) => ({
   admin,
   loggedIn,
 });

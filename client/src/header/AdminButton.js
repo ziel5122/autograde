@@ -35,7 +35,7 @@ const AdminButton = ({ admin }) => (
   ) : null
 );
 
-const mapStateToProps = ({ login: { admin } }) => ({
+const mapStateToProps = ({ auth: { admin } }) => ({
   admin,
 });
 
