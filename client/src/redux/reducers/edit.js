@@ -1,9 +1,21 @@
 import { combineReducers } from 'redux';
 
-const assignmentId = (state = '', action) => {
+const assignment = (state = {}, action) => {
   switch (action.type) {
-    case 'SET_ASSIGNMENT_ID':
-      return action.assignmentId;
+    case 'SET_EDIT_ASSIGNMENT':
+      return action.assignment;
+    case 'ADD_EDIT_PART_ID':
+      return {
+        ...state,
+        partIds: [...state.partIds, action.partId],
+      };
+    case 'REMOVE_EDIT_PART_ID': {
+      const { partIds } = state;
+      return {
+        ...state,
+        partIds: partIds.slice(0, partIds.length - 1),
+      }
+    }
     default:
       return state;
   }
@@ -35,38 +47,16 @@ const editors = (state = {}, action) => {
   }
 };
 
-const partId = (state = '', action) => {
-  switch (action.type) {
-    case 'SET_PART_ID':
-      return action.partId;
-    default:
-      return state;
-  }
-};
-
-const partIds = (state = [], action) => {
-  switch (action.type) {
-    case 'ADD_ADMIN_PART_ID':
-      return [...state, action.partId];
-    case 'REMOVE_ADMIN_PART_ID':
-      return state.slice(0, state.length - 1);
-    case 'SET_ADMIN_PART_IDS':
-      return action.partIds;
-    default:
-      return state;
-  }
-};
-
 const parts = (state = {}, action) => {
   switch (action.type) {
-    case 'SET_ADMIN_PART':
+    case 'SET_EDIT_PART':
       return {
         ...state,
         [action.partId]: action.part,
       };
-    case 'SET_ADMIN_PARTS':
+    case 'SET_EDIT_PARTS':
       return action.parts;
-    case 'UNSET_ADMIN_PART':
+    case 'UNSET_EDIT_PART':
       const { [action.partId]: {}, ...rest } = state;
       return rest;
     default:
@@ -74,13 +64,10 @@ const parts = (state = {}, action) => {
   }
 };
 
-export { assignmentId, editorIds, editors, partId, partIds, parts };
+export { assignment, editors, parts };
 
 export default combineReducers({
-  assignmentId,
-  editorIds,
+  assignment,
   editors,
-  partId,
-  partIds,
   parts
 });

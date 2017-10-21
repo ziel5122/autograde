@@ -6,14 +6,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, Route, withRouter } from 'react-router-dom';
 
+import AssignmentDetails from './AssignmentDetails';
 import EditEditors from './EditEditors';
 import EditParts from './EditParts';
-
-const assignmentsStyle = {
-  background: 'white',
-  flex: '.3333333',
-  marginRight: '12px',
-};
 
 const style = {
   background: 'whitesmoke',
@@ -22,90 +17,55 @@ const style = {
   margin: '24px',
 };
 
-const textFieldStyles = {
-  display: 'block',
-};
-
-const textFieldProps = {
-  floatingLabelFocusStyle: { color: 'orangered' },
-  floatingLabelShrinkStyle: { color: 'orangered' },
-  floatingLabelStyle: { color: 'darkgray' },
-  style: textFieldStyles,
-  underlineFocusStyle: { borderColor: 'orangered' },
-  underlineStyle: { borderColor: 'white' },
-};
-
 const EditAssignment = ({
+  assignment,
   assignmentId,
-  assignments,
   editors,
   match,
   parts,
-  setAdminPartIds,
-  setAdminParts,
+  setEditParts,
 }) => {
-  const { dueDate, name, partIds, visible } = assignments[assignmentId];
+  console.log(assignment);
+  const { dueDate, name, partIds, visible } = assignment;
   const { url } = match;
 
-  setAdminPartIds(partIds);
-  const adminParts = partIds.reduce((newParts, partId) => {
+  const editParts = partIds.reduce((newParts, partId) => {
     newParts[partId] = parts[partId];
     return newParts;
   }, {});
-  setAdminParts(adminParts);
+  setEditParts(editParts);
 
   return (
     <div style={style}>
-      <div style={assignmentsStyle}>
-        <Subheader>Assignment</Subheader>
-        <div style={{ marginLeft: '12px', marginRight: '12px' }}>
-          {assignmentId}
-          <TextField
-            defaultValue={name}
-            floatingLabelText="name"
-            id="editName"
-            {...textFieldProps}
-          />
-          <DatePicker
-            defaultDate={new Date(dueDate)}
-            floatingLabelText="due date"
-            id="editDueDate"
-            onChange={(event, date) => console.log(date)}
-            {...textFieldProps}
-          />
-          <div style={{ color: 'orangered', fontSize: '12px' }}>
-            visible
-            <Toggle
-              style={{ display: 'inline-block' }}
-              defaultToggled={visible}
-            />
-          </div>
-        </div>
-      </div>
+      <AssignmentDetails
+        assignmentId={assignmentId}
+        dueDate={dueDate}
+        name={name}
+        visible={visible}
+      />
       <EditParts />
-      <Route path={`${url}/:partId`} component={EditEditors} />
+      {/* <Route path={`${url}/:partId`} component={EditEditors} /> */}
     </div>
   );
 };
 
-const mapStateToProps = ({ assignments, editors, parts }) => ({
+const mapStateToProps = ({
+  edit: { assignment },
+  assignments,
+  editors,
+  parts
+}) => ({
+  assignment,
   assignments,
   editors,
   parts,
 });
 
 const mapDispatchToProps = dispatch => ({
-  setAdminPartIds(partIds) {
-    dispatch({
-      partIds,
-      type: 'SET_ADMIN_PART_IDS',
-    });
-  },
-
-  setAdminParts(parts) {
+  setEditParts(parts) {
     dispatch({
       parts,
-      type: 'SET_ADMIN_PARTS',
+      type: 'SET_EDIT_PARTS',
     });
   },
 });

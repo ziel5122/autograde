@@ -1,18 +1,18 @@
 import { combineReducers } from 'redux';
 
-import admin from './admin';
 import assignmentIds from './assignmentIds';
 import assignments from './assignments';
 import auth from './auth';
+import edit from './edit';
 import editors from './editors';
 import parts from './parts';
 import user from './user';
 
 const rootReducer = combineReducers({
-  admin,
   assignmentIds,
   assignments,
   auth,
+  edit,
   editors,
   parts,
   user,
