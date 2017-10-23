@@ -14,7 +14,7 @@ const assignment = (state = {}, action) => {
       return {
         ...state,
         partIds: partIds.slice(0, partIds.length - 1),
-      }
+      };
     }
     default:
       return state;
@@ -47,8 +47,41 @@ const editors = (state = {}, action) => {
   }
 };
 
+const part = (state = {}, action) => {
+  switch (action.type) {
+    case 'ADD_EDIT_EDITOR_ID':
+      return {
+        ...state,
+        editorIds: [...state.editorIds, action.editorId],
+      };
+    case 'REMOVE_EDIT_EDITOR_ID': {
+      const { editorIds } = state;
+      return {
+        ...state,
+        editorIds: editorIds.slice(0, editorIds.length - 1),
+      };
+    }
+    default:
+      return state;  
+  }
+};
+
 const parts = (state = {}, action) => {
   switch (action.type) {
+    case 'ADD_EDIT_EDITOR_ID': {
+      const { partId } = action;
+      return {
+        ...state,
+        [partId]: part(state[partId], action),
+      };
+    }
+    case 'REMOVE_EDIT_EDITOR_ID': {
+      const { partId } = action;
+      return {
+        ...state,
+        [partId]: part(state[partId], action),
+      };
+    }
     case 'SET_EDIT_PART':
       return {
         ...state,
@@ -64,7 +97,7 @@ const parts = (state = {}, action) => {
   }
 };
 
-export { assignment, editors, parts };
+export { assignment, editors, part, parts };
 
 export default combineReducers({
   assignment,

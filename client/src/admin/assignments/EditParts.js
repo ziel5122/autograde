@@ -49,10 +49,15 @@ class EditParts extends PureComponent {
   }
 
   removePart() {
-    this.props.removeEditPartId();
+    const { removeEditPartId, unsetEditPart } = this.props;
+    const partId = partIds[partIds.length - 1];
+    unsetEditPart(partId);
+    removeEditPartId();
   }
 
   render() {
+    const { match: { url }, parts, partIds } = this.props;
+
     return (
       <div style={style}>
         <Subheader>Parts</Subheader>
@@ -64,7 +69,7 @@ class EditParts extends PureComponent {
               <td></td>
             </tr>
           </thead>
-          <PartDetails />
+          <PartDetails partIds={partIds} parts={parts} url={url} />
           <tfoot>
             <tr>
               <td>
@@ -78,6 +83,11 @@ class EditParts extends PureComponent {
     );
   }
 }
+
+const mapStateToProps = ({ edit: { assignment: { partIds }, parts } }) => ({
+  partIds,
+  parts,
+});
 
 const mapDispatchToProps = dispatch => ({
   addEditPartId(partId) {
@@ -98,6 +108,13 @@ const mapDispatchToProps = dispatch => ({
       part,
       partId,
       type: 'SET_EDIT_PART',
+    });
+  },
+
+  unsetEditPart(partId) {
+    dispatch({
+      partId,
+      type: 'UNSET_EDIT_PART',
     });
   },
 });

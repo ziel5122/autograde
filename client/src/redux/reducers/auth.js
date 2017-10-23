@@ -1,4 +1,3 @@
-import jwt from 'jsonwebtoken';
 import { combineReducers } from 'redux';
 
 const admin = (state = false, action) => {
@@ -13,11 +12,7 @@ const admin = (state = false, action) => {
 const loggedIn = (state = false, action) => {
   switch (action.type) {
     case 'SET_LOGGED_IN':
-      console.log(action);
-      const li = action.loggedIn;
-      console.log(li);
-      return li;
-      // return action.loggedIn
+      return action.loggedIn
     default:
       return state;
   }

@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 
-const PartDetails = ({ match: { url }, partIds, parts }) => (
+const PartDetails = ({ url , partIds, parts }) => (
   <tbody>{
     partIds.map((partId, index) => {
       const { attempts, name } = parts[partId];
@@ -23,9 +23,4 @@ const PartDetails = ({ match: { url }, partIds, parts }) => (
   }</tbody>
 );
 
-const mapStateToProps = ({ edit: { assignment: { partIds }, parts } }) => ({
-  partIds,
-  parts,
-});
-
-export default withRouter(connect(mapStateToProps)(PartDetails));
+export default withRouter(PartDetails);

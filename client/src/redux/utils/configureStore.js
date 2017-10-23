@@ -42,7 +42,7 @@ const configureStore = () => {
   const store = createStore(reducers, initialState);
 
   store.subscribe(throttle(() => {
-    const state = {...store.getState()};
+    const state = { ...store.getState() };
     delete state.login;
     saveState(state);
   }, 1000));
