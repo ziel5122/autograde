@@ -14,7 +14,7 @@ const style = {
   marginRight: '12px',
 };
 
-const AssignmentDetails = ({
+const Details = ({
   assignmentId,
   dueDate,
   name,
@@ -41,4 +41,4 @@ const AssignmentDetails = ({
   </div>
 );
 
-export default AssignmentDetails;
+export default Details;

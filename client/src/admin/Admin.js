@@ -4,26 +4,18 @@ import React from 'react';
 import Body from './Body';
 import Tabs from './Tabs';
 
-const paperStyle = {
-  display: 'flex',
-  flexDirection: 'column',
-  height: '100%',
-  width: '100%',
-};
-
 const style = {
+  display: 'flex',
   flex: 1,
+  flexDirection: 'column',
   maxWidth: '1000px',
-  width: '100%',
 };
 
-const Home = () => (
+const Admin = () => (
   <div style={style}>
-    <Paper style={paperStyle} zDepth={5}>
-      <Tabs />
-      <Body />
-    </Paper>
+    <Tabs />
+    <Body />
   </div>
 );
 
-export default Home;
+export default Admin;

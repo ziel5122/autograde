@@ -2,8 +2,6 @@ import { combineReducers } from 'redux';
 
 const assignment = (state = {}, action) => {
   switch (action.type) {
-    case 'SET_EDIT_ASSIGNMENT':
-      return action.assignment;
     case 'ADD_EDIT_PART_ID':
       return {
         ...state,
@@ -16,6 +14,8 @@ const assignment = (state = {}, action) => {
         partIds: partIds.slice(0, partIds.length - 1),
       };
     }
+    case 'SET_EDIT_ASSIGNMENT':
+      return action.assignment;
     default:
       return state;
   }
@@ -62,7 +62,7 @@ const part = (state = {}, action) => {
       };
     }
     default:
-      return state;  
+      return state;
   }
 };
 

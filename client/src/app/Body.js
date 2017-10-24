@@ -12,7 +12,6 @@ const style = {
   display: 'flex',
   flex: 1,
   justifyContent: 'center',
-  overflow: 'hidden',
   padding: '24px',
 };
 

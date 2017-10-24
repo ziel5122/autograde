@@ -56,7 +56,7 @@ class EditParts extends PureComponent {
   }
 
   render() {
-    const { match: { url }, parts, partIds } = this.props;
+    const { match: { url }, partIds, parts } = this.props;
 
     return (
       <div style={style}>
@@ -120,5 +120,5 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default withRouter(
-  connect(undefined, mapDispatchToProps)(EditParts)
+  connect(mapStateToProps, mapDispatchToProps)(EditParts)
 );

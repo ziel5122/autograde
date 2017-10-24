@@ -4,7 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import AssignmentList from './List';
-import EditAssignment from './EditAssignment';
+import EditAssignment from './Edit';
 import ConfigUpload from './ConfigUpload';
 
 const Assignments = ({ assignments, match, setEditAssignment }) => {
