@@ -9,8 +9,7 @@ const labelStyle = {
 };
 
 const style = {
-  background: 'white',
-  flex: '.3333333',
+  marginLeft: '12px',
   marginRight: '12px',
 };
 
@@ -18,26 +17,26 @@ const Details = ({
   assignmentId,
   dueDate,
   name,
+  updateDueDate,
+  updateName,
+  updateVisible,
   visible
 }) => (
   <div style={style}>
-    <Subheader>Assignment</Subheader>
-    <div style={{ marginLeft: '12px', marginRight: '12px' }}>
-      <div style={labelStyle}>ID</div>
-      {assignmentId}
-      <br />
-      <br />
-      <div style={labelStyle}>Name</div>
-      <input defaultValue={name} />
-      <br />
-      <br />
-      <div style={labelStyle}>Due</div>
-      <input type="date" defaultValue={dueDate} />
-      <br />
-      <br />
-      <div style={labelStyle}>Visible</div>
-      <input type="checkbox" defaultValue={visible} />
-    </div>
+    <div style={labelStyle}>ID</div>
+    {assignmentId}
+    <br />
+    <br />
+    <div style={labelStyle}>Name</div>
+    <input defaultValue={name} onChange={updateName} />
+    <br />
+    <br />
+    <div style={labelStyle}>Due</div>
+    <input type="date" defaultValue={dueDate} onChange={updateDueDate} />
+    <br />
+    <br />
+    <div style={labelStyle}>Visible</div>
+    <input type="checkbox" defaultValue={visible} onChange={updateVisible} />
   </div>
 );
 

@@ -7,26 +7,42 @@ import AssignmentList from './List';
 import EditAssignment from './Edit';
 import ConfigUpload from './ConfigUpload';
 
-const Assignments = ({ assignments, match, setEditAssignment }) => {
+const Assignments = ({
+  assignment: { id },
+  assignments,
+  clearEditAssignment,
+  match,
+  setEditAssignment
+}) => {
   const { params: { assignmentId }, url } = match;
 
   if (!assignmentId) {
+    clearEditAssignment();
     return <AssignmentList url={url} />;
   }
 
-  const assignment = assignments[assignmentId];
-  setEditAssignment(assignment);
+  if (assignmentId !== id) {
+    setEditAssignment(assignments[assignmentId], assignmentId);
+  }
   return <EditAssignment assignmentId={assignmentId} />;
 };
 
-const mapStateToProps = ({ assignments }) => ({
+const mapStateToProps = ({ assignments, edit: { assignment } }) => ({
+  assignment,
   assignments,
 });
 
 const mapDispatchToProps = dispatch => ({
-  setEditAssignment(assignment) {
+  clearEditAssignment() {
+    dispatch({
+      type: 'CLEAR_EDIT_ASSIGNMENT',
+    });
+  },
+
+  setEditAssignment(assignment, assignmentId) {
     dispatch({
       assignment,
+      assignmentId,
       type: 'SET_EDIT_ASSIGNMENT',
     });
   },

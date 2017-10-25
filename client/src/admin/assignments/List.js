@@ -16,7 +16,7 @@ const theadStyle = {
   color: 'whitesmoke',
 };
 
-const Assignments = ({ assignmentIds, assignments, url }) => (
+const Assignments = ({ assignmentIds, assignments, match: { url } }) => (
   <table style={style}>
     <thead style={theadStyle}>
       <tr>

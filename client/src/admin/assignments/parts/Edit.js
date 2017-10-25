@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { v4 } from 'uuid';
 
-import PartDetails from './PartDetails';
+import PartDetails from './Details';
 
 const buttonStyle = {
   /* eslint-disable no-dupe-keys */

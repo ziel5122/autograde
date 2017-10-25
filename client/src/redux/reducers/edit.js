@@ -7,6 +7,8 @@ const assignment = (state = {}, action) => {
         ...state,
         partIds: [...state.partIds, action.partId],
       };
+    case 'CLEAR_EDIT_ASSIGNMENT':
+      return {};
     case 'REMOVE_EDIT_PART_ID': {
       const { partIds } = state;
       return {
@@ -15,7 +17,25 @@ const assignment = (state = {}, action) => {
       };
     }
     case 'SET_EDIT_ASSIGNMENT':
-      return action.assignment;
+      return {
+        ...action.assignment,
+        id: action.assignmentId,
+      };
+    case 'SET_EDIT_DUE_DATE':
+      return {
+        ...state,
+        dueDate: action.dueDate,
+      };
+    case 'SET_EDIT_NAME':
+      return {
+        ...state,
+        name: action.name,
+      };
+    case 'SET_EDIT_VISIBLE':
+      return {
+        ...state,
+        visible: action.visible,
+      };
     default:
       return state;
   }

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { v4 } from 'uuid';
 
-import EditorForm from './EditorForm';
+import EditorForm from './Form';
 
 const buttonStyle = {
   /* eslint-disable no-dupe-keys */
@@ -25,7 +25,7 @@ class EditEditors extends PureComponent {
   constructor(props) {
     super(props);
 
-    const { editors, match: { params: { partId } }, parts } = this.props;
+    const { editors, match: { params: { partId = '1ba3487a-78ed-4962-bf6e-f49c686aead6' } }, parts } = this.props;
     const { editorIds } = parts[partId];
 
     this.state = {
