@@ -17,13 +17,9 @@ const Assignments = ({
   const { params: { assignmentId }, url } = match;
 
   if (!assignmentId) {
-    clearEditAssignment();
     return <AssignmentList url={url} />;
   }
 
-  if (assignmentId !== id) {
-    setEditAssignment(assignments[assignmentId], assignmentId);
-  }
   return <EditAssignment assignmentId={assignmentId} />;
 };
 

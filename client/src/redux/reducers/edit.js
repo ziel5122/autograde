@@ -19,7 +19,7 @@ const assignment = (state = {}, action) => {
     case 'SET_EDIT_ASSIGNMENT':
       return {
         ...action.assignment,
-        id: action.assignmentId,
+        assignmentId: action.assignmentId,
       };
     case 'SET_EDIT_DUE_DATE':
       return {

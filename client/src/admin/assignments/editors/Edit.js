@@ -86,7 +86,6 @@ class EditEditors extends PureComponent {
 
     return (
       <div style={style}>
-        <Subheader>Editors</Subheader>
         <table style={{ width: '100%' }}>
           <thead>
             <tr>

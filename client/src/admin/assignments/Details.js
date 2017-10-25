@@ -2,6 +2,7 @@ import DatePicker from 'material-ui/DatePicker';
 import Subheader from 'material-ui/Subheader';
 import Toggle from 'material-ui/Toggle';
 import React from 'react';
+import { connect } from 'react-redux';
 
 const labelStyle = {
   color: 'orangered',
@@ -40,4 +41,14 @@ const Details = ({
   </div>
 );
 
-export default Details;
+const mapStateToProps = ({ edit: { assignment } }) => {
+  const { name, dueDate, visible } = assignment;
+
+  return {
+    dueDate,
+    name,
+    visible,
+  };
+};
+
+export default connect(mapStateToProps)(Details);

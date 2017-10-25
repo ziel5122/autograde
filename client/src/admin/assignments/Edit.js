@@ -44,18 +44,25 @@ const rightChildStyle = {
 class EditAssignment extends PureComponent {
   constructor(props) {
     super(props);
-    const { assignments, parts, setEditAssignment, setEditParts } = this.props;
     const { assignmentId } = this.props.match.params;
-    const { partIds } = assignments[assignmentId];
-    const editParts = partIds.reduce((newParts, partId) => {
-      newParts[partId] = parts[partId];
-      return newParts;
-    }, {});
-    setEditAssignment(assignments[assignmentId]);
-    setEditParts(editParts);
+    const { assignment } = this.props;
+    if (assignmentId !== assignment.assignmentId) {
+      const { assignments, parts, setEditAssignment, setEditParts } = this.props;
+      const { partIds } = assignments[assignmentId];
+      const editParts = partIds.reduce((newParts, partId) => {
+        newParts[partId] = parts[partId];
+        return newParts;
+      }, {});
+      setEditAssignment(assignments[assignmentId], assignmentId);
+      setEditParts(editParts);
+    }
     this.updateDueDate = this.updateDueDate.bind(this);
     this.updateName = this.updateName.bind(this);
     this.updateVisible = this.updateVisible.bind(this);
+  }
+
+  componentWillUnmount() {
+    this.props.clearEditAssignment();
   }
 
   updateDueDate({ target: { value } }) {
@@ -80,22 +87,19 @@ class EditAssignment extends PureComponent {
           <Subheader>Assignment</Subheader>
           <AssignmentDetails
             assignmentId={assignmentId}
-            dueDate={dueDate}
-            name={name}
             updateDueDate={this.updateDueDate}
             updateName={this.updateName}
             updateVisible={this.updateVisible}
-            visible={visible}
           />
         </div>
         <div style={middleChildStyle}>
           <Subheader>Parts</Subheader>
+          <EditParts />
         </div>
         <div style={rightChildStyle}>
           <Subheader>Editors</Subheader>
+          <Route path={`${url}/:partId`} component={EditEditors} />
         </div>
-        {/* <EditParts />
-        <Route path={`${url}/:partId`} component={EditEditors} /> */}
       </div>
     );
   }
@@ -104,7 +108,7 @@ class EditAssignment extends PureComponent {
 const mapStateToProps = ({
   assignments,
   edit: { assignment },
-  parts
+  parts,
 }) => ({
   assignment,
   assignments,
@@ -112,9 +116,16 @@ const mapStateToProps = ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setEditAssignment(assignment) {
+  clearEditAssignment() {
+    dispatch({
+      type: 'CLEAR_EDIT_ASSIGNMENT',
+    });
+  },
+
+  setEditAssignment(assignment, assignmentId) {
     dispatch({
       assignment,
+      assignmentId,
       type: 'SET_EDIT_ASSIGNMENT',
     });
   },

@@ -16,16 +16,13 @@ const buttonStyle = {
 };
 
 const style = {
-  background: 'white',
-  flex: '.333',
-  marginLeft: '12px',
-  marginRight: '12px',
-  paddingLeft: '12px',
-  paddingRight: '12px',
+  display: 'flex',
   width: '100%',
 };
 
 const tableStyle = {
+  paddingLeft: '12px',
+  paddingRight: '12px',
   width: '100%',
 };
 
@@ -41,7 +38,7 @@ class EditParts extends PureComponent {
     const { addEditPartId, setEditPart } = this.props;
     addEditPartId(partId);
     const part = {
-      filename: '',
+      filename: '<filename>',
       attempts: 5,
       editorIds: [],
     };
@@ -49,7 +46,7 @@ class EditParts extends PureComponent {
   }
 
   removePart() {
-    const { removeEditPartId, unsetEditPart } = this.props;
+    const { partIds, removeEditPartId, unsetEditPart } = this.props;
     const partId = partIds[partIds.length - 1];
     unsetEditPart(partId);
     removeEditPartId();
@@ -60,7 +57,6 @@ class EditParts extends PureComponent {
 
     return (
       <div style={style}>
-        <Subheader>Parts</Subheader>
         <table style={tableStyle}>
           <thead>
             <tr>
