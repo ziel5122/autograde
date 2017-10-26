@@ -52,6 +52,21 @@ const editorIds = (state = [], action) => {
   }
 };
 
+const editorFilename = (state, filename) => ({
+  ...state,
+  filename,
+});
+
+const editorFileType = (state, fileType) => ({
+  ...state,
+  fileType,
+});
+
+const editorTitle = (state, title) => ({
+  ...state,
+  title,
+});
+
 const editors = (state = {}, action) => {
   switch (action.type) {
     case 'SET_ADMIN_EDITOR':
@@ -62,6 +77,27 @@ const editors = (state = {}, action) => {
     case 'UNSET_ADMIN_EDITOR':
       const { [action.editorId]: {}, ...rest } = state;
       return rest;
+    case 'SET_EDIT_EDITOR_FILE_TYPE': {
+      const { editorId } = action;
+      return {
+        ...state,
+        [editorId]: editorFileType(state[editorId], action.fileType),
+      };
+    }
+    case 'SET_EDIT_EDITOR_FILENAME': {
+      const { editorId } = action;
+      return {
+        ...state,
+        [editorId]: editorFilename(state[editorId], action.filename),
+      };
+    }
+    case 'SET_EDIT_EDITOR_TITLE': {
+      const { editorId } = action;
+      return {
+        ...state,
+        [editorId]: editorTitle(state[editorId], action.title),
+      };
+    }
     default:
       return state;
   }
@@ -86,6 +122,20 @@ const part = (state = {}, action) => {
   }
 };
 
+const partAttempts = (state, attempts) => {
+  return {
+    ...state,
+    attempts,
+  };
+};
+
+const partName = (state, name) => {
+  return {
+    ...state,
+    name,
+  };
+}
+
 const parts = (state = {}, action) => {
   switch (action.type) {
     case 'ADD_EDIT_EDITOR_ID': {
@@ -107,6 +157,20 @@ const parts = (state = {}, action) => {
         ...state,
         [action.partId]: action.part,
       };
+    case 'SET_EDIT_PART_ATTEMPTS': {
+      const { partId } = action;
+      return {
+        ...state,
+        [partId]: partAttempts(state[partId], action.attempts),
+      };
+    }
+    case 'SET_EDIT_PART_NAME': {
+      const { partId } = action;
+      return {
+        ...state,
+        [partId]: partName(state[partId], action.name),
+      };
+    }
     case 'SET_EDIT_PARTS':
       return action.parts;
     case 'UNSET_EDIT_PART':

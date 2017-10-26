@@ -25,7 +25,7 @@ class EditEditors extends PureComponent {
   constructor(props) {
     super(props);
 
-    const { editors, match: { params: { partId = '1ba3487a-78ed-4962-bf6e-f49c686aead6' } }, parts } = this.props;
+    const { editors, match: { params: { partId } }, parts } = this.props;
     const { editorIds } = parts[partId];
 
     this.state = {
@@ -121,7 +121,7 @@ class EditEditors extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ editors, parts }) => ({
+const mapStateToProps = ({ edit: { editors, parts } }) => ({
   editors,
   parts,
 });

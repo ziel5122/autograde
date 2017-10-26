@@ -1,7 +1,8 @@
-import KeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
+
+import PartForm from './Form';
 
 const PartDetails = ({ url , partIds, parts }) => (
   <tbody>{
@@ -9,15 +10,12 @@ const PartDetails = ({ url , partIds, parts }) => (
       const { attempts, name } = parts[partId];
 
       return (
-        <tr key={index}>
-          <td>{name}</td>
-          <td style={{ textAlign: 'center' }}>{attempts}</td>
-          <td style={{ textAlign: 'center' }}>
-            <Link to={`${url}/${partId}`}>
-              <KeyboardArrowRight />
-            </Link>
-          </td>
-        </tr>
+        <PartForm
+          attempts={attempts}
+          key={partId}
+          name={name}
+          partId={partId}
+        />
       );
     })
   }</tbody>
