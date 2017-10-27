@@ -32,7 +32,7 @@ const AssignmentList = ({
   </div>
 );
 
-const mapStateToProps = ({ assignmentIds, assignments }) => ({
+const mapStateToProps = ({ data: { assignmentIds, assignments } }) => ({
   assignmentIds,
   assignments,
 });

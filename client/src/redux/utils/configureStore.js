@@ -20,7 +20,9 @@ const configureData = (data) => {
     return newAssignmentsTemp;
   }, {});
 
-  return dataTemp;
+  return {
+    data: dataTemp,
+  };
 };
 
 const configureStore = () => {

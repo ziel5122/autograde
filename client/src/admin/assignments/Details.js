@@ -41,7 +41,7 @@ const Details = ({
   </div>
 );
 
-const mapStateToProps = ({ edit: { assignment } }) => {
+const mapStateToProps = ({ editAssignment: { assignment } }) => {
   const { name, dueDate, visible } = assignment;
 
   return {

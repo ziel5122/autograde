@@ -52,7 +52,7 @@ const Tabs = ({
   );
 };
 
-const mapStateToProps = ({ assignments, parts }) => ({
+const mapStateToProps = ({ data: { assignments, parts } }) => ({
   assignments,
   parts,
 });

@@ -1,0 +1,8 @@
+export const ADD_PART_ID = 'ADD_PART_ID';
+export const CLEAR_ASSIGNMENT = 'CLEAR_ASSIGNMENT';
+export const REMOVE_PART_ID = 'REMOVE_PART_ID';
+export const SET_ASSIGNMENT = 'SET_ASSIGNMENT';
+export const SET_DUE_DATE = 'SET_DUE_DATE';
+export const SET_NAME = 'SET_ASSIGNMENT_NAME';
+export const SET_OPEN_TAB = 'SET_OPEN_TAB';
+export const TOGGLE_VISIBLE = 'TOGGLE_VISIBLE';

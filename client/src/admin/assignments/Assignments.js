@@ -3,6 +3,10 @@ import Done from 'material-ui/svg-icons/action/done';
 import React from 'react';
 import { connect } from 'react-redux';
 
+import {
+  CLEAR_ASSIGNMENT,
+  SET_ASSIGNMENT,
+} from '../../redux/action-types/assignments';
 import AssignmentList from './List';
 import EditAssignment from './Edit';
 import ConfigUpload from './ConfigUpload';
@@ -23,7 +27,10 @@ const Assignments = ({
   return <EditAssignment assignmentId={assignmentId} />;
 };
 
-const mapStateToProps = ({ assignments, edit: { assignment } }) => ({
+const mapStateToProps = ({
+  data: { assignments },
+  editAssignment: { assignment },
+}) => ({
   assignment,
   assignments,
 });
@@ -31,7 +38,7 @@ const mapStateToProps = ({ assignments, edit: { assignment } }) => ({
 const mapDispatchToProps = dispatch => ({
   clearEditAssignment() {
     dispatch({
-      type: 'CLEAR_EDIT_ASSIGNMENT',
+      type: CLEAR_ASSIGNMENT,
     });
   },
 
@@ -39,7 +46,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch({
       assignment,
       assignmentId,
-      type: 'SET_EDIT_ASSIGNMENT',
+      type: SET_ASSIGNMENT,
     });
   },
 });

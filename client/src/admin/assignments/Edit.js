@@ -6,6 +6,10 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Link, Route, withRouter } from 'react-router-dom';
 
+import {
+  CLEAR_ASSIGNMENT,
+  SET_ASSIGNMENT,
+} from '../../redux/action-types/assignments';
 import AssignmentDetails from './Details';
 import EditEditors from './editors/Edit';
 import EditParts from './parts/Edit';
@@ -106,9 +110,8 @@ class EditAssignment extends PureComponent {
 }
 
 const mapStateToProps = ({
-  assignments,
+  data: { assignments, parts },
   edit: { assignment },
-  parts,
 }) => ({
   assignment,
   assignments,

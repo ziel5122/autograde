@@ -4,6 +4,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 
+import { CLEAR_ASSIGNMENT } from '../../redux/action-types/assignments';
 import ConfigUpload from './ConfigUpload';
 
 const style = {
@@ -66,7 +67,7 @@ class List extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ assignmentIds, assignments }) => ({
+const mapStateToProps = ({ data: { assignmentIds, assignments } }) => ({
   assignmentIds,
   assignments,
 });
@@ -74,7 +75,7 @@ const mapStateToProps = ({ assignmentIds, assignments }) => ({
 const mapDispatchToProps = dispatch => ({
   clearEditAssignment() {
     dispatch({
-      type: 'CLEAR_EDIT_ASSIGNMENT',
+      type: CLEAR_ASSIGNMENT,
     });
   },
 });

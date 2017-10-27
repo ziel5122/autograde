@@ -136,7 +136,7 @@ class Actions extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ editors, user }) => ({
+const mapStateToProps = ({ data: { editors }, user }) => ({
   editors,
   user,
 });
