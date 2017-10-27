@@ -6,14 +6,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { v4 } from 'uuid';
 
+import EditorAddRemove from './AddRemove';
 import EditorForm from './Form';
-
-const buttonStyle = {
-  /* eslint-disable no-dupe-keys */
-  cursor: 'hand',
-  cursor: 'pointer',
-  /* eslint-enable no-dupe-keys */
-};
 
 const style = {
   background: 'white',
@@ -21,109 +15,42 @@ const style = {
   marginLeft: '12px',
 };
 
-class EditEditors extends PureComponent {
-  constructor(props) {
-    super(props);
+const Editors = ({ editors, match: { params: { partId } }, parts }) => {
+  const { editorIds } = parts[partId];
+  console.log(editors);
+  console.log(editorIds);
 
-    const { editors, match: { params: { partId } }, parts } = this.props;
-    const { editorIds } = parts[partId];
+  return (
+    <div style={style}>
+      <table style={{ width: '100%' }}>
+        <thead>
+          <tr>
+            <td><b>Filename</b></td>
+            <td><b>Type</b></td>
+            <td><b>Title</b></td>
+          </tr>
+        </thead>
+        <tbody>{
+          editorIds.map(editorId => {
+            const editor = editors[editorId];
+            return (
+              <EditorForm
+                editor={editor}
+                key={editorId}
+                id={editorId}
+              />
+            );
+          })
+        }</tbody>
+        <EditorAddRemove partId={partId} />
+      </table>
+    </div>
+  );
+};
 
-    this.state = {
-      editorIds,
-      editors: editorIds.reduce((editorsMap, editorId) => {
-        editorsMap[editorId] = editors[editorId];
-        return editorsMap;
-      }, {}),
-    };
-
-    this.addEditor = this.addEditor.bind(this);
-    this.removeEditor = this.removeEditor.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { editors, match: { params: { partId } }, parts } = nextProps;
-    const { editorIds } = parts[partId];
-
-    this.setState({
-      editorIds,
-      editors: editorIds.reduce((editorsMap, editorId) => {
-        editorsMap[editorId] = editors[editorId];
-        return editorsMap;
-      }, {}),
-    });
-  }
-
-  addEditor() {
-    const { editorIds, editors } = this.state;
-    const editorId = v4();
-    this.setState({
-      editorIds: [...editorIds, editorId],
-      editors: {
-        ...editors,
-        [editorId]: {
-          filename: '',
-          title: false,
-          type: '',
-        },
-      }
-    });
-  }
-
-  removeEditor() {
-    const { editorIds, editors } = this.state;
-    const lastIndex = editorIds.length - 1;
-    const editorId = editorIds[lastIndex];
-    const { [editorId]: {}, ...rest } = editors;
-    this.setState({
-      editorIds: editorIds.slice(0, lastIndex),
-      editors: rest,
-    });
-  }
-
-  render() {
-    console.log(this.state);
-    const { editorIds, editors } = this.state;
-
-    return (
-      <div style={style}>
-        <table style={{ width: '100%' }}>
-          <thead>
-            <tr>
-              <td><b>Filename</b></td>
-              <td><b>Type</b></td>
-              <td><b>Title</b></td>
-            </tr>
-          </thead>
-          <tbody>{
-            editorIds.map(editorId => {
-              const editor = editors[editorId];
-              return (
-                <EditorForm
-                  addEditor={this.addEditor}
-                  editor={editor}
-                  key={editorId}
-                  id={editorId}
-                />
-              );
-            })
-          }</tbody>
-          <tfoot>
-            <tr>
-              <td>
-                <Add onClick={this.addEditor} style={buttonStyle} />
-                <Remove onClick={this.removeEditor} style={buttonStyle} />
-              </td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-    );
-  }
-}
-
-const mapStateToProps = ({ edit: { editors, parts } }) => ({
+const mapStateToProps = ({ edit: { parts }, editors }) => ({
   editors,
   parts,
 });
 
-export default withRouter(connect(mapStateToProps)(EditEditors));
+export default withRouter(connect(mapStateToProps)(Editors));

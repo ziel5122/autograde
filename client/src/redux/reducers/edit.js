@@ -43,9 +43,9 @@ const assignment = (state = {}, action) => {
 
 const editorIds = (state = [], action) => {
   switch (action.type) {
-    case 'ADD_ADMIN_EDITOR_ID':
+    case 'ADD_EDIT_EDITOR_ID':
       return [...state, action.editorId];
-    case 'REMOVE_ADMIN_EDITOR_ID':
+    case 'REMOVE_EDIT_EDITOR_ID':
       return state.slice(0, state.length - 1);
     default:
       return state;
@@ -69,12 +69,12 @@ const editorTitle = (state, title) => ({
 
 const editors = (state = {}, action) => {
   switch (action.type) {
-    case 'SET_ADMIN_EDITOR':
+    case 'SET_EDIT_EDITOR':
       return {
         ...state,
         [action.editorId]: action.editor,
       };
-    case 'UNSET_ADMIN_EDITOR':
+    case 'UNSET_EDIT_EDITOR':
       const { [action.editorId]: {}, ...rest } = state;
       return rest;
     case 'SET_EDIT_EDITOR_FILE_TYPE': {

@@ -2,6 +2,11 @@ import Done from 'material-ui/svg-icons/action/done';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 
+const supportedFileTypes = [
+  'bash',
+  'C',
+];
+
 class Form extends PureComponent {
   constructor() {
     super();
@@ -26,7 +31,7 @@ class Form extends PureComponent {
   }
 
   render() {
-    const { addEditor, editor: { filename, title, type }, id} = this.props;
+    const { editor: { filename, title, type }, id} = this.props;
 
     return (
       <tr>
@@ -34,14 +39,15 @@ class Form extends PureComponent {
           <input defaultValue={filename} id={`${id}filename`} />
         </td>
         <td>
-          <select defaultValue={type} id={`${id}select`}>
-            <option value="C">C</option>
-            <option value="bash">bash</option>
-          </select>
+          <select defaultValue={type} id={`${id}select`}>{
+            supportedFileTypes.map((fileType) => (
+              <option key={fileType} value={fileType}>{fileType}</option>
+            ))
+          }</select>
         </td>
-        <td>
-          <Done />
-        </td>
+        <td>{
+          title ? <Done /> : null
+        }</td>
       </tr>
     );
   }
