@@ -1,8 +1,16 @@
 import { combineReducers } from 'redux';
 
+import {
+  SET_ADMIN,
+  SET_ERROR_TEXT,
+  SET_LOGGED_IN,
+  SET_USERNAME,
+  SET_PASSWORD,
+} from '../../action-types/auth';
+
 const admin = (state = false, action) => {
   switch (action.type) {
-    case 'SET_ADMIN':
+    case SET_ADMIN:
       return action.admin;
     default:
       return state;
@@ -11,16 +19,16 @@ const admin = (state = false, action) => {
 
 const loggedIn = (state = false, action) => {
   switch (action.type) {
-    case 'SET_LOGGED_IN':
+    case SET_LOGGED_IN:
       return action.loggedIn
     default:
       return state;
   }
 };
 
-const loginErrorText = (state = '', action) => {
+const errorText = (state = '', action) => {
   switch (action.type) {
-    case 'SET_ERROR_TEXT':
+    case SET_ERROR_TEXT:
       return action.errorText;
     default:
       return state;
@@ -29,7 +37,7 @@ const loginErrorText = (state = '', action) => {
 
 const password = (state = '', action) => {
   switch (action.type) {
-    case 'SET_PASSWORD':
+    case SET_PASSWORD:
       return action.password;
     default:
       return state;
@@ -38,7 +46,7 @@ const password = (state = '', action) => {
 
 const username = (state = '', action) => {
   switch (action.type) {
-    case 'SET_USERNAME':
+    case SET_USERNAME:
       return action.username;
     default:
       return state;
@@ -47,8 +55,8 @@ const username = (state = '', action) => {
 
 export default combineReducers({
   admin,
+  errorText,
   loggedIn,
-  loginErrorText,
   username,
   password,
 });

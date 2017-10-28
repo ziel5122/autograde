@@ -3,6 +3,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 
+import { setAttempts } from '../redux/actions/parts';
+
 const buttonStyle = {
   marginLeft: '8px',
   marginRight: '8px',
@@ -46,10 +48,10 @@ class Actions extends PureComponent {
   handleSubmitClick() {
     const {
       assignmentId,
+      dispatch,
       editorIds,
       editors,
       partId,
-      setAttempts,
       user: { parts },
       username,
     } = this.props;
@@ -88,7 +90,7 @@ class Actions extends PureComponent {
       })
       .then(({ newAttempts, result }) => {
         this.setState({ result });
-        setAttempts(newAttempts, partId);
+        dispatch(setAttempts(partId, newAttempts));
       })
       .catch(err => console.log(err, err.stack));
   }
@@ -141,14 +143,4 @@ const mapStateToProps = ({ data: { editors }, user }) => ({
   user,
 });
 
-const mapDispatchToProps = dispatch => ({
-  setAttempts(attempts, partId) {
-    dispatch({
-      attempts,
-      partId,
-      type: 'SET_ATTEMPTS',
-    });
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Actions);
+export default connect(mapStateToProps)(Actions);

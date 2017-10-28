@@ -4,6 +4,14 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 
+import {
+  setAdmin,
+  setErrorText,
+  setLogin,
+  setUsername,
+  setPassword,
+} from '../redux/actions/auth';
+import { setUserPart } from '../redux/actions/user';
 import LoginButton from './LoginButton';
 
 const ENTER_KEY = 13;
@@ -54,14 +62,6 @@ const textFieldProps = {
 };
 
 class Login extends PureComponent {
-  constructor() {
-    super();
-    this.state = { errorText: '' };
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.handleLoginResponse = this.handleLoginResponse.bind(this);
-    this.login = this.login.bind(this);
-  }
-
   componentWillMount() {
     document.addEventListener('keydown', this.handleKeyDown);
   }
@@ -70,7 +70,7 @@ class Login extends PureComponent {
     document.removeEventListener('keydown', this.handleKeyDown);
   }
 
-  handleKeyDown(event) {
+  handleKeyDown = (event) => {
     switch (event.keyCode) {
       case ENTER_KEY:
         this.login();
@@ -80,25 +80,27 @@ class Login extends PureComponent {
     }
   }
 
-  handleLoginResponse(loginResponse) {
-    const { clearState, parts, setAdmin, setLoggedIn, setUserPart } = this.props;
+  handleLoginResponse = (loginResponse) => {
+    const { dispatch, parts, setUserPart } = this.props;
 
     switch (loginResponse.status) {
       case 200:
         loginResponse.json()
           .then(({ privilege, token, userParts }) => {
             sessionStorage.setItem('jwt', token);
-            setLoggedIn(true);
-            setAdmin(privilege === 'admin');
-            clearState();
+            dispatch(setLoggedIn(true));
+            dispatch(setAdmin(privilege === 'admin'));
+            dispatch(clearState());
             Object.keys(parts).forEach((partId) => {
               const part = userParts.find(userPart => (
                 userPart.partId === partId
               ));
               if (part) {
-                setUserPart(part.id, { attempts: part.attempts });
+                dispatch(setUserPart(part.id, { attempts: part.attempts }));
               } else {
-                setUserPart(partId, { attempts: parts[partId].attempts });
+                dispatch(
+                  setUserPart(partId, { attempts: parts[partId].attempts })
+                );
               }
             });
           })
@@ -107,17 +109,19 @@ class Login extends PureComponent {
           });
         break;
       case 400:
-        this.setState({ errorText: 'username or password incorrect' });
+        dispatch(setErrorText('username or password incorrect'));
         break;
       case 500:
-        this.setState({ errorText: 'server exploded' });
+        dispatch(setErrorText('server exploded'));
         break;
       default:
         throw new Error('unexpected status code');
     }
   }
 
-  login() {
+  login = () => {
+    const { dispatch } = this.props;
+
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
@@ -130,15 +134,25 @@ class Login extends PureComponent {
         .then(this.handleLoginResponse)
         .catch((err) => {
           console.log(err, err.stack);
-          this.setState({ errorText: 'error connecting to server' });
+          dispatch(setErrorText('error connecting to server'));
         });
     } else if (!username && !password) {
-      this.setState({ errorText: 'username and password required' });
+      dispatch(setErrorText('username and password required'));
     } else if (!username) {
-      this.setState({ errorText: 'username required' });
+      dispatch(setErrorText('username required'));
     } else {
-      this.setState({ errorText: 'password required' });
+      dispatch(setErrorText('password required'));
     }
+  }
+
+  onPasswordChange = ({ target: { value } }) => {
+    const { dispatch } = this.props;
+    dispatch(setPassword(value));
+  }
+
+  onUsernameChange = ({ target: { value } }) => {
+    const { dispatch } = this.props;
+    dispatch(setUsername(value));
   }
 
   render() {
@@ -147,19 +161,23 @@ class Login extends PureComponent {
       return <Redirect to={from} />;
     }
 
+    const { errorText, password, username } = this.props;
+
     return (
       <div style={loginStyles}>
         <Paper style={loginPaperStyles} zDepth={5}>
           <TextField
-            defaultValue={this.props.username}
+            defaultValue={username}
             floatingLabelText="username"
             id="username"
+            onChange={this.onUsernameChange}
             {...textFieldProps}
           />
           <TextField
-            defaultValue={this.props.password}
+            defaultValue={password}
             floatingLabelText="password"
             id="password"
+            onChange={this.onPasswordChange}
             type="password"
             {...textFieldProps}
           />
@@ -170,7 +188,7 @@ class Login extends PureComponent {
             </div>
           </div>
           <div style={errorTextStyles}>
-            {this.state.errorText}
+            {errorText}
           </div>
         </Paper>
       </div>
@@ -178,53 +196,16 @@ class Login extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ auth: { loggedIn }, parts }) => ({
-  loggedIn,
-  parts,
-});
+const mapStateToProps = ({ auth, parts }) => {
+  const { errorText, loggedIn, username, password } = auth;
 
-const mapDispatchToProps = dispatch => ({
-  clearState() {
-    dispatch({
-      type: 'CLEAR_STATE',
-    });
-  },
+  return {
+    errorText,
+    loggedIn,
+    username,
+    parts,
+    password,
+  };
+};
 
-  setAdmin(admin) {
-    dispatch({
-      admin,
-      type: 'SET_ADMIN',
-    });
-  },
-
-  setLoggedIn(loggedIn) {
-    dispatch({
-      loggedIn,
-      type: 'SET_LOGGED_IN',
-    });
-  },
-
-  setPassword(password) {
-    dispatch({
-      password,
-      type: 'SET_PASSWORD',
-    });
-  },
-
-  setUsername(username) {
-    dispatch({
-      username,
-      type: 'SET_USERNAME',
-    });
-  },
-
-  setUserPart(partId, part) {
-    dispatch({
-      part,
-      partId,
-      type: 'SET_USER_PART',
-    });
-  },
-});
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));
+export default withRouter(connect(mapStateToProps)(Login));
