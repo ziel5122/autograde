@@ -4,6 +4,13 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { v4 } from 'uuid';
 
+import {
+  addEditorId,
+  removeEditorId,
+  setEditor,
+  unsetEditor,
+} from '../../../redux/actions/edit-assignment';
+
 const buttonStyle = {
   /* eslint-disable no-dupe-keys */
   cursor: 'hand',
@@ -12,31 +19,25 @@ const buttonStyle = {
 };
 
 class AddRemove extends PureComponent {
-  constructor() {
-    super();
-    this.onAddEditor = this.onAddEditor.bind(this);
-    this.onRemoveEditor = this.onRemoveEditor.bind(this);
-  }
-
-  onAddEditor() {
+  onAddEditor = () => {
     const editorId = v4();
-    const { addEditorId, setEditEditor } = this.props;
     const editor = {
       filename: '',
       title: false,
       type: '',
     };
-    addEditEditorId(editorId);
-    setEditEditor(editorId, editor);
-  }
+    const { dispatch } = this.props;
+    dispatch(addEditorId(editorId));
+    dispatch(setEditor(editorId, editor));
+  };
 
-  onRemoveEditor() {
-    const { partId, parts, removeEditorId, unsetEditorId } = this.props;
+  onRemoveEditor = () => {
+    const { dispatch, partId, parts } = this.props;
     const { editorIds } = parts[partId];
     const editorId = editorIds[editorIds.length - 1];
-    removeEditEditorId();
-    unsetEditEditor(editorId);
-  }
+    dispatch(removeEditorId());
+    dispatch(unsetEditor(editorId));
+  };
 
   render() {
     return (
@@ -56,34 +57,4 @@ const mapStateToProps = ({ edit: { parts } }) => ({
   parts,
 });
 
-const mapDispatchToProps = dispatch => ({
-  addEditEditorId(editorId) {
-    dispatch({
-      editorId,
-      type: 'ADD_EDIT_EDITOR_ID',
-    });
-  },
-
-  removeEditEditorId() {
-    dispatch({
-      type: 'REMOVE_EDIT_EDITOR_ID',
-    });
-  },
-
-  setEditEditor(editorId, editor) {
-    dispatch({
-      editor,
-      editorId,
-      type: 'SET_EDIT_EDITOR',
-    });
-  },
-
-  unsetEditEditor(editorId) {
-    dispatch({
-      editorId,
-      type: 'UNSET_EDIT_EDITOR',
-    });
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddRemove);
+export default connect(mapStateToProps)(AddRemove);

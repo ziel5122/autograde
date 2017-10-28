@@ -4,10 +4,12 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 
+import { handleLogin, handleResponse } from './utils';
 import {
+  clearState,
   setAdmin,
   setErrorText,
-  setLogin,
+  setLoggedIn,
   setUsername,
   setPassword,
 } from '../redux/actions/auth';
@@ -78,81 +80,43 @@ class Login extends PureComponent {
       default:
         break;
     }
-  }
-
-  handleLoginResponse = (loginResponse) => {
-    const { dispatch, parts, setUserPart } = this.props;
-
-    switch (loginResponse.status) {
-      case 200:
-        loginResponse.json()
-          .then(({ privilege, token, userParts }) => {
-            sessionStorage.setItem('jwt', token);
-            dispatch(setLoggedIn(true));
-            dispatch(setAdmin(privilege === 'admin'));
-            dispatch(clearState());
-            Object.keys(parts).forEach((partId) => {
-              const part = userParts.find(userPart => (
-                userPart.partId === partId
-              ));
-              if (part) {
-                dispatch(setUserPart(part.id, { attempts: part.attempts }));
-              } else {
-                dispatch(
-                  setUserPart(partId, { attempts: parts[partId].attempts })
-                );
-              }
-            });
-          })
-          .catch((err) => {
-            throw new Error(err);
-          });
-        break;
-      case 400:
-        dispatch(setErrorText('username or password incorrect'));
-        break;
-      case 500:
-        dispatch(setErrorText('server exploded'));
-        break;
-      default:
-        throw new Error('unexpected status code');
-    }
-  }
+  };
 
   login = () => {
-    const { dispatch } = this.props;
-
+    const { dispatch, parts, userParts } = this.props;
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
-
-    if (username && password) {
-      fetch('/login/authorize', {
-        body: JSON.stringify({ password, username }),
-        headers: { 'content-type': 'application/json' },
-        method: 'post',
-      })
-        .then(this.handleLoginResponse)
-        .catch((err) => {
-          console.log(err, err.stack);
-          dispatch(setErrorText('error connecting to server'));
+    handleLogin(username, password)
+      .then(({ privilege, token, userParts }) => {
+        sessionStorage.setItem('jwt', token);
+        dispatch(setLoggedIn(true));
+        dispatch(setAdmin(privilege === 'admin'));
+        dispatch(clearState());
+        Object.keys(parts).forEach((partId) => {
+          const part = userParts.find(userPart => (
+            userPart.partId === partId
+          ));
+          if (part) {
+            dispatch(setUserPart(part.id, { attempts: part.attempts }));
+          } else {
+            dispatch(
+              setUserPart(partId, { attempts: parts[partId].attempts })
+            );
+          }
         });
-    } else if (!username && !password) {
-      dispatch(setErrorText('username and password required'));
-    } else if (!username) {
-      dispatch(setErrorText('username required'));
-    } else {
-      dispatch(setErrorText('password required'));
-    }
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch(setErrorText(err));
+      });
   }
 
   onPasswordChange = ({ target: { value } }) => {
-    const { dispatch } = this.props;
-    dispatch(setPassword(value));
+    this.props.dispatch(setPassword(value));
   }
 
   onUsernameChange = ({ target: { value } }) => {
-    const { dispatch } = this.props;
-    dispatch(setUsername(value));
+    this.props.dispatch(setUsername(value));
   }
 
   render() {

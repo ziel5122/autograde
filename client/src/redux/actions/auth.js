@@ -1,10 +1,15 @@
 import {
+  CLEAR_STATE,
   SET_ADMIN,
   SET_ERROR_TEXT,
   SET_LOGGED_IN,
   SET_USERNAME,
   SET_PASSWORD,
-} from '../action-types/auth';
+} from '../types/auth';
+
+const clearState = () => ({
+  type: CLEAR_STATE,
+});
 
 const setAdmin = (admin) => ({
   admin,
@@ -31,4 +36,11 @@ const setUsername = (username) => ({
   type: SET_USERNAME,
 });
 
-export { setAdmin, setErrorText, setLoggedIn, setUsername, setPassword };
+export {
+  clearState,
+  setAdmin,
+  setErrorText,
+  setLoggedIn,
+  setUsername,
+  setPassword,
+ };

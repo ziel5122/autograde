@@ -1,8 +1,11 @@
+export const ADD_EDITOR_ID = 'ADD_EDITOR_ID';
 export const ADD_PART_ID = 'ADD_PART_ID';
 export const CLEAR_ASSIGNMENT = 'CLEAR_ASSIGNMENT';
+export const REMOVE_EDITOR_ID = 'REMOVE_EDITOR_ID';
 export const REMOVE_PART_ID = 'REMOVE_PART_ID';
 export const SET_ASSIGNMENT = 'SET_ASSIGNMENT';
+export const SET_EDITOR = 'SET_EDITOR';
 export const SET_DUE_DATE = 'SET_DUE_DATE';
 export const SET_NAME = 'SET_ASSIGNMENT_NAME';
-export const SET_OPEN_TAB = 'SET_OPEN_TAB';
-export const TOGGLE_VISIBLE = 'TOGGLE_VISIBLE';
+export const SET_VISIBLE = 'SET_VISIBLE';
+export const UNSET_EDITOR = 'UNSET_EDITOR';

@@ -1,16 +1,16 @@
 import {
-  ADD_PARTID,
+  ADD_PART_ID,
   CLEAR_ASSIGNMENT,
   REMOVE_PART_ID,
   SET_ASSIGNMENT,
   SET_DUE_DATE,
   SET_NAME,
   SET_VISIBLE,
-} from '../../action-types/assignments';
+} from '../../types/edit-assignment';
 
 const assignment = (state = {}, action) => {
   switch (action.type) {
-    case ADD_PARTID:
+    case ADD_PART_ID:
       return {
         ...state,
         partIds: [...state.partIds, action.partId],

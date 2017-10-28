@@ -4,7 +4,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 
-import { CLEAR_ASSIGNMENT } from '../../redux/action-types/assignments';
+import { clearAssignment } from '../../redux/actions/edit-assignment';
 import ConfigUpload from './ConfigUpload';
 
 const style = {
@@ -18,9 +18,9 @@ const theadStyle = {
 };
 
 class List extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.props.clearEditAssignment();
+  constructor() {
+    super();
+    this.props.dispatch(clearAssignment());
   }
 
   render() {
@@ -72,12 +72,4 @@ const mapStateToProps = ({ data: { assignmentIds, assignments } }) => ({
   assignments,
 });
 
-const mapDispatchToProps = dispatch => ({
-  clearEditAssignment() {
-    dispatch({
-      type: CLEAR_ASSIGNMENT,
-    });
-  },
-});
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(List));
+export default withRouter(connect(mapStateToProps)(List));

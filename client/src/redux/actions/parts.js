@@ -1,4 +1,4 @@
-import { SET_ATTEMPTS } from '../action-types/parts';
+import { SET_ATTEMPTS } from '../types/parts';
 
 const setAttempts = (partId, attempts) => ({
   attempts,

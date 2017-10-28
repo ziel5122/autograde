@@ -1,7 +1,7 @@
 import {
   SET_OPEN_TAB,
   TOGGLE_VISIBLE,
-} from '../../action-types/assignments';
+} from '../../types/assignments';
 
 const assignment = (state, action) => {
   switch (action.type) {

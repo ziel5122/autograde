@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 
 import { setOpenTab } from '../redux/actions/assignments';
-import { SET_OPEN_TAB } from '../redux/action-types/assignments';
 
 class Tab extends PureComponent {
   constructor() {

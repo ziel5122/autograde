@@ -6,7 +6,7 @@ import {
   SET_PART,
   SET_PARTS,
   UNSET_PART,
-} from '../../action-types/parts';
+} from '../../types/parts';
 
 const part = (state, action) => {
   switch (action.type) {

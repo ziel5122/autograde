@@ -4,7 +4,7 @@ import {
   SET_FILENAME,
   SET_TITLE,
   UNSET_EDITOR,
-} from '../../action-types/editors';
+} from '../../types/editors';
 
 const editor = (state, action) => {
   switch (action.type) {

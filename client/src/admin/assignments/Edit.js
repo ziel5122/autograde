@@ -9,7 +9,7 @@ import { Link, Route, withRouter } from 'react-router-dom';
 import {
   CLEAR_ASSIGNMENT,
   SET_ASSIGNMENT,
-} from '../../redux/action-types/assignments';
+} from '../../redux/types/assignments';
 import AssignmentDetails from './Details';
 import EditEditors from './editors/Edit';
 import EditParts from './parts/Edit';

@@ -1,4 +1,4 @@
-import { SET_OPEN_TAB } from '../action-types/assignments';
+import { SET_OPEN_TAB } from '../types/assignments';
 
 const setOpenTab = (assignmentId, partId) => ({
   assignmentId,

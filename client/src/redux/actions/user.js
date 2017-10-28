@@ -1,4 +1,4 @@
-import { SET_PART } from '../action-types/user';
+import { SET_PART } from '../types/user';
 
 const setUserPart = (partId, part) => ({
   part,
