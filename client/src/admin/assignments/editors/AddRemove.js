@@ -53,7 +53,7 @@ class AddRemove extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ edit: { parts } }) => ({
+const mapStateToProps = ({ editAssignment: { parts } }) => ({
   parts,
 });
 

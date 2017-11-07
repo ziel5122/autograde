@@ -10,6 +10,7 @@ import {
   CLEAR_ASSIGNMENT,
   SET_ASSIGNMENT,
 } from '../../redux/types/assignments';
+import { setAssignment, setParts } from '../../redux/actions/edit-assignment';
 import AssignmentDetails from './Details';
 import EditEditors from './editors/Edit';
 import EditParts from './parts/Edit';
@@ -48,8 +49,8 @@ const rightChildStyle = {
 class EditAssignment extends PureComponent {
   constructor(props) {
     super(props);
-    const { assignmentId } = this.props.match.params;
-    const { assignment } = this.props;
+    const { assignment, dispatch, match } = this.props;
+    const { assignmentId } = match.params;
     if (assignmentId !== assignment.assignmentId) {
       const { assignments, parts, setEditAssignment, setEditParts } = this.props;
       const { partIds } = assignments[assignmentId];
@@ -57,10 +58,9 @@ class EditAssignment extends PureComponent {
         newParts[partId] = parts[partId];
         return newParts;
       }, {});
-      setEditAssignment(assignments[assignmentId], assignmentId);
-      setEditParts(editParts);
+      dispatch(setAssignment(assignmentId, assignments[assignmentId]));
+      dispatch(setParts(editParts));
     }
-    this.updateDueDate = this.updateDueDate.bind(this);
     this.updateName = this.updateName.bind(this);
     this.updateVisible = this.updateVisible.bind(this);
   }
@@ -69,20 +69,21 @@ class EditAssignment extends PureComponent {
     this.props.clearEditAssignment();
   }
 
-  updateDueDate({ target: { value } }) {
+  updateDueDate = ({ target: { value } }) => {
     this.props.setEditDueDate(value);
-  }
+  };
 
-  updateName({ target: { value } }) {
-    this.props.setEditName(value);
-  }
+  updateName = ({ target: { value } }) => {
+    this.pros.setEditName(value);
+  };
 
-  updateVisible({ target: { value } }) {
+  updateVisible = ({ target: { value } }) => {
     this.props.setEditVisible(value);
-  }
+  };
 
   render() {
     const { assignment, match: { params: { assignmentId }, url } } = this.props;
+    console.log(assignment);
     const { dueDate, name, visible } = assignment;
 
     return (
@@ -111,7 +112,7 @@ class EditAssignment extends PureComponent {
 
 const mapStateToProps = ({
   data: { assignments, parts },
-  edit: { assignment },
+  editAssignment: { assignment },
 }) => ({
   assignment,
   assignments,
@@ -122,14 +123,6 @@ const mapDispatchToProps = dispatch => ({
   clearEditAssignment() {
     dispatch({
       type: 'CLEAR_EDIT_ASSIGNMENT',
-    });
-  },
-
-  setEditAssignment(assignment, assignmentId) {
-    dispatch({
-      assignment,
-      assignmentId,
-      type: 'SET_EDIT_ASSIGNMENT',
     });
   },
 
@@ -147,13 +140,6 @@ const mapDispatchToProps = dispatch => ({
     })
   },
 
-  setEditParts(parts) {
-    dispatch({
-      parts,
-      type: 'SET_EDIT_PARTS',
-    });
-  },
-
   setEditVisible(visible) {
     dispatch({
       visible,
@@ -162,6 +148,4 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(EditAssignment)
-);
+export default withRouter(connect(mapStateToProps)(EditAssignment));

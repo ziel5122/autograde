@@ -6,6 +6,12 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { v4 } from 'uuid';
 
+import {
+  addPartId,
+  removePartId,
+  setPart,
+  unsetPart
+} from '../../../redux/actions/edit-assignment';
 import PartDetails from './Details';
 
 const buttonStyle = {
@@ -27,33 +33,28 @@ const tableStyle = {
 };
 
 class EditParts extends PureComponent {
-  constructor() {
-    super()
-    this.addPart = this.addPart.bind(this);
-    this.removePart = this.removePart.bind(this);
-  }
-
-  addPart() {
+  addPart = () => {
     const partId = v4();
-    const { addEditPartId, setEditPart } = this.props;
-    addEditPartId(partId);
+    const { dispatch } = this.props;
+    dispatch(addPartId(partId));
     const part = {
       filename: '<filename>',
       attempts: 5,
       editorIds: [],
     };
-    setEditPart(partId, part);
-  }
+    dispatch(setPart(partId, part));
+  };
 
-  removePart() {
-    const { partIds, removeEditPartId, unsetEditPart } = this.props;
+  removePart = () => {
+    const { dispatch, partIds } = this.props;
     const partId = partIds[partIds.length - 1];
-    unsetEditPart(partId);
-    removeEditPartId();
-  }
+    dispatch(unsetPart(partId));
+    dispatch(removePartId());
+  };
 
   render() {
     const { match: { url }, partIds, parts } = this.props;
+    console.log(partIds);
 
     return (
       <div style={style}>
@@ -80,41 +81,9 @@ class EditParts extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ edit: { assignment: { partIds }, parts } }) => ({
-  partIds,
-  parts,
-});
+const mapStateToProps = ({ editAssignment: { assignment, parts } }) => {
+  const { partIds } = assignment;
+  return { partIds, parts };
+};
 
-const mapDispatchToProps = dispatch => ({
-  addEditPartId(partId) {
-    dispatch({
-      partId,
-      type: 'ADD_EDIT_PART_ID',
-    });
-  },
-
-  removeEditPartId() {
-    dispatch({
-      type: 'REMOVE_EDIT_PART_ID',
-    });
-  },
-
-  setEditPart(partId, part) {
-    dispatch({
-      part,
-      partId,
-      type: 'SET_EDIT_PART',
-    });
-  },
-
-  unsetEditPart(partId) {
-    dispatch({
-      partId,
-      type: 'UNSET_EDIT_PART',
-    });
-  },
-});
-
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(EditParts)
-);
+export default withRouter(connect(mapStateToProps)(EditParts));

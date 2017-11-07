@@ -18,8 +18,8 @@ const theadStyle = {
 };
 
 class List extends PureComponent {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.props.dispatch(clearAssignment());
   }
 

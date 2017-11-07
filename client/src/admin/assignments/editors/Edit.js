@@ -48,7 +48,7 @@ const Editors = ({ editors, match: { params: { partId } }, parts }) => {
   );
 };
 
-const mapStateToProps = ({ edit: { parts }, editors }) => ({
+const mapStateToProps = ({ data: { editors }, editAssignment: { parts } }) => ({
   editors,
   parts,
 });
