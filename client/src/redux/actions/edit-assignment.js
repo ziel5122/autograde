@@ -12,8 +12,9 @@ import {
   UNSET_PART,
 } from '../types/edit-assignment';
 
-const addEditorId = (editorId) => ({
+const addEditorId = (partId, editorId) => ({
   editorId,
+  partId,
   type: ADD_EDITOR_ID,
 });
 

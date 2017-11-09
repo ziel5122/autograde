@@ -26,8 +26,8 @@ class AddRemove extends PureComponent {
       title: false,
       type: '',
     };
-    const { dispatch } = this.props;
-    dispatch(addEditorId(editorId));
+    const { dispatch, partId } = this.props;
+    dispatch(addEditorId(partId, editorId));
     dispatch(setEditor(editorId, editor));
   };
 
@@ -44,8 +44,8 @@ class AddRemove extends PureComponent {
       <tfoot>
         <tr>
           <td>
-            <Add onClick={this.onAddEditor} style={buttonStyle} />
             <Remove onClick={this.onRemoveEditor} style={buttonStyle} />
+            <Add onClick={this.onAddEditor} style={buttonStyle} />
           </td>
         </tr>
       </tfoot>

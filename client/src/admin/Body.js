@@ -18,7 +18,7 @@ const HomeBody = ({ match }) => {
   const { url } = match;
 
   if (match.isExact) {
-    //return <Redirect to={`${url}/assignments`} />;
+    return <Redirect to={`${url}/assignments`} />;
   }
 
   return (

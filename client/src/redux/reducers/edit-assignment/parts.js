@@ -11,6 +11,7 @@ import {
 const part = (state, action) => {
   switch (action.type) {
     case ADD_EDITOR_ID:
+      console.log(state);
       return {
         ...state,
         editorIds: [...state.editorIds, action.editorId],

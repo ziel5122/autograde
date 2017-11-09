@@ -54,7 +54,6 @@ class EditParts extends PureComponent {
 
   render() {
     const { match: { url }, partIds, parts } = this.props;
-    console.log(partIds);
 
     return (
       <div style={style}>

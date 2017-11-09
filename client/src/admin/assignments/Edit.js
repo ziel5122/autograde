@@ -49,17 +49,33 @@ const rightChildStyle = {
 class EditAssignment extends PureComponent {
   constructor(props) {
     super(props);
-    const { assignment, dispatch, match } = this.props;
+    const { assignment, match } = props;
     const { assignmentId } = match.params;
     if (assignmentId !== assignment.assignmentId) {
-      const { assignments, parts, setEditAssignment, setEditParts } = this.props;
-      const { partIds } = assignments[assignmentId];
+      const { assignments, dispatch, editors, parts } = props;
+      const editAssignment = assignments[assignmentId];
+      const { partIds } = editAssignment;
       const editParts = partIds.reduce((newParts, partId) => {
         newParts[partId] = parts[partId];
         return newParts;
       }, {});
-      dispatch(setAssignment(assignmentId, assignments[assignmentId]));
+      const editEditors = Object.keys(editParts).reduce((editEditors, editPartId) => {
+        const editPart = editParts[editPartId];
+        const editPartTemp = editPart.editorIds.reduce((moreEditors, editorId) => {
+          moreEditors[editorId] = editors[editorId];
+          return moreEditors;
+        }, {});
+        return {
+          ...editEditors,
+          ...editPartTemp,
+        };
+      });
+      console.log(editAssignment);
+      console.log(editParts);
+      console.log(editEditors);
+      dispatch(setAssignment(assignmentId, editAssignment));
       dispatch(setParts(editParts));
+      dispatch(setEditors(editEditors));
     }
     this.updateName = this.updateName.bind(this);
     this.updateVisible = this.updateVisible.bind(this);
@@ -83,8 +99,9 @@ class EditAssignment extends PureComponent {
 
   render() {
     const { assignment, match: { params: { assignmentId }, url } } = this.props;
-    console.log(assignment);
     const { dueDate, name, visible } = assignment;
+
+    console.log(this.props);
 
     return (
       <div style={style}>
@@ -111,11 +128,12 @@ class EditAssignment extends PureComponent {
 }
 
 const mapStateToProps = ({
-  data: { assignments, parts },
+  data: { assignments, editors, parts },
   editAssignment: { assignment },
 }) => ({
   assignment,
   assignments,
+  editors,
   parts,
 });
 
