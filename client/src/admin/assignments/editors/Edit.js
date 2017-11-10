@@ -17,8 +17,8 @@ const style = {
 
 const Editors = ({ editors, match: { params: { partId } }, parts }) => {
   const { editorIds } = parts[partId];
-  console.log(editors);
-  console.log(editorIds);
+  console.log('editors', editors);
+  console.log('editors', editorIds);
 
   return (
     <div style={style}>
@@ -48,7 +48,7 @@ const Editors = ({ editors, match: { params: { partId } }, parts }) => {
   );
 };
 
-const mapStateToProps = ({ data: { editors }, editAssignment: { parts } }) => ({
+const mapStateToProps = ({ editAssignment: { editors, parts } }) => ({
   editors,
   parts,
 });

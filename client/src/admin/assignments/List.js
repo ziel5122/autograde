@@ -4,7 +4,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 
-import { clearAssignment } from '../../redux/actions/edit-assignment';
+import { clearAssignment } from '../../redux/actions/edit-assignment/assignment';
 import ConfigUpload from './ConfigUpload';
 
 const style = {

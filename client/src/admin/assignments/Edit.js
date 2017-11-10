@@ -6,11 +6,9 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Link, Route, withRouter } from 'react-router-dom';
 
-import {
-  CLEAR_ASSIGNMENT,
-  SET_ASSIGNMENT,
-} from '../../redux/types/assignments';
-import { setAssignment, setParts } from '../../redux/actions/edit-assignment';
+import { clearAssignment, setAssignment } from '../../redux/actions/edit-assignment/assignment';
+import { setEditors } from '../../redux/actions/edit-assignment/editors';
+import { setParts } from '../../redux/actions/edit-assignment/parts';
 import AssignmentDetails from './Details';
 import EditEditors from './editors/Edit';
 import EditParts from './parts/Edit';
@@ -69,20 +67,15 @@ class EditAssignment extends PureComponent {
           ...editEditors,
           ...editPartTemp,
         };
-      });
-      console.log(editAssignment);
-      console.log(editParts);
-      console.log(editEditors);
+      }, {});
       dispatch(setAssignment(assignmentId, editAssignment));
       dispatch(setParts(editParts));
       dispatch(setEditors(editEditors));
     }
-    this.updateName = this.updateName.bind(this);
-    this.updateVisible = this.updateVisible.bind(this);
   }
 
   componentWillUnmount() {
-    this.props.clearEditAssignment();
+    this.props.dispatch(clearAssignment());
   }
 
   updateDueDate = ({ target: { value } }) => {

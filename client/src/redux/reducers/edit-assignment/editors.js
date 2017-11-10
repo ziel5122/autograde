@@ -1,10 +1,11 @@
 import {
   SET_EDITOR,
+  SET_EDITORS,
   SET_FILE_TYPE,
   SET_FILENAME,
   SET_TITLE,
   UNSET_EDITOR,
-} from '../../types/editors';
+} from '../../types/edit-assignment';
 
 const editor = (state, action) => {
   switch (action.type) {
@@ -37,6 +38,8 @@ const editors = (state = {}, action) => {
         [editorId]: editor,
       };
     }
+    case SET_EDITORS:
+      return action.editors;
     case SET_FILE_TYPE: {
       const { editorId } = action;
       return {

@@ -31,6 +31,7 @@ class Form extends PureComponent {
   }
 
   render() {
+    console.log('editor', this.props.editor);
     const { editor: { filename, title, type }, id} = this.props;
 
     return (

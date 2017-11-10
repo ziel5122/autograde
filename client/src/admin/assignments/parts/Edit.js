@@ -6,12 +6,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { v4 } from 'uuid';
 
-import {
-  addPartId,
-  removePartId,
-  setPart,
-  unsetPart
-} from '../../../redux/actions/edit-assignment';
+import { addParrtId, removePartId } from '../../../redux/actions/edit-assignment/assignment';
+import { setPart, unsetPart } from '../../../redux/actions/edit-assignment/parts';
 import PartDetails from './Details';
 
 const buttonStyle = {

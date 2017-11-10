@@ -4,12 +4,8 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { v4 } from 'uuid';
 
-import {
-  addEditorId,
-  removeEditorId,
-  setEditor,
-  unsetEditor,
-} from '../../../redux/actions/edit-assignment';
+import { setEditor, unsetEditor } from '../../../redux/actions/edit-assignment/editors';
+import { addEditorId, removeEditorId } from '../../../redux/actions/edit-assignment/parts';
 
 const buttonStyle = {
   /* eslint-disable no-dupe-keys */
@@ -35,7 +31,7 @@ class AddRemove extends PureComponent {
     const { dispatch, partId, parts } = this.props;
     const { editorIds } = parts[partId];
     const editorId = editorIds[editorIds.length - 1];
-    dispatch(removeEditorId());
+    dispatch(removeEditorId(partId));
     dispatch(unsetEditor(editorId));
   };
 
