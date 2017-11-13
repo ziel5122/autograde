@@ -8,7 +8,9 @@
     "build:server": "webpack --config config/webpack.server.js",
     "lint": "eslint client/src",
     "start": "node scripts/start",
-    "test": "jest"
+    "test": "jest",
+    "test:cov": "jest --coverage",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "aws-sdk": "^2.124.0",

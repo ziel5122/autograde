@@ -1,31 +1,8 @@
 import { createStore } from 'redux';
 
 import { addPartId, clearAssignment, removePartId } from '../../actions/edit-assignment/assignment';
+import emptyState from '../../utils/emptyState';
 import reducers from '..';
-
-const emptyState = {
-  auth: {
-    admin: false,
-    errorText: '',
-    loggedIn: false,
-    password: '',
-    username: '',
-  },
-  data: {
-    assignmentIds: [],
-    assignments: {},
-    editors: {},
-    parts: {},
-  },
-  editAssignment: {
-    assignment: {},
-    editors: {},
-    parts: {},
-  },
-  user: {
-    parts: {},
-  },
-};
 
 describe('tests for the editAssignment->assignment reducer', () => {
   it('should add a part id to the end of the partIds array', () => {

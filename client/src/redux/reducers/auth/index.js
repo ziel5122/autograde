@@ -9,7 +9,7 @@ import {
   SET_PASSWORD,
 } from '../../types/auth';
 
-const admin = (state = false, action) => {
+export const admin = (state = false, action) => {
   switch (action.type) {
     case SET_ADMIN:
       return action.admin;
@@ -18,16 +18,7 @@ const admin = (state = false, action) => {
   }
 };
 
-const loggedIn = (state = false, action) => {
-  switch (action.type) {
-    case SET_LOGGED_IN:
-      return action.loggedIn
-    default:
-      return state;
-  }
-};
-
-const errorText = (state = '', action) => {
+export const errorText = (state = '', action) => {
   switch (action.type) {
     case CLEAR_STATE:
       return '';
@@ -38,7 +29,16 @@ const errorText = (state = '', action) => {
   }
 };
 
-const password = (state = '', action) => {
+export const loggedIn = (state = false, action) => {
+  switch (action.type) {
+    case SET_LOGGED_IN:
+      return action.loggedIn
+    default:
+      return state;
+  }
+};
+
+export const password = (state = '', action) => {
   switch (action.type) {
     case CLEAR_STATE:
       return '';
@@ -49,7 +49,7 @@ const password = (state = '', action) => {
   }
 };
 
-const username = (state = '', action) => {
+export const username = (state = '', action) => {
   switch (action.type) {
     case CLEAR_STATE:
       return '';

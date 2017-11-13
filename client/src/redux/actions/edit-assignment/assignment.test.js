@@ -1,113 +1,86 @@
-import {
-  addPartId,
-  clearAssignment,
-  removePartId,
-  setAssignment,
-  setDueDate,
-  setName,
-  setVisible,
-} from './assignment.js';
-import {
-  ADD_PART_ID,
-  CLEAR_ASSIGNMENT,
-  REMOVE_PART_ID,
-  SET_ASSIGNMENT,
-  SET_DUE_DATE,
-  SET_NAME,
-  SET_VISIBLE,
-} from '../../types/edit-assignment';
+import * as actions from './assignment.js';
+import * as types from '../../types/edit-assignment';
 
-describe('action to add a part id to assignment being edited', () => {
-  it('should return an object with the partId and type to add a partId', () => {
+describe('editAssignment->assignment actions', () => {
+  it('should create an action to add a partId', () => {
     const partId = '0123456789';
-    const type = ADD_PART_ID;
+    const expectedAction = {
+      partId,
+      type: types.ADD_PART_ID,
+    };
 
-    const action = addPartId(partId);
+    const action = actions.addPartId(partId);
 
-    expect(action.partId).toBe(partId);
-    expect(action.type).toBe(type);
+    expect(action).toEqual(expectedAction);
   });
-});
 
-describe('action to clear assignment being edited', () => {
-  it('should return an object with the type to clear assignment', () => {
-    const type = CLEAR_ASSIGNMENT;
+  it('should create an action to clear the assignment', () => {
+    const expectedAction = { type: types.CLEAR_ASSIGNMENT };
 
-    const action = clearAssignment();
+    const action = actions.clearAssignment();
 
-    expect(action.type).toBe(type);
+    expect(action).toEqual(expectedAction);
   });
-});
 
-describe('action to remove a part id from assignment being edited', () => {
-  it('should return an object with the type to remove a partI id', () => {
-    const type = REMOVE_PART_ID;
+  it('should create an action to remove a partId', () => {
+    const expectedAction = { type: types.REMOVE_PART_ID };
 
-    const action = removePartId();
+    const action = actions.removePartId();
 
-    expect(action.type).toBe(type);
+    expect(action).toEqual(expectedAction);
   });
-});
 
-describe('action to set the assignment to edit', () => {
-  it(
-    'should return an object with the assignment, assignment id, and type to set assignment',
-     () => {
-       const assignment = {
-         name: 'assignment 1',
-         dueDate: '2017-08-08',
-         visible: true,
-       };
-       const assignmentId = '0123456789';
-       const type = SET_ASSIGNMENT;
+  it('should create an action to set the assignment', () => {
+     const assignment = {
+       name: 'assignment 1',
+       dueDate: '2017-08-08',
+       visible: true,
+     };
+     const assignmentId = '0123456789';
+     const expectedAction = {
+       assignment,
+       assignmentId,
+       type: types.SET_ASSIGNMENT,
+     };
 
-       const action = setAssignment(assignmentId, assignment);
+     const action = actions.setAssignment(assignmentId, assignment);
 
-       expect(action.assignment).toEqual(assignment);
-       expect(action.assignmentId).toEqual(assignmentId);
-       expect(action.type).toBe(SET_ASSIGNMENT);
-     },
-  );
-});
+     expect(action).toEqual(expectedAction);
+   });
 
-describe('action to set due date of assignment being edited', () => {
-  it(
-    'should return an object with the due date, and type to set due date',
-    () => {
-      const dueDate = '2017-08-08';
-      const type = SET_DUE_DATE;
+  it('should create an action to set the dueDate', () => {
+    const dueDate = '2017-08-08';
+    const expectedAction = {
+      dueDate,
+      type: types.SET_DUE_DATE,
+    };
 
-      const action = setDueDate(dueDate);
+    const action = actions.setDueDate(dueDate);
 
-      expect(action.dueDate).toBe(dueDate);
-      expect(action.type).toBe(type);
-    },
-  );
-});
+    expect(action).toEqual(expectedAction);
+  });
 
-describe('action to set due name of assignment being edited', () => {
-  it('should return an object with the name, and type to set name', () => {
+  it('should create an action to set the name', () => {
       const name = 'assignment 1';
-      const type = SET_NAME;
+      const expectedAction = {
+        name,
+        type: types.SET_NAME,
+      };
 
-      const action = setName(name);
+      const action = actions.setName(name);
 
-      expect(action.name).toBe(name);
-      expect(action.type).toBe(type);
+      expect(action).toEqual(expectedAction);
   });
-});
 
-describe('action to set visibility of assignment being edited', () => {
-  it(
-    'should return an object with the visibility, and type to set visibility',
-    () => {
-        const visible = true;
-        const type = SET_VISIBLE;
+  it('should create an action to set the visibility', () => {
+      const visible = true;
+      const expectedAction = {
+        visible,
+        type: types.SET_VISIBLE,
+      };
 
-        const action = setVisible(visible);
+      const action = actions.setVisible(visible);
 
-        expect(action.visible).toBe(visible);
-        expect(action.type).toBe(type);
-    },
-  );
+      expect(action).toEqual(expectedAction);
+  });
 });
