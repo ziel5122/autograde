@@ -1,26 +1,7 @@
-import {
-  SET_OPEN_TAB,
-  TOGGLE_VISIBLE,
-} from '../../types/assignments';
+import assignment from './assignment';
+import { SET_OPEN_TAB, TOGGLE_VISIBLE } from '../../types/data';
 
-const assignment = (state, action) => {
-  switch (action.type) {
-    case SET_OPEN_TAB:
-      return {
-        ...state,
-        openTab: action.partId,
-      };
-    case TOGGLE_VISIBLE:
-      return {
-        ...state,
-        visible: !state.visible,
-      }
-    default:
-      return state;
-  }
-};
-
-const assignments = (state = {}, action) => {
+export default (state = {}, action) => {
   switch (action.type) {
     case SET_OPEN_TAB: {
       const { assignmentId } = action;
@@ -40,5 +21,3 @@ const assignments = (state = {}, action) => {
       return state;
   }
 };
-
-export default assignments;

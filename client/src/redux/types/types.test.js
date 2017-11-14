@@ -1,13 +1,13 @@
-import * as assignments from './assignments';
 import * as auth from './auth';
+import * as data from './data';
 import * as editAssignment from './edit-assignment';
 import * as editors from './editors';
 import * as part from './parts';
 import * as user from './user';
 
 const types = {
-  assignments,
   auth,
+  data,
   editAssignment,
   editors,
   part,
