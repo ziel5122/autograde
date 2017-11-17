@@ -1,5 +1,5 @@
 import reducer from './admin';
-import { setAdmin } from '../../actions/auth';
+import { SET_ADMIN } from '../../types/auth';
 
 describe('auth->admin reducer', () => {
   it('should return the initial state', () => {
@@ -15,7 +15,10 @@ describe('auth->admin reducer', () => {
   it('should handle SET_ADMIN', () => {
     const initialState = false;
     const admin = true;
-    const action = setAdmin(admin);
+    const action = {
+      admin,
+      type: SET_ADMIN,
+    };
     const expectedState = true;
 
     const state = reducer(initialState, action);

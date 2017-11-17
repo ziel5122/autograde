@@ -1,5 +1,5 @@
 import reducer from './error-text';
-import { clearState, setErrorText } from '../../actions/auth';
+import { CLEAR_STATE, SET_ERROR_TEXT } from '../../types/auth';
 
 describe('auth->errorText reducer', () => {
   it('should return the initial state', () => {
@@ -14,7 +14,7 @@ describe('auth->errorText reducer', () => {
 
   it('shoulc handle CLEAR_STATE', () => {
     const initialState = 'there was an error';
-    const action = clearState();
+    const action = { type: CLEAR_STATE };
     const expectedState = '';
 
     const state = reducer(initialState, action);
@@ -25,7 +25,10 @@ describe('auth->errorText reducer', () => {
   it('should handle SET_ERROR_TEXT', () => {
     const initialState = '';
     const errorText = 'there was an error';
-    const action = setErrorText(errorText);
+    const action = {
+      errorText,
+      type: SET_ERROR_TEXT,
+    };
     const expectedState = errorText;
 
     const state = reducer(initialState, action);
