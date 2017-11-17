@@ -1,82 +1,180 @@
-import { createStore } from 'redux';
+import reducer from './assignment';
+import * as actions from '../../actions/edit-assignment/assignment';
 
-import { addPartId, clearAssignment, removePartId } from '../../actions/edit-assignment/assignment';
-import emptyState from '../../utils/emptyState';
-import reducers from '..';
+describe('editAssignment->assignment reducer', () => {
+  it('should return the initial state', () => {
+    const initialState = undefined;
+    const action = {};
+    const expectedState = {};
 
-describe('tests for the editAssignment->assignment reducer', () => {
-  it('should add a part id to the end of the partIds array', () => {
+    const state = reducer(initialState, action);
+
+    expect(state).toEqual(expectedState);
+  });
+
+  it('should handle ADD_PART_ID', () => {
     const initialState = {
-      editAssignment: {
-        assignment: {
-          partIds: ['1234567890'],
-        },
-      },
+      assignmentId: '1111111111',
+      name: 'assignment 1',
+      classCode: 'class 1',
+      dueDate: '2017-08-08',
+      visible: true,
+      partIds: [
+        '1234567890',
+      ],
     };
-    const store = createStore(reducers, initialState);
     const partId = '0987654321';
-    const finalState = {
-      ...emptyState,
-      editAssignment: {
-        ...emptyState.editAssignment,
-        assignment: {
-          partIds: [
-            '1234567890',
-            '0987654321',
-          ],
-        },
-      },
+    const action = actions.addPartId(partId);
+    const expectedState = {
+      ...initialState,
+      partIds: [
+        ...initialState.partIds,
+        partId,
+      ],
     };
 
-    store.dispatch(addPartId(partId));
-    const state = store.getState();
+    const state = reducer(initialState, action);
 
-    expect(state).toEqual(finalState);
+    expect(state).toEqual(expectedState);
   });
 
-  it('should set the assignment state to an empty object', () => {
+  it('should handle CLEAR_ASSIGNMENT', () => {
     const initialState = {
-      editAssignment: {
-        assignment: {
-          dueDate: '2017-08-08',
-          name: 'assignment 1',
-          partIds: ['1234567890'],
-          visible: true,
-        },
-      },
+      assignmentId: '1111111111',
+      name: 'assignment 1',
+      classCode: 'class 1',
+      dueDate: '2017-08-08',
+      visible: true,
+      partIds: [
+        '1234567890',
+      ],
     };
-    const store = createStore(reducers, initialState);
+    const action = actions.clearAssignment();
+    const expectedState = {};
 
-    store.dispatch(clearAssignment());
-    const state = store.getState();
+    const state = reducer(initialState, action);
 
-    expect(state).toEqual(emptyState);
+    expect(state).toEqual(expectedState);
   });
 
-  it('should remove a part id from the end of the partIds array', () => {
+  it('should handle REMOVE_PART_ID', () => {
     const initialState = {
-      editAssignment: {
-        assignment: {
-          partIds: ['1234567890', '0987654321'],
-        },
-      },
+      asssignmentId: '1111111111',
+      name: 'assignment 1',
+      classCode: 'class 1',
+      dueDate: '2017-08-08',
+      visible: true,
+      partIds: [
+        '1234567890',
+        '0987654321',
+      ],
     };
-    const store = createStore(reducers, initialState);
-    const finalState = {
-      ...emptyState,
-      editAssignment: {
-        ...emptyState.editAssignment,
-        assignment: {
-          partIds: [
-            '1234567890',
-          ],
-        },
-      },
+    const action = actions.removePartId();
+    const expectedState = {
+      asssignmentId: '1111111111',
+      name: 'assignment 1',
+      classCode: 'class 1',
+      dueDate: '2017-08-08',
+      visible: true,
+      partIds: [
+        '1234567890',
+      ],
+    }
+
+    const state = reducer(initialState, action);
+
+    expect(state).toEqual(expectedState);
+  });
+
+  it('should handle SET_ASSIGNMENT', () => {
+    const initialState = {};
+    const assignment = {
+      name: 'assignment 1',
+      classCode: 'class 1',
+      dueDate: '2017-08-08',
+      visible: true,
+      partIds: [
+        '1234567890',
+      ],
+    };
+    const assignmentId = '1111111111';
+    const action = actions.setAssignment(assignmentId, assignment);
+    const expectedState = {
+      ...assignment,
+      assignmentId,
     };
 
-    store.dispatch(removePartId());
-    const state = store.getState();
+    const state = reducer(initialState, action);
 
-    expect(state).toEqual(finalState);
+    expect(state).toEqual(expectedState);
+  });
+
+  it('should handle SET_DUE_DATE', () => {
+    const initialState = {
+      assignmentId: '1111111111',
+      name: 'assignment 1',
+      classCode: 'class 1',
+      dueDate: '2017-08-08',
+      visible: true,
+      partIds: [
+        '1234567890',
+      ],
+    };
+    const dueDate = '1992-08-08';
+    const action = actions.setDueDate(dueDate);
+    const expectedState = {
+      ...initialState,
+      dueDate,
+    };
+
+    const state = reducer(initialState, action);
+
+    expect(state).toEqual(expectedState);
+  });
+
+  it('should handle SET_NAME', () => {
+    const initialState = {
+      assignmentId: '1111111111',
+      name: 'assignment 1',
+      classCode: 'class 1',
+      dueDate: '2017-08-08',
+      visible: true,
+      partIds: [
+        '1234567890',
+      ],
+    };
+    const name = 'assignment 2';
+    const action = actions.setName(name);
+    const expectedState = {
+      ...initialState,
+      name,
+    };
+
+    const state = reducer(initialState, action);
+
+    expect(state).toEqual(expectedState);
+  });
+
+  it('should handle SET_VISIBLE', () => {
+    const initialState = {
+      assignmentId: '1111111111',
+      name: 'assignment 1',
+      classCode: 'class 1',
+      dueDate: '2017-08-08',
+      visible: true,
+      partIds: [
+        '1234567890',
+      ],
+    };
+    const visible = false;
+    const action = actions.setVisible(visible);
+    const expectedState = {
+      ...initialState,
+      visible,
+    };
+
+    const state = reducer(initialState, action);
+
+    expect(state).toEqual(expectedState);
   });
 });

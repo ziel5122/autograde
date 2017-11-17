@@ -2,6 +2,15 @@ import reducer from './editor';
 import { setCode } from '../../actions/data';
 
 describe('data->editor reducer', () => {
+  it('should return the initial state', () => {
+    const initialState = undefined;
+    const action = {};
+
+    const state = reducer(initialState, action);
+
+    expect(state).toBeUndefined();
+  });
+
   it('should handle SET_CODE', () => {
     const initialState = {
       filename: 'code.c',

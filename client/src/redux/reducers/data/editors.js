@@ -1,14 +1,11 @@
-const setCode = (state, code) => ({
-  ...state,
-  code,
-});
+import editor from './editor';
 
 const editors = (state = {}, action) => {
   switch (action.type) {
     case 'SET_CODE':
       return {
         ...state,
-        [action.id]: setCode(state[action.id], action.code),
+        [action.editorId]: editor(state[action.editorId], action),
       };
     default:
       return state;

@@ -2,6 +2,15 @@ import { setOpenTab, toggleVisible } from '../../actions/data';
 import reducer from './assignment';
 
 describe('data->assignment reducer', () => {
+  it('should return the initial state', () => {
+    const initialState = undefined;
+    const action = {};
+
+    const state = reducer(initialState, action);
+
+    expect(state).toBeUndefined();
+  });
+
   it('should handle SET_OPEN_TAB', () => {
     const initialState = {
       name: 'assignment 1',
