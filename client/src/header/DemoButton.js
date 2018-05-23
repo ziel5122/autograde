@@ -40,7 +40,7 @@ DemoButton.propTypes = {
   loggedIn: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = ({ login: { loggedIn } }) => ({
+const mapStateToProps = ({ auth: { loggedIn } }) => ({
   loggedIn,
 });
 

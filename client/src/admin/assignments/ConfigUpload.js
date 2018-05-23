@@ -1,4 +1,4 @@
-import ContentCreate from 'material-ui/svg-icons/content/create';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 import React from 'react';
 
 const reader = new FileReader();
@@ -23,8 +23,10 @@ reader.onload = ({ target }) => {
 };
 
 const buttonStyle = {
+/* eslint-disable no-dupe-keys */
   cursor: 'hand',
   cursor: 'pointer',
+/* eslint-enable no-dupe-keys */
 };
 
 const inputStyle = {
@@ -34,7 +36,7 @@ const inputStyle = {
 const ConfigUpload = () => (
   <div>
     <label htmlFor="configInput" style={buttonStyle}>
-      <ContentCreate />
+      <ContentAdd />
       <input
         id="configInput"
         onChange={handleInputChange}

@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 
+import { setOpenTab } from '../redux/actions/assignments';
+
 class Tab extends PureComponent {
   constructor() {
     super();
@@ -8,8 +10,8 @@ class Tab extends PureComponent {
   }
 
   handleSetOpenTab() {
-    const { assignmentId, partId } = this.props;
-    this.props.setOpenTab(assignmentId, partId);
+    const { assignmentId, dispatch, partId } = this.props;
+    dispatch(setOpenTab(assignmentId, partId));
   }
 
   render() {
@@ -18,7 +20,9 @@ class Tab extends PureComponent {
     return (
       <div
         onClick={this.handleSetOpenTab}
+        role="button"
         style={style}
+        tabIndex={0}
       >
         {name}
       </div>
@@ -26,14 +30,4 @@ class Tab extends PureComponent {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  setOpenTab(assignmentId, partId) {
-    dispatch({
-      assignmentId,
-      partId,
-      type: 'SET_OPEN_TAB',
-    });
-  },
-});
-
-export default connect(undefined, mapDispatchToProps)(Tab);
+export default connect()(Tab);

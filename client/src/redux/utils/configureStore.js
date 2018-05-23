@@ -1,37 +1,53 @@
+import jwt from 'jsonwebtoken';
 import throttle from 'lodash/throttle';
 import { createStore } from 'redux';
 
-import data from '../../../../data';
+import jsonData from '../../../../data';
 import reducers from '../reducers';
-import { loadState, saveState } from './localStorage';
+import { loadState, saveState } from './sessionStorage';
 
 const configureData = (data) => {
-  data.assignments = data.assignmentIds.reduce((
+  const dataTemp = data;
+  dataTemp.assignments = dataTemp.assignmentIds.reduce((
     newAssignments,
     assignmentId,
   ) => {
-    newAssignments[assignmentId] = {
-      ...initialState.assignments[assignmentId],
-      openTab: initialState.assignments[assignmentId].partIds[0],
+    const newAssignmentsTemp = newAssignments;
+    newAssignmentsTemp[assignmentId] = {
+      ...data.assignments[assignmentId],
+      openTab: dataTemp.assignments[assignmentId].partIds[0],
     };
-    return newAssignments;
+    return newAssignmentsTemp;
   }, {});
 
-  return data;
+  return {
+    data: dataTemp,
+  };
 };
 
 const configureStore = () => {
   const persistedState = loadState();
 
-  const initialState = persistedState || configureData(data);
+  const initialState = persistedState || configureData(jsonData);
+
+  const token = sessionStorage.getItem('jwt');
+  if (token) {
+    const privilege = jwt.decode(token).privilege;
+    initialState.auth = {
+      admin: (privilege === 'admin'),
+      loggedIn: true,
+    };
+  }
+
+  console.log(initialState);
 
   const store = createStore(reducers, initialState);
 
   store.subscribe(throttle(() => {
-    saveState(store.getState());
+    const state = { ...store.getState() };
+    delete state.login;
+    saveState(state);
   }, 1000));
-
-  console.log(store.getState());
 
   return store;
 };

@@ -12,7 +12,7 @@ const style = {
 };
 
 const MenuToggle = ({ open, toggleOpen }) => (
-  <div onClick={toggleOpen} style={style}>{
+  <div onClick={toggleOpen} role="button" style={style} tabIndex={0}>{
     open ?
       <KeyboardArrowLeft style={arrowStyle} /> :
       <KeyboardArrowRight style={arrowStyle} />

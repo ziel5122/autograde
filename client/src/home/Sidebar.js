@@ -1,6 +1,5 @@
 import Paper from 'material-ui/Paper';
 import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
 
 import Menu from './sidebar/Menu';
 import MenuToggle from './sidebar/MenuToggle';
@@ -28,9 +27,8 @@ class Sidebar extends PureComponent {
   }
 
   render() {
-    const { assignments } = this.props;
     const open = this.state.open || !this.props.match.params.name;
-    
+
     return (
       <Paper style={style} zDepth={5}>
         <MenuToggle open={open} toggleOpen={this.toggleOpen} />
@@ -40,8 +38,4 @@ class Sidebar extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ assignments }) => ({
-  assignments,
-});
-
-export default connect(mapStateToProps)(Sidebar);
+export default Sidebar;

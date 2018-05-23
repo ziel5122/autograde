@@ -1,71 +1,162 @@
-import React from 'react';
+import DatePicker from 'material-ui/DatePicker';
+import Subheader from 'material-ui/Subheader';
+import TextField from 'material-ui/TextField';
+import Toggle from 'material-ui/Toggle';
+import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
+import { Link, Route, withRouter } from 'react-router-dom';
 
-const editStyle = {
-  border: 'solid orangered 2px',
+import { clearAssignment, setAssignment } from '../../redux/actions/edit-assignment/assignment';
+import { setEditors } from '../../redux/actions/edit-assignment/editors';
+import { setParts } from '../../redux/actions/edit-assignment/parts';
+import AssignmentDetails from './Details';
+import EditEditors from './editors/Edit';
+import EditParts from './parts/Edit';
+
+const style = {
+  background: 'whitesmoke',
+  display: 'flex',
+  flex: 1,
 };
 
-const Edit = ({
-  assignment: {
-    attempts,
-    dueDate,
-    name,
-    visible,
-  },
-  save,
-}) => (
-  <tr>
-    <td colSpan={5}>
-      <div style={editStyle}>
-        <div
-          onClick={save}
-          style={{
-            textAlign: 'center',
-            width: '30px'
-          }}
-        >
-          &#9998;
-        </div>
-        <table style={{ width: '100%' }}>
-          <tbody>
-            <tr>
-              <td style={leftFormStyle}>Name</td>
-              <td><input id="name" defaultValue={name} /></td>
-            </tr>
-            <tr>
-              <td style={leftFormStyle}>Due</td>
-              <td>
-                <input
-                  defaultValue={dueDate}
-                  id="due"
-                  type="date"
-                />
-              </td>
-            </tr>
-            <tr>
-              <td style={leftFormStyle}>Attempts</td>
-              <td>
-                <input
-                  defaultValue={attempts}
-                  id="attempts"
-                  type="number"
-                />
-              </td>
-            </tr>
-            <tr>
-              <td style={leftFormStyle}>Visible</td>
-              <td>
-                <input
-                  defaultChecked={visible}
-                  id="visible"
-                  type="checkbox"
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </td>
-  </tr>
-);
+const childStyle = {
+  background: 'white',
+  flex: '.3333333',
+  marginBottom: '24px',
+  marginTop: '24px',
+};
 
-export default Edit;
+const leftChildStyle = {
+  ...childStyle,
+  marginLeft: '24px',
+  marginRight: '12px',
+};
+
+const middleChildStyle = {
+  ...childStyle,
+  marginLeft: '12px',
+  marginRight: '12px',
+};
+
+const rightChildStyle = {
+  ...childStyle,
+  marginLeft: '12px',
+  marginRight: '24px',
+};
+
+class EditAssignment extends PureComponent {
+  constructor(props) {
+    super(props);
+    const { assignment, match } = props;
+    const { assignmentId } = match.params;
+    if (assignmentId !== assignment.assignmentId) {
+      const { assignments, dispatch, editors, parts } = props;
+      const editAssignment = assignments[assignmentId];
+      const { partIds } = editAssignment;
+      const editParts = partIds.reduce((newParts, partId) => {
+        newParts[partId] = parts[partId];
+        return newParts;
+      }, {});
+      const editEditors = Object.keys(editParts).reduce((editEditors, editPartId) => {
+        const editPart = editParts[editPartId];
+        const editPartTemp = editPart.editorIds.reduce((moreEditors, editorId) => {
+          moreEditors[editorId] = editors[editorId];
+          return moreEditors;
+        }, {});
+        return {
+          ...editEditors,
+          ...editPartTemp,
+        };
+      }, {});
+      dispatch(setAssignment(assignmentId, editAssignment));
+      dispatch(setParts(editParts));
+      dispatch(setEditors(editEditors));
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.dispatch(clearAssignment());
+  }
+
+  updateDueDate = ({ target: { value } }) => {
+    this.props.setEditDueDate(value);
+  };
+
+  updateName = ({ target: { value } }) => {
+    this.pros.setEditName(value);
+  };
+
+  updateVisible = ({ target: { value } }) => {
+    this.props.setEditVisible(value);
+  };
+
+  render() {
+    const { assignment, match: { params: { assignmentId }, url } } = this.props;
+    const { dueDate, name, visible } = assignment;
+
+    console.log(this.props);
+
+    return (
+      <div style={style}>
+        <div style={leftChildStyle}>
+          <Subheader>Assignment</Subheader>
+          <AssignmentDetails
+            assignmentId={assignmentId}
+            updateDueDate={this.updateDueDate}
+            updateName={this.updateName}
+            updateVisible={this.updateVisible}
+          />
+        </div>
+        <div style={middleChildStyle}>
+          <Subheader>Parts</Subheader>
+          <EditParts />
+        </div>
+        <div style={rightChildStyle}>
+          <Subheader>Editors</Subheader>
+          <Route path={`${url}/:partId`} component={EditEditors} />
+        </div>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = ({
+  data: { assignments, editors, parts },
+  editAssignment: { assignment },
+}) => ({
+  assignment,
+  assignments,
+  editors,
+  parts,
+});
+
+const mapDispatchToProps = dispatch => ({
+  clearEditAssignment() {
+    dispatch({
+      type: 'CLEAR_EDIT_ASSIGNMENT',
+    });
+  },
+
+  setEditDueDate(dueDate) {
+    dispatch({
+      dueDate,
+      type: 'SET_EDIT_DUE_DATE',
+    });
+  },
+
+  setEditName(name) {
+    dispatch({
+      name,
+      type: 'SET_EDIT_NAME',
+    })
+  },
+
+  setEditVisible(visible) {
+    dispatch({
+      visible,
+      type: 'SET_EDIT_VISIBLE',
+    });
+  },
+});
+
+export default withRouter(connect(mapStateToProps)(EditAssignment));

@@ -1,17 +1,15 @@
 import { combineReducers } from 'redux';
 
-import assignmentIds from './assignmentIds';
-import assignments from './assignments';
-import editors from './editors';
-import login from './login';
-import parts from './parts';
+import auth from './auth';
+import data from './data';
+import editAssignment from './edit-assignment';
 import user from './user';
 
-export default combineReducers({
-  assignmentIds,
-  assignments,
-  editors,
-  login,
-  parts,
+const rootReducer = combineReducers({
+  auth,
+  data,
+  editAssignment,
   user,
 });
+
+export default rootReducer;

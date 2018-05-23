@@ -1,17 +1,14 @@
-import Paper from 'material-ui/Paper';
 import Subheader from 'material-ui/Subheader';
 import React from 'react';
-import { Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Actions from '../home/Actions';
 import Editor from './Editor';
-import Tabs from '../home/Tabs';
 
 const assignmentStyle = {
   display: 'flex',
   flex: 1,
-  overflow: 'hidden'
+  overflow: 'hidden',
 };
 
 const style = {
@@ -36,7 +33,7 @@ const subStyle = {
 const Assignment = ({
   assignments,
   editors,
-  match: { params: { assignmentId }, url },
+  match: { params: { assignmentId } },
   parts,
 }) => {
   const partId = assignments[assignmentId].openTab;
@@ -46,12 +43,15 @@ const Assignment = ({
     <div style={style}>
       <div style={assignmentStyle}>
         <div style={subStyle}>{
-          editorIds.map(editorId => {
+          editorIds.map((editorId) => {
             const { code, filename, title, type } = editors[editorId];
             const mode = ((fileType) => {
               switch (fileType) {
-                case 'c/c++':
+                case 'C':
+                case 'C++':
+                case 'C/C++':
                   return 'ace/mode/c_cpp';
+                case 'bash':
                 case 'sh':
                   return 'ace/mode/sh';
                 default:

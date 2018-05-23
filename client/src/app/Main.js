@@ -1,10 +1,9 @@
-import jwt from 'jsonwebtoken';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 
 import App from './App';
 import configureStore from '../redux/utils/configureStore';
@@ -28,7 +27,7 @@ const muiTheme = getMuiTheme({
   },
 });
 
-const socket = io();
+// const socket = io();
 
 const store = configureStore();
 

@@ -18,6 +18,7 @@ const getAceTheme = darkTheme => (
 class Editor extends PureComponent {
   componentDidMount() {
     this.editor = ace.edit(this.props.id);
+    this.editor.$blockScrolling = Infinity;
     this.editor.on('change', () => this.props.setCode(this.props.id, this.editor.getValue()));
     this.editor.setFontSize(this.props.fontSize);
     this.editor.setPrintMarginColumn(80);

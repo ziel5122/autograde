@@ -10,7 +10,7 @@ const Instructions = () => (
       orientation={'vertical'}
     >
       <Step>
-        <StepLabel>Run the code to see it's output</StepLabel>
+        <StepLabel>{'Run the code to see it\'s output'}</StepLabel>
       </Step>
       <Step>
         <StepLabel>Alter the print statement to see it change</StepLabel>

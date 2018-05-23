@@ -6,7 +6,7 @@ import LogoutButton from './LogoutButton';
 
 const Right = ({ loggedIn }) => (loggedIn ? <LogoutButton /> : <Github />);
 
-const mapStateToProps = ({ login: { loggedIn } }) => ({
+const mapStateToProps = ({ auth: { loggedIn } }) => ({
   loggedIn,
 });
 

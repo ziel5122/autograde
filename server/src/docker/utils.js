@@ -40,9 +40,9 @@ const evaluate = (attempts, partId, tempStudentDir, username) => (
           ExpressionAttributeValues: {
             ':a': newAttempts,
             ':rod': {
-              result,
-              output,
               date,
+              result: result,
+              output: output || 'error',
             },
           },
         };

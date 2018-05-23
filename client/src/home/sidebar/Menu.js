@@ -1,10 +1,8 @@
 import Divider from 'material-ui/Divider';
 import MaterialMenu from 'material-ui/Menu';
-import Subheader from 'material-ui/Subheader';
 import React from 'react';
 
 import AssignmentList from './AssignmentList';
-import OptionList from './OptionList';
 
 const style = {
   background: 'white',
@@ -22,7 +20,6 @@ const Menu = ({ open, toggleOpen }) => (
       <MaterialMenu style={style}>
         <AssignmentList toggleOpen={toggleOpen} />
         <Divider />
-        <OptionList />
       </MaterialMenu>
     ) : null
   }</div>

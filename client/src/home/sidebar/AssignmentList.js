@@ -11,31 +11,28 @@ const linkStyle = {
 const AssignmentList = ({
   assignmentIds,
   assignments,
-  match: { url },
-  toggleOpen
+  toggleOpen,
 }) => (
   <div>
     <Subheader style={{ background: 'white' }}>Assignments</Subheader>
     {
-      assignmentIds.map(assignmentId => {
+      assignmentIds.map((assignmentId) => {
         const { name, visible } = assignments[assignmentId];
-        if (visible) {
-          return (
-            <Link
-              key={assignmentId}
-              style={linkStyle}
-              to={`/home/${assignmentId}`}
-            >
-              <MenuItem onClick={toggleOpen} primaryText={name} />
-            </Link>
-          );
-        }
+        return visible ? (
+          <Link
+            key={assignmentId}
+            style={linkStyle}
+            to={`/home/${assignmentId}`}
+          >
+            <MenuItem onClick={toggleOpen} primaryText={name} />
+          </Link>
+        ) : null;
       })
     }
   </div>
 );
 
-const mapStateToProps = ({ assignmentIds, assignments }) => ({
+const mapStateToProps = ({ data: { assignmentIds, assignments } }) => ({
   assignmentIds,
   assignments,
 });
